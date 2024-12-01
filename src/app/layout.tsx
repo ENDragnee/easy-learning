@@ -1,19 +1,32 @@
-"use client";
+"use client"
 
-import { ReactNode } from "react";
-import { Clock } from "@/components/clock";
-import { MainMenu } from "@/components/main-menu";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { ScrollProgressBar } from "@/components/scroll-progress-bar";
-// import ContexMenu  from "@/components/context-menu";
-import "./globals.css";
-
+import { ReactNode, useState } from "react"
+import { Clock } from "@/components/clock"
+import { MainMenu } from "@/components/main-menu"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { ScrollProgressBar } from "@/components/scroll-progress-bar"
+import ContextMenu2 from "@/components/context-menu"  // Import the ContextMenu component
+import "./globals.css"
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const [menuPosition, setMenuPosition] = useState<{ x: number; y: number } | null>(null)
+
+  const handleContextMenu = (event: React.MouseEvent) => {
+    event.preventDefault()
+    setMenuPosition({ x: event.clientX, y: event.clientY })
+  }
+
+  const handleCloseMenu = () => {
+    setMenuPosition(null)
+  }
+
+  const handleAskAI = () => {
+    console.log("Ask AI action")
+  }
+
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col bg-white dark:bg-[#404552] text-black dark:text-white">
-        {/* <ContexMenu/> */}
+      <body className="min-h-screen flex flex-col bg-white dark:bg-[#404552] text-black dark:text-white" onContextMenu={handleContextMenu}>
         <ScrollProgressBar />
         <Clock onSessionEnd={() => {}} />
         <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
@@ -21,6 +34,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <MainMenu />
         </header>
         {children}
+
+        {/* Conditionally render the ContextMenu when there is a menu position */}
+        {menuPosition && (
+          <ContextMenu2
+            x={menuPosition.x}
+            y={menuPosition.y}
+            onClose={handleCloseMenu}
+            onAskAI={handleAskAI}
+          />
+        )}
+
         <footer className="border-t border-gray-200 dark:border-[#4b5162] py-8">
           <div className="container mx-auto px-4">
             <div className="flex justify-center">
@@ -32,5 +56,5 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </footer>
       </body>
     </html>
-  );
+  )
 }

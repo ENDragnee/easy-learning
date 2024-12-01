@@ -62,4 +62,3 @@ export default function ContextMenu({ x, y, onClose, onAskAI }: ContextMenuProps
     </AnimatePresence>
   )
 }
-
