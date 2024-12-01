@@ -2,20 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: rgb(64,69,82);
+
+    --card: #ffffff;
+    --card-foreground: rgb(64,69,82);
+ 
+    --popover: #ffffff;
+    --popover-foreground: rgb(64,69,82);
+ 
+    --primary: rgb(64,69,82);
+    --primary-foreground: #ffffff;
+ 
+    --secondary: rgb(241,245,249);
+    --secondary-foreground: rgb(64,69,82);
+ 
+    --muted: rgb(241,245,249);
+    --muted-foreground: rgb(100,116,139);
+ 
+    --accent: rgb(241,245,249);
+    --accent-foreground: rgb(64,69,82);
+ 
+    --destructive: rgb(239,68,68);
+    --destructive-foreground: rgb(249,250,251);
+
+    --border: rgb(226,232,240);
+    --input: rgb(226,232,240);
+    --ring: rgb(64,69,82);
+ 
+    --radius: 0.5rem;
+  }
+  
+  .dark {
+    --background: rgb(52,148,220);
+    --foreground: rgb(249,250,251);
+ 
+    --card: rgb(64,69,82);
+    --card-foreground: rgb(249,250,251);
+ 
+    --popover: rgb(64,69,82);
+    --popover-foreground: rgb(249,250,251);
+ 
+    --primary: rgb(249,250,251);
+    --primary-foreground: rgb(64,69,82);
+ 
+    --secondary: rgb(30,41,59);
+    --secondary-foreground: rgb(249,250,251);
+ 
+    --muted: rgb(30,41,59);
+    --muted-foreground: rgb(148,163,184);
+ 
+    --accent: rgb(30,41,59);
+    --accent-foreground: rgb(249,250,251);
+ 
+    --destructive: rgb(127,29,29);
+    --destructive-foreground: rgb(249,250,251);
+ 
+    --border: rgb(30,41,59);
+    --input: rgb(30,41,59);
+    --ring: rgb(249,250,251);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
