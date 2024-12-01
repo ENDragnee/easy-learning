@@ -26,10 +26,40 @@ export default function ContextMenu({ x, y, onClose, onAskAI }: ContextMenuProps
     }
   }, [onClose])
 
+  const highlightText = () => {
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+  
+      // Check if the range is already highlighted
+      const parentElement = range.commonAncestorContainer.parentElement;
+  
+      if (parentElement?.tagName === 'SPAN' && parentElement.style.backgroundColor === 'yellow') {
+        // Unhighlight by replacing the span with its text content
+        const span = parentElement as HTMLSpanElement;
+        const parent = span.parentNode;
+        if (parent) {
+          while (span.firstChild) {
+            parent.insertBefore(span.firstChild, span);
+          }
+          parent.removeChild(span);
+        }
+      } else {
+        // Highlight the selected text
+        const span = document.createElement('span');
+        span.style.backgroundColor = 'yellow';
+        span.appendChild(range.extractContents());
+        range.insertNode(span);
+        selection.removeAllRanges(); // Deselect the text after highlighting
+      }
+    }
+  };
+  
+
   const menuItems = [
     { label: 'Ask AI', action: onAskAI },
     { label: 'Copy', action: () => document.execCommand('copy') },
-    { label: 'Highlight', action: () => console.log('Highlight action') },
+    { label: 'Highlight', action: highlightText },
     { label: 'Search', action: () => console.log('Search action') },
   ]
 
