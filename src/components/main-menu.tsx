@@ -103,7 +103,6 @@ const courses = [
           { title: "3.2", href: "/chemistry/chapter3/3_2" },
           { title: "3.3", href: "/chemistry/chapter3/3_3" },
           { title: "3.4", href: "/chemistry/chapter3/3_4" },
-          { title: "3.5", href: "/chemistry/chapter3/3_5" },
         ],
       },
       {
