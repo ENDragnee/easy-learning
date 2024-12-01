@@ -1,49 +1,8 @@
 "use client"
 
-import { useState, useCallback } from 'react'
-import { Clock } from "@/components/clock"
-import { MainMenu } from "@/components/main-menu"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { ContextMenu } from "@/components/context-menu"
-import { ScrollProgressBar } from "@/components/scroll-progress-bar"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { Notification } from "@/components/notification"
-
 export default function Home() {
-  const [selectedText, setSelectedText] = useState("")
-  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 })
-  const [aiDialogOpen, setAiDialogOpen] = useState(false)
-  const [showNotification, setShowNotification] = useState(false)
-  const [notificationMessage, setNotificationMessage] = useState("")
-
-  const handleSessionEnd = useCallback((isStudySession: boolean) => {
-    const message = isStudySession
-      ? "Break's over! Start your study session."
-      : "Time's up! Start your break.";
-    setNotificationMessage(message);
-    setShowNotification(true);
-    setTimeout(() => setShowNotification(false), 5000);
-  }, []);
-
-  const handleAskAI = () => {
-    setAiDialogOpen(true)
-  }
-
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-[#404552] text-black dark:text-white">
-      <ScrollProgressBar />
-      <Clock onSessionEnd={handleSessionEnd} />
-      <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
-        <ThemeToggle />
-        <MainMenu />
-      </header>
-
       <main className="flex-1 pt-24">
         <div className="container mx-auto px-4">
           <div className="prose dark:prose-invert max-w-none">
@@ -109,42 +68,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-
-      <footer className="border-t border-gray-200 dark:border-[#4b5162] py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center">
-            <p className="text-sm text-gray-500 dark:text-[#7c818c]">
-              © 2024 Educational Platform. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-
-      {contextMenu.visible && (
-        <ContextMenu
-          x={contextMenu.x}
-          y={contextMenu.y}
-          onClose={() => setContextMenu({ visible: false, x: 0, y: 0 })}
-          onAskAI={handleAskAI}
-        />
-      )}
-
-      <Dialog open={aiDialogOpen} onOpenChange={setAiDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Ask AI about the selected text</DialogTitle>
-            <DialogDescription>
-              You&apos;ve selected: &quot;{selectedText}&quot;
-            </DialogDescription>
-          </DialogHeader>
-          <div className="mt-4">
-            <p>AI response would go here...</p>
-          </div>
-        </DialogContent>
-      </Dialog>
-      {showNotification && (
-        <Notification message={notificationMessage} />
-      )}
     </div>
   )
 }

@@ -10,7 +10,7 @@ interface ContextMenuProps {
   onAskAI: () => void
 }
 
-export function ContextMenu({ x, y, onClose, onAskAI }: ContextMenuProps) {
+export default function ContextMenu({ x, y, onClose, onAskAI }: ContextMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
