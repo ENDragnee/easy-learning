@@ -2,6 +2,7 @@
 
 import { ReactNode, useState } from "react"
 import { Clock } from "@/components/clock"
+import { Toaster, toast } from "sonner" // Import from sonner
 import { MainMenu } from "@/components/main-menu"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ScrollProgressBar } from "@/components/scroll-progress-bar"
@@ -20,15 +21,41 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     setMenuPosition(null)
   }
 
+
   const handleAskAI = () => {
     console.log("Ask AI action")
+  }
+
+  const handleSessionEnd = (isStudySession: boolean) => {
+    const message = isStudySession ? "Time to focus!" : "Time to take a break!";
+    const borderColor = isStudySession ? "red" : "green";
+
+    toast(message, {
+      duration: 0,
+      position: "top-center",
+      className: "custom-toast",
+      style: {
+        borderLeft: `5px solid ${borderColor}`,
+        borderRadius: '8px',
+        background: 'white',
+        marginTop: '15px',
+        width: '300px'
+      },
+    })
   }
 
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-white dark:bg-[#404552] text-black dark:text-white" onContextMenu={handleContextMenu}>
+      <Toaster
+          position="top-center"
+          expand={false}
+          richColors
+          closeButton
+          className="mt-10"
+        />
         <ScrollProgressBar />
-        <Clock onSessionEnd={() => {}} />
+        <Clock onSessionEnd={handleSessionEnd} />
         <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
           <ThemeToggle />
           <MainMenu />

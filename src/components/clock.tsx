@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Switch } from "@/components/ui/switch"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { PauseIcon, PlayIcon } from "lucide-react" // Import these icons from lucide-react
 
 interface ClockProps {
   onSessionEnd: (isStudySession: boolean) => void;
@@ -18,6 +20,8 @@ export function Clock({ onSessionEnd }: ClockProps) {
   const [timerSeconds, setTimerSeconds] = useState(studyDuration * 60)
   const [isStudyPeriod, setIsStudyPeriod] = useState(true)
   const [isTimerOn, setIsTimerOn] = useState(true)
+  const [isPaused, setIsPaused] = useState(true)
+  const [hasStarted, setHasStarted] = useState(false) // New state to track if timer
   const clockRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -30,7 +34,7 @@ export function Clock({ onSessionEnd }: ClockProps) {
 
   useEffect(() => {
     let timer: NodeJS.Timeout
-    if (isTimerOn) {
+    if (isTimerOn && !isPaused && hasStarted) {
       timer = setInterval(() => {
         setTimerSeconds((prev) => {
           if (prev === 0) {
@@ -45,7 +49,7 @@ export function Clock({ onSessionEnd }: ClockProps) {
     }
 
     return () => clearInterval(timer)
-  }, [isTimerOn, isStudyPeriod, studyDuration, restDuration, onSessionEnd])
+  }, [isTimerOn, isPaused, isStudyPeriod, studyDuration, restDuration, onSessionEnd, hasStarted])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -67,22 +71,47 @@ export function Clock({ onSessionEnd }: ClockProps) {
   }
 
   const handleStudyDurationChange = (value: string) => {
-    const newDuration = parseInt(value, 10)
-    if (!isNaN(newDuration) && newDuration > 0) {
-      setStudyDuration(newDuration)
+    const numValue = parseInt(value)
+    if (!isPaused && isTimerOn && hasStarted) {
+      alert("Please pause the timer before changing the duration!")
+      return
+    }
+    if (!isNaN(numValue) && numValue > 0) {
+      setStudyDuration(numValue)
       if (isStudyPeriod) {
-        setTimerSeconds(newDuration * 60)
+        setTimerSeconds(numValue * 60)
       }
     }
   }
 
   const handleRestDurationChange = (value: string) => {
-    const newDuration = parseInt(value, 10)
-    if (!isNaN(newDuration) && newDuration > 0) {
-      setRestDuration(newDuration)
+    const numValue = parseInt(value)
+    if (!isPaused && isTimerOn && hasStarted) {
+      alert("Please pause the timer before changing the duration!")
+      return
+    }
+    if (!isNaN(numValue) && numValue > 0) {
+      setRestDuration(numValue)
       if (!isStudyPeriod) {
-        setTimerSeconds(newDuration * 60)
+        setTimerSeconds(numValue * 60)
       }
+    }
+  }
+
+  const togglePause = () => {
+    if (!hasStarted) {
+      setHasStarted(true)
+    }
+    setIsPaused(!isPaused)
+  }
+
+  const handleTimerToggle = (checked: boolean) => {
+    setIsTimerOn(checked)
+    if (!checked) {
+      setIsPaused(true)
+      setHasStarted(false)
+      setTimerSeconds(studyDuration * 60)
+      setIsStudyPeriod(true)
     }
   }
 
@@ -90,7 +119,7 @@ export function Clock({ onSessionEnd }: ClockProps) {
     <motion.div
       ref={clockRef}
       className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 cursor-pointer ${
-        isExpanded ? 'w-full max-w-3xl' : ''
+        isExpanded ? 'md:max-w-xl max-w-md' : ''  // Reduced from max-w-3xl to max-w-xl
       }`}
       animate={{
         width: isExpanded ? '100%' : 'auto',
@@ -120,7 +149,7 @@ export function Clock({ onSessionEnd }: ClockProps) {
             exit={{ opacity: 0, width: 0 }}
             className="bg-zinc-200/80 dark:bg-zinc-800/80 backdrop-blur-sm rounded-[40px] shadow-lg p-3 px-6 flex items-center justify-between"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center md:gap-4 gap-2">
               <div className="w-3 h-3 rounded-full bg-black/10 dark:bg-white/10" />
               <div className="font-medium tabular-nums text-lg">
                 {formatTime(timerSeconds)}
@@ -128,15 +157,28 @@ export function Clock({ onSessionEnd }: ClockProps) {
               <div className="text-sm">
                 {isStudyPeriod ? 'Study' : 'Rest'}
               </div>
+              {isTimerOn && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    togglePause()
+                  }}
+                  className="p-2"
+                >
+                  {isPaused ? <PlayIcon size={20} /> : <PauseIcon size={20} />}
+                </Button>
+              )}
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center md:gap-4 gap-2">
               <Label htmlFor="studyDuration" className="text-sm">Study</Label>
               <Input
                 id="studyDuration"
                 type="number"
                 value={studyDuration}
                 onChange={(e) => handleStudyDurationChange(e.target.value)}
-                className="w-20 h-8 text-sm"
+                className="md:w-20 w-11 h-8 text-sm"
                 min={1}
               />
               <Label htmlFor="restDuration" className="text-sm">Rest</Label>
@@ -145,7 +187,7 @@ export function Clock({ onSessionEnd }: ClockProps) {
                 type="number"
                 value={restDuration}
                 onChange={(e) => handleRestDurationChange(e.target.value)}
-                className="w-20 h-8 text-sm"
+                className="md:w-20 w-10 h-8 text-sm"
                 min={1}
               />
               <Switch
