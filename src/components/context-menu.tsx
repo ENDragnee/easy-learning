@@ -175,7 +175,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.1 }}
-          className="fixed z-50 bg-white dark:bg-[#383c4a] rounded-lg shadow-lg overflow-hidden"
+          className="fixed z-50 bg-white dark:bg-[#383c4a] rounded-lg shadow-lg overflow-hidden max-w-xs w-32 px-2"
           style={{ left: x, top: y }}
         >
           <div className="py-2">
@@ -186,7 +186,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
                   item.action();
                   if (item.label !== 'Ask AI') onClose(); // Close on click outside Ask AI
                 }}
-                className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-[#4b5162] transition-colors"
+                className="w-full text-center px-4 py-2 rounded-lg text-left text-sm hover:bg-gray-100 dark:hover:bg-[#4b5162] transition-colors"
               >
                 {item.label}
               </button>
