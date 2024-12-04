@@ -135,13 +135,13 @@ export function MainMenu() {
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 max-h-[50vh] overflow-y-auto p-2">
+      <DropdownMenuContent className="w-56 max-h-[50vh] overflow-y-auto p-2 bg-white dark:bg-gray-800 text-black dark:text-white">
         {courses.map((course, index) => (
           <DropdownMenuSub key={index}>
             <DropdownMenuSubTrigger>
               {course.title}
             </DropdownMenuSubTrigger>
-            <DropdownMenuSubContent className="max-h-[40vh] overflow-y-auto">
+            <DropdownMenuSubContent className="max-h-[40vh] overflow-y-auto bg-white dark:bg-gray-800 text-black dark:text-white">
               {course.chapters.map((chapter, chapterIndex) => (
                 <React.Fragment key={chapterIndex}>
                   <DropdownMenuItem asChild>

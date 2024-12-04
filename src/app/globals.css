@@ -76,5 +76,12 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.3s, color 0.3s;
   }
+  .dark body {
+    @apply bg-background text-foreground;
+  }
+  
 }
+
+
