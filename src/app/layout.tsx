@@ -21,11 +21,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     setMenuPosition(null)
   }
 
-
-  const handleAskAI = () => {
-    console.log("Ask AI action")
-  }
-
   const handleSessionEnd = (isStudySession: boolean) => {
     const message = isStudySession ? "Time to focus!" : "Time to take a break!";
     const borderColor = isStudySession ? "red" : "green";
