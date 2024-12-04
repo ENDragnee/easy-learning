@@ -144,13 +144,13 @@ export function MainMenu() {
             <DropdownMenuSubContent className="max-h-[40vh] overflow-y-auto">
               {course.chapters.map((chapter, chapterIndex) => (
                 <React.Fragment key={chapterIndex}>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href={`#${chapter.title.toLowerCase().replace(" ", "")}`}>
                       {chapter.title}
                     </Link>
                   </DropdownMenuItem>
                   {chapter.subChapters.map((subChapter, subIndex) => (
-                    <DropdownMenuItem key={subIndex}>
+                    <DropdownMenuItem key={subIndex} asChild>
                       <Link href={subChapter.href}>
                         {subChapter.title}
                       </Link>
@@ -161,13 +161,14 @@ export function MainMenu() {
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         ))}
-        <DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link href="/flashcards">Flash Cards</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link href="/quiz">Quiz</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
+
