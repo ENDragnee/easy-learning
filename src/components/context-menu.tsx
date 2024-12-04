@@ -79,8 +79,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
       if (
         menuRef.current &&
         !menuRef.current.contains(event.target as Node) &&
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
+        !showModal
       ) {
         onClose();
       }
@@ -88,13 +87,24 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [onClose]);
+  }, [onClose, showModal]);
 
   const menuItems = [
     { label: 'Ask AI', action: handleAskAI },
     { label: 'Copy', action: () => document.execCommand('copy') },
     { label: 'Highlight', action: () => highlightText() },
-    { label: 'Search', action: () => console.log('Search') },
+    {
+      label: 'Search',
+      action: () => {
+        const selection = window.getSelection()?.toString();
+        if (selection) {
+          const query = encodeURIComponent(selection);
+          window.open(`https://www.google.com/search?q=${query}`, '_blank');
+        } else {
+          alert('No text selected to search.');
+        }
+      },
+    },
   ];
   const highlightText = () => {
     const selection = window.getSelection();
