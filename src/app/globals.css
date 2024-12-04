@@ -40,36 +40,35 @@ body {
   }
   
   .dark {
-    --background: rgb(52,148,220);
-    --foreground: rgb(249,250,251);
- 
-    --card: rgb(64,69,82);
-    --card-foreground: rgb(249,250,251);
- 
-    --popover: rgb(64,69,82);
-    --popover-foreground: rgb(249,250,251);
- 
-    --primary: rgb(249,250,251);
-    --primary-foreground: rgb(64,69,82);
- 
-    --secondary: rgb(30,41,59);
-    --secondary-foreground: rgb(249,250,251);
- 
-    --muted: rgb(30,41,59);
-    --muted-foreground: rgb(148,163,184);
- 
-    --accent: rgb(30,41,59);
-    --accent-foreground: rgb(249,250,251);
- 
-    --destructive: rgb(127,29,29);
-    --destructive-foreground: rgb(249,250,251);
- 
-    --border: rgb(30,41,59);
-    --input: rgb(30,41,59);
-    --ring: rgb(249,250,251);
+    --background: rgb(56,60,74); /* #383c4a */
+    --foreground: rgb(124,129,140); /* #7c818c */
+  
+    --card: rgb(64,69,82); /* #404552 */
+    --card-foreground: rgb(124,129,140); /* #7c818c */
+  
+    --popover: rgb(75,81,98); /* #4b5162 */
+    --popover-foreground: rgb(124,129,140); /* #7c818c */
+  
+    --primary: rgb(82,148,226); /* #5294e2 */
+    --primary-foreground: rgb(64,69,82); /* #404552 */
+  
+    --secondary: rgb(56,60,74); /* #383c4a */
+    --secondary-foreground: rgb(124,129,140); /* #7c818c */
+  
+    --muted: rgb(64,69,82); /* #404552 */
+    --muted-foreground: rgb(75,81,98); /* #4b5162 */
+  
+    --accent: rgb(82,148,226); /* #5294e2 */
+    --accent-foreground: rgb(64,69,82); /* #404552 */
+  
+    --destructive: rgb(82,148,226); /* #5294e2 */
+    --destructive-foreground: rgb(124,129,140); /* #7c818c */
+  
+    --border: rgb(56,60,74); /* #383c4a */
+    --input: rgb(56,60,74); /* #383c4a */
+    --ring: rgb(124,129,140); /* #7c818c */
   }
-}
-
+}  
 @layer base {
   * {
     @apply border-border;
