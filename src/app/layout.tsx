@@ -68,7 +68,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             x={menuPosition.x}
             y={menuPosition.y}
             onClose={handleCloseMenu}
-            onAskAI={handleAskAI}
           />
         )}
 

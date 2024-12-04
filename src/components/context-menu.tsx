@@ -1,80 +1,56 @@
-"use client"
-
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ContextMenuProps {
-  x: number
-  y: number
-  onClose: () => void
+  x: number;
+  y: number;
+  onClose: () => void;
 }
 
-export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
-  const menuRef = useRef<HTMLDivElement>(null)
-  const [showModal, setShowModal] = useState(false)
-  const [aiResponse, setAiResponse] = useState<string>("")
-  const [isLoading, setIsLoading] = useState(false)
+export default function ContextMenu({ x, y, onClose, onAskAI }: ContextMenuProps) {
+  const menuRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [aiResponse, setAiResponse] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAskAI = async () => {
     setIsLoading(true);
     setShowModal(true);
-    setAiResponse(''); // Clear previous response
-    
+    setAiResponse('');
+
     const selection = window.getSelection();
     const selectedText = selection?.toString();
-  
+
     try {
       const response = await fetch('/api/ai', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ input: selectedText }),
       });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-  
+
+      if (!response.ok) throw new Error('Network response was not ok');
+
       const reader = response.body?.getReader();
       if (!reader) return;
-  
+
       let responseText = '';
-      let buffer = '';
-      
+
+      // Read the stream and accumulate content
+      const decoder = new TextDecoder();
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        
-        // Convert the Uint8Array to a string and add to buffer
-        buffer += new TextDecoder().decode(value);
-        
-        // Try to process complete JSON objects from the buffer
-        try {
-          // Remove the opening and closing brackets
-          const cleanBuffer = buffer.replace(/^\[|\]$/g, '').trim();
-          
-          // Split by newlines and process each line
-          const lines = cleanBuffer.split('\n');
-          
-          for (const line of lines) {
-            if (line.trim()) {
-              // Remove trailing comma if it exists
-              const jsonStr = line.replace(/,$/, '');
-              try {
-                const jsonObj = JSON.parse(jsonStr);
-                if (jsonObj.content) {
-                  responseText += jsonObj.content;
-                  setAiResponse(responseText);
-                }
-              } catch (e) {
-                // Ignore parsing errors for incomplete JSON objects
-              }
-            }
-          }
-        } catch (e) {
-          // Continue accumulating the buffer if we can't parse it yet
-          console.error('Error processing chunk:', e);
+
+        const chunk = decoder.decode(value, { stream: true });
+        const parsedChunk = chunk.match(/{"content":"(.*?)"}/g);
+
+        if (parsedChunk) {
+          parsedChunk.forEach((jsonStr) => {
+            const content = JSON.parse(jsonStr)?.content || '';
+            responseText += content;
+            setAiResponse(responseText); // Update the state with the content
+          });
         }
       }
     } catch (error) {
@@ -86,26 +62,76 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        onClose()
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowModal(false);
+        onClose();
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [onClose])
+    document.addEventListener('keydown', handleKeydown);
+    return () => document.removeEventListener('keydown', handleKeydown);
+  }, [onClose]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Close context menu if the click is outside both the menu and the modal
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [onClose]);
+
+  const menuItems = [
+    { label: 'Ask AI', action: handleAskAI },
+    { label: 'Copy', action: () => document.execCommand('copy') },
+    { label: 'Highlight', action: () => highlightText() },
+    { label: 'Search', action: () => console.log('Search') },
+  ];
   const highlightText = () => {
     const selection = window.getSelection();
-    if (selection && selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      const parentElement = range.commonAncestorContainer.parentElement;
+    if (!selection || selection.rangeCount === 0) return;
   
-      if (parentElement?.tagName === 'SPAN' && parentElement.style.backgroundColor === 'yellow') {
-        const span = parentElement as HTMLSpanElement;
+    const range = selection.getRangeAt(0);
+    
+    // Check if selection is collapsed (just a cursor)
+    if (range.collapsed) return;
+  
+    // Helper function to check if node is highlighted
+    const isHighlighted = (node: Node): boolean => {
+      return node.nodeType === Node.ELEMENT_NODE && 
+             (node as Element).tagName === 'SPAN' && 
+             (node as HTMLElement).style.backgroundColor === 'yellow';
+    };
+  
+    // Check if selection is entirely within a highlighted span
+    const startContainer = range.startContainer.parentElement;
+    const endContainer = range.endContainer.parentElement;
+    const sameHighlightedSpan = startContainer === endContainer && isHighlighted(startContainer!);
+  
+    if (sameHighlightedSpan) {
+      // Remove highlight
+      const span = startContainer as HTMLElement;
+      const parent = span.parentNode;
+      if (parent) {
+        while (span.firstChild) {
+          parent.insertBefore(span.firstChild, span);
+        }
+        parent.removeChild(span);
+      }
+    } else {
+      // First remove any existing highlights in the range
+      const fragment = range.cloneContents();
+      const highlightedSpans = fragment.querySelectorAll('span[style*="background-color: yellow"]');
+      highlightedSpans.forEach(span => {
         const parent = span.parentNode;
         if (parent) {
           while (span.firstChild) {
@@ -113,22 +139,22 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
           }
           parent.removeChild(span);
         }
-      } else {
-        const span = document.createElement('span');
-        span.style.backgroundColor = 'yellow';
-        span.appendChild(range.extractContents());
-        range.insertNode(span);
-        selection.removeAllRanges();
-      }
+      });
+  
+      // Apply new highlight
+      const span = document.createElement('span');
+      span.style.backgroundColor = 'yellow';
+      range.deleteContents();
+      span.appendChild(fragment);
+      range.insertNode(span);
+  
+      // Normalize to clean up any adjacent text nodes
+      span.parentNode?.normalize();
     }
+  
+    // Clear selection
+    selection.removeAllRanges();
   };
-
-  const menuItems = [
-    { label: 'Ask AI', action: handleAskAI },
-    { label: 'Copy', action: () => document.execCommand('copy') },
-    { label: 'Highlight', action: highlightText },
-    { label: 'Search', action: () => console.log('Search action') },
-  ]
 
   return (
     <>
@@ -147,8 +173,8 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
               <button
                 key={index}
                 onClick={() => {
-                  item.action()
-                  if (item.label !== 'Ask AI') onClose()
+                  item.action();
+                  if (item.label !== 'Ask AI') onClose(); // Close on click outside Ask AI
                 }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-[#4b5162] transition-colors"
               >
@@ -159,7 +185,6 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
         </motion.div>
       </AnimatePresence>
 
-      {/* AI Response Modal */}
       <AnimatePresence>
         {showModal && (
           <motion.div
@@ -169,6 +194,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
           >
             <motion.div
+              ref={modalRef}
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
@@ -177,10 +203,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">AI Response</h2>
                 <button
-                  onClick={() => {
-                    setShowModal(false)
-                    onClose()
-                  }}
+                  onClick={() => setShowModal(false)}
                   className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 >
                   ✕
@@ -200,5 +223,5 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }
