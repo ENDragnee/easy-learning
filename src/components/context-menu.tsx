@@ -111,16 +111,19 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
     if (!selection || selection.rangeCount === 0) return;
   
     const range = selection.getRangeAt(0);
-    
+  
     // Check if selection is collapsed (just a cursor)
     if (range.collapsed) return;
   
     // Helper function to check if node is highlighted
     const isHighlighted = (node: Node): boolean => {
-      return node.nodeType === Node.ELEMENT_NODE && 
-             (node as Element).tagName === 'SPAN' && 
-             (node as HTMLElement).style.backgroundColor === 'yellow';
+      return (
+        node.nodeType === Node.ELEMENT_NODE &&
+        (node as Element).tagName === 'SPAN' &&
+        (node as HTMLElement).style.backgroundColor === 'yellow' // or use another color like 'blue'
+      );
     };
+    
   
     // Check if selection is entirely within a highlighted span
     const startContainer = range.startContainer.parentElement;
@@ -138,9 +141,12 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
         parent.removeChild(span);
       }
     } else {
+      // Get the current theme
+      const isDarkMode = document.documentElement.classList.contains('dark') as boolean;
+  
       // First remove any existing highlights in the range
       const fragment = range.cloneContents();
-      const highlightedSpans = fragment.querySelectorAll('span[style*="background-color: yellow"]');
+      const highlightedSpans = fragment.querySelectorAll('span[style*="background-color"]');
       highlightedSpans.forEach(span => {
         const parent = span.parentNode;
         if (parent) {
@@ -151,9 +157,9 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
         }
       });
   
-      // Apply new highlight
+      // Apply new highlight with blue for dark mode, yellow for light mode
       const span = document.createElement('span');
-      span.style.backgroundColor = 'yellow';
+      span.style.backgroundColor = isDarkMode ? '#5294e2' : 'yellow'; // Use blue in dark mode
       range.deleteContents();
       span.appendChild(fragment);
       range.insertNode(span);
@@ -165,6 +171,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
     // Clear selection
     selection.removeAllRanges();
   };
+  
 
   return (
     <>
