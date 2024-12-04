@@ -1,71 +1,79 @@
-"use client"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { GraduationCap, Lightbulb, Zap, Rocket } from 'lucide-react'
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#404552] text-black dark:text-white">
-      <main className="flex-1 pt-24">
-        <div className="container mx-auto px-4">
-          <div className="prose dark:prose-invert max-w-none">
-            <h1 className="text-3xl font-bold mb-6">4.1 The Concept of Force and Newton's Laws of Motion</h1>
-            
-            <h2 className="text-2xl font-semibold mb-4">Learning Objectives</h2>
-            <p>At the end of this unit, you should be able to:</p>
-            <ul>
-              <li>Demonstrate an understanding of the relationship between net force and the acceleration of an object in linear motion</li>
-              <li>Analyze the effect of a net force in quantitative terms, using graphs, free-body diagrams, and vector diagrams</li>
-              <li>Describe the first condition of equilibrium quantitatively</li>
-              <li>Demonstrate an understanding, in qualitative and quantitative terms, of the concepts of work, energy, energy transformations, and power</li>
-              <li>Design and carry out experiments and solve problems involving energy transformations and the law of conservation of energy</li>
-              <li>Realize that momentum is an inherent property of moving objects</li>
-              <li>Express the relationship between impulse and momentum</li>
-            </ul>
-
-            <h2 className="text-2xl font-semibold mb-4">The Concept of Force</h2>
-            <p>In physics, a force is any interaction that, when unopposed, will change the motion of an object. Forces can be described as a push or pull on an object. They can be due to phenomena such as gravity, magnetism, or anything that causes mass to accelerate.</p>
-
-            <h3 className="text-xl font-semibold mb-3">Types of Forces</h3>
-            <p>Forces can be broadly categorized into two types:</p>
-            <ol>
-              <li><strong>Contact forces:</strong> These forces act between objects that are physically touching each other. Examples include friction, normal force, and tension.</li>
-              <li><strong>Field forces:</strong> These forces act between objects that are not in physical contact. Examples include gravitational force, electromagnetic force, and nuclear forces.</li>
-            </ol>
-
-            <h3 className="text-xl font-semibold mb-3">Fundamental Forces in Nature</h3>
-            <p>There are four fundamental forces in nature:</p>
-            <ol>
-              <li><strong>Strong nuclear force:</strong> This force holds quarks together to form hadrons like protons and neutrons. It's the strongest of the four forces but only acts over very short distances.</li>
-              <li><strong>Electromagnetic force:</strong> This force acts between electrically charged particles. It's responsible for holding atoms and molecules together.</li>
-              <li><strong>Weak nuclear force:</strong> This force is responsible for some forms of radioactive decay. It acts over even shorter distances than the strong nuclear force.</li>
-              <li><strong>Gravitational force:</strong> This is the weakest of the four forces, but it acts over the longest distances. It's responsible for the attraction between masses and shapes the large-scale structure of the universe.</li>
-            </ol>
-
-            <h2 className="text-2xl font-semibold mb-4">Newton's Laws of Motion</h2>
-            <p>Sir Isaac Newton formulated three laws that describe the fundamental nature of force and motion. These laws form the foundation of classical mechanics.</p>
-
-            <h3 className="text-xl font-semibold mb-3">Newton's First Law of Motion</h3>
-            <p>"An object at rest stays at rest and an object in motion stays in motion with the same speed and in the same direction unless acted upon by an unbalanced force."</p>
-            <p>This law introduces the concept of inertia, which is the resistance of any physical object to changes in its velocity. The mass of an object is a measure of its inertia.</p>
-
-            <h3 className="text-xl font-semibold mb-3">Newton's Second Law of Motion</h3>
-            <p>"The acceleration of an object as produced by a net force is directly proportional to the magnitude of the net force, in the same direction as the net force, and inversely proportional to the mass of the object."</p>
-            <p>This is often expressed mathematically as F = ma, where F is the net force, m is the mass of the object, and a is the acceleration.</p>
-
-            <h3 className="text-xl font-semibold mb-3">Newton's Third Law of Motion</h3>
-            <p>"For every action, there is an equal and opposite reaction."</p>
-            <p>This means that in every interaction, there is a pair of forces acting on the two interacting objects. The size of the forces on the first object equals the size of the force on the second object.</p>
-
-            <h2 className="text-2xl font-semibold mb-4">Applications of Newton's Laws</h2>
-            <p>Newton's laws have numerous practical applications in everyday life and technology:</p>
-            <ul>
-              <li><strong>Seat belts and airbags:</strong> These safety features in vehicles work based on Newton's first law. They prevent passengers from continuing in motion when the vehicle suddenly stops.</li>
-              <li><strong>Rocket propulsion:</strong> Rockets work on the principle of Newton's third law. The downward thrust of exhaust gases produces an equal and opposite upward force on the rocket.</li>
-              <li><strong>Sports:</strong> Many aspects of sports, from the trajectory of a thrown ball to the force needed to start or stop motion, can be explained using Newton's laws.</li>
-              <li><strong>Construction and engineering:</strong> Understanding forces and their effects is crucial in designing stable structures and efficient machines.</li>
-            </ul>
-
-            <h2 className="text-2xl font-semibold mb-4">Conclusion</h2>
-            <p>Understanding force and Newton's laws of motion is fundamental to physics and our understanding of the physical world. These concepts form the basis for more advanced topics in mechanics and continue to be relevant in modern physics and engineering.</p>
-          </div>
+    <div className="flex flex-col min-h-screen">
+      <header className="w-full px-4 lg:px-6 h-14 flex items-center justify-center">
+        <div className="flex items-center justify-between w-full">
+          <a className="flex items-center justify-center" href="#">
+            <GraduationCap className="h-6 w-6" />
+            <span className="ml-2 text-2xl font-bold">Lumo</span>
+          </a>
+        </div>
+      </header>
+      <main className="flex-1 flex items-center justify-center">
+        <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+                  Welcome to <span className="text-blue-500">Lumo</span>
+                </h1>
+                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                  The educational system that makes learning fun and interactive. Ignite your curiosity and unlock your potential.
+                </p>
+              </div>
+              <div className="space-x-4">
+                <Button>Get Started</Button>
+                <Button variant="outline">Learn More</Button>
+              </div>
+            </div>
+          </section>
+          <section id="features" className="w-full py-12 md:py-24 lg:py-32">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12">
+              Why Choose Lumo?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+              <div className="flex flex-col items-center text-center max-w-xs">
+                <Lightbulb className="h-12 w-12 mb-4 text-blue-500" />
+                <h3 className="text-xl font-bold mb-2">Interactive Learning</h3>
+                <p className="text-gray-500 dark:text-gray-400">Engage with content through quizzes, games, and simulations.</p>
+              </div>
+              <div className="flex flex-col items-center text-center max-w-xs">
+                <Zap className="h-12 w-12 mb-4 text-blue-500" />
+                <h3 className="text-xl font-bold mb-2">Personalized Experience</h3>
+                <p className="text-gray-500 dark:text-gray-400">Adaptive learning paths tailored to your unique needs.</p>
+              </div>
+              <div className="flex flex-col items-center text-center max-w-xs">
+                <Rocket className="h-12 w-12 mb-4 text-blue-500" />
+                <h3 className="text-xl font-bold mb-2">Progress Tracking</h3>
+                <p className="text-gray-500 dark:text-gray-400">Monitor your growth with detailed analytics and insights.</p>
+              </div>
+            </div>
+          </section>
+          <section id="cta" className="w-full py-12 md:py-24 lg:py-32">
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                  Ready to Transform Your Learning?
+                </h2>
+                <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                  Join Lumo today and experience the future of education. Sign up for our newsletter to get started.
+                </p>
+              </div>
+              <div className="w-full max-w-sm space-y-2">
+                <form className="flex space-x-2">
+                  <Input className="max-w-lg flex-1" placeholder="Enter your email" type="email" />
+                  <Button type="submit">Subscribe</Button>
+                </form>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  By subscribing, you agree to our Terms of Service and Privacy Policy.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
     </div>
