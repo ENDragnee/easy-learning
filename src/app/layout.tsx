@@ -10,6 +10,7 @@ import { ScrollProgressBar } from "@/components/scroll-progress-bar"
 import ContextMenu2 from "@/components/context-menu"
 import { ThemeProvider } from "next-themes"
 import "./globals.css"
+import Sidebar from "@/components/Sidebar"
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname()
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         onContextMenu={handleContextMenu}
       >
         <ThemeProvider attribute="class" enableSystem={true} defaultTheme="light">
+          <Sidebar />
           <Toaster
             position="top-center"
             expand={false}
@@ -66,7 +68,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
           <ThemeToggle />
         </header>
-          <div id="content">
+          <div id="content" className="pt-10">
             {children}
           </div>
 

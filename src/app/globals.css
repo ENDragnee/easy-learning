@@ -13,82 +13,200 @@ body {
 
     --card: #ffffff;
     --card-foreground: rgb(64,69,82);
- 
+
     --popover: #ffffff;
     --popover-foreground: rgb(64,69,82);
- 
+
     --primary: rgb(64,69,82);
     --primary-foreground: #ffffff;
- 
+
     --secondary: rgb(241,245,249);
     --secondary-foreground: rgb(64,69,82);
- 
+
     --muted: rgb(241,245,249);
     --muted-foreground: rgb(100,116,139);
- 
+
     --accent: rgb(241,245,249);
     --accent-foreground: rgb(64,69,82);
- 
+
     --destructive: rgb(239,68,68);
     --destructive-foreground: rgb(249,250,251);
 
     --border: rgb(226,232,240);
     --input: rgb(226,232,240);
     --ring: rgb(64,69,82);
- 
+
     --radius: 0.5rem;
   }
-  
+
   .dark {
-    --background: rgb(56,60,74); /* #383c4a */
-    --foreground: rgb(124,129,140); /* #7c818c */
-  
-    --card: rgb(64,69,82); /* #404552 */
-    --card-foreground: rgb(124,129,140); /* #7c818c */
-  
-    --popover: rgb(75,81,98); /* #4b5162 */
-    --popover-foreground: rgb(124,129,140); /* #7c818c */
-  
-    --primary: rgb(82,148,226); /* #5294e2 */
-    --primary-foreground: rgb(64,69,82); /* #404552 */
-  
-    --secondary: rgb(56,60,74); /* #383c4a */
-    --secondary-foreground: rgb(124,129,140); /* #7c818c */
-  
-    --muted: rgb(64,69,82); /* #404552 */
-    --muted-foreground: rgb(75,81,98); /* #4b5162 */
-  
-    --accent: rgb(82,148,226); /* #5294e2 */
-    --accent-foreground: rgb(64,69,82); /* #404552 */
-  
-    --destructive: rgb(82,148,226); /* #5294e2 */
-    --destructive-foreground: rgb(124,129,140); /* #7c818c */
-  
-    --border: rgb(56,60,74); /* #383c4a */
-    --input: rgb(56,60,74); /* #383c4a */
-    --ring: rgb(124,129,140); /* #7c818c */
+    --background: rgb(56,60,74);
+    --foreground: rgb(124,129,140);
+
+    --card: rgb(64,69,82);
+    --card-foreground: rgb(124,129,140);
+
+    --popover: rgb(75,81,98);
+    --popover-foreground: rgb(124,129,140);
+
+    --primary: rgb(82,148,226);
+    --primary-foreground: rgb(64,69,82);
+
+    --secondary: rgb(56,60,74);
+    --secondary-foreground: rgb(124,129,140);
+
+    --muted: rgb(64,69,82);
+    --muted-foreground: rgb(75,81,98);
+
+    --accent: rgb(82,148,226);
+    --accent-foreground: rgb(64,69,82);
+
+    --destructive: rgb(82,148,226);
+    --destructive-foreground: rgb(124,129,140);
+
+    --border: rgb(56,60,74);
+    --input: rgb(56,60,74);
+    --ring: rgb(124,129,140);
   }
-}  
-@layer base {
+
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
     transition: background-color 0.3s, color 0.3s;
   }
+
   .dark body {
     @apply bg-background text-foreground;
   }
-  
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-input[type=number] {
+input[type="number"] {
   appearance: none;
+}
+
+/* VS Code-inspired styles */
+.vscode-tree-view {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.vscode-tree-item {
+  display: flex;
+  align-items: center;
+  padding: 3px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vscode-tree-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.vscode-tree-item-active {
+  background-color: rgba(255, 255, 255, 0.05);
+  font-weight: bold;
+}
+
+.vscode-tree-item-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+
+.vscode-tree-item-label {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vscode-tree-item-arrow {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.vscode-tree-item-arrow-expanded {
+  transform: rotate(90deg);
+}
+
+/* Smooth transitions */
+.transition-vscode {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #383c4a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5c6370;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6e7686;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .sidebar-collapsed {
+    width: 0;
+    overflow: hidden;
+  }
+
+  .sidebar-expanded {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Pill-shaped search bar */
+.search-bar {
+  border-radius: 9999px;
+}
+
+/* Collapsible animations */
+.collapsible-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.collapsible-content[data-state="open"] {
+  max-height: 1000px;
+}
+
+.collapsible-content[data-state="closed"] {
+  max-height: 0;
+}
+
+/* Rotate chevron for open state */
+.collapsible-trigger[data-state="open"] .chevron {
+  transform: rotate(90deg);
 }
