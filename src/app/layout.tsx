@@ -66,7 +66,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
           <ThemeToggle />
         </header>
-        {children}
+          <div id="content">
+            {children}
+          </div>
 
           {shouldRenderProgressBar && <ScrollProgressBar />}
           {shouldRenderExtras && <Clock onSessionEnd={handleSessionEnd} />}
@@ -74,7 +76,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <ThemeToggle />
             {shouldRenderExtras && <MainMenu />}
           </header>
-          {children}
+          <div id="content">
+            {children}
+          </div>
 
           {shouldRenderExtras && menuPosition && (
             <ContextMenu2

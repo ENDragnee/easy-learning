@@ -27,163 +27,6 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
   const [aiResponse, setAiResponse] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleAskAI = async () => {
-    setIsLoading(true);
-    setShowModal(true);
-    setAiResponse('');
-
-    const selection = window.getSelection();
-    const selectedText = selection?.toString();
-
-    try {
-      const response = await fetch('/api/ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input: selectedText }),
-      });
-
-      if (!response.ok) throw new Error('Network response was not ok');
-
-      const reader = response.body?.getReader();
-      if (!reader) return;
-
-      let responseText = '';
-
-      // Read the stream and accumulate content
-      const decoder = new TextDecoder();
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value, { stream: true });
-        const parsedChunk = chunk.match(/{"content":"(.*?)"}/g);
-
-        if (parsedChunk) {
-          parsedChunk.forEach((jsonStr) => {
-            const content = JSON.parse(jsonStr)?.content || '';
-            responseText += content;
-            setAiResponse(responseText); // Update the state with the content
-          });
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setAiResponse('Error getting AI response');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setShowModal(false);
-        onClose();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeydown);
-    return () => document.removeEventListener('keydown', handleKeydown);
-  }, [onClose]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      // Close context menu if the click is outside both the menu and the modal
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        !showModal
-      ) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [onClose, showModal]);
-
-  const menuItems = [
-    { label: 'Ask AI', action: handleAskAI },
-    { label: 'Copy', action: () => document.execCommand('copy') },
-    { label: 'Highlight', action: () => highlightText() },
-    {
-      label: 'Search',
-      action: () => {
-        const selection = window.getSelection()?.toString();
-        if (selection) {
-          const query = encodeURIComponent(selection);
-          window.open(`https://www.google.com/search?q=${query}`, '_blank');
-        } else {
-          alert('No text selected to search.');
-        }
-      },
-    },
-  ];
-  const highlightText = async (grade: string, course: string, chapter: string, sub_chapter: string) => {
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return;
-  
-    const range = selection.getRangeAt(0);
-    if (range.collapsed) return;
-  
-    const container = document.getElementById('content');
-    if (!container) return;
-  
-    const marker = new Mark(container);
-    const selectedText = range.toString();
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    const highlightColor = isDarkMode ? '#5294e2' : 'yellow';
-  
-    // Check if text is already highlighted
-    const markElement = range.commonAncestorContainer.parentElement?.closest('mark');
-    
-    if (markElement) {
-      // Remove highlight
-      const highlightId = markElement.dataset.highlightId;
-      if (highlightId) {
-        await removeHighlightFromDatabase(highlightId);
-        marker.unmark({
-          done: () => {
-            console.log('Highlight removed');
-          }
-        });
-      }
-    } else {
-      // Add new highlight
-      const highlightInstance: HighlightInstance = {
-        id: generateUniqueId(),
-        text: selectedText,
-        color: highlightColor,
-        grade,
-        course,
-        chapter,
-        sub_chapter,
-        startOffset: range.startOffset,
-        endOffset: range.endOffset,
-      };
-  
-      await saveHighlightToDatabase(highlightInstance);
-      marker.mark(selectedText, {
-        element: 'mark',
-        className: 'custom-highlight',
-        acrossElements: true,
-        separateWordSearch: false,
-        done: () => {
-          const marks = document.querySelectorAll('mark.custom-highlight');
-          marks.forEach(mark => {
-            if (mark.textContent === selectedText) {
-              (mark as HTMLElement).dataset.highlightId = highlightInstance.id;
-              (mark as HTMLElement).style.backgroundColor = highlightColor;
-            }
-          });
-        }
-      });
-    }
-  
-    // Clear selection
-    selection.removeAllRanges();
-  };
-
   const generateUniqueId = (): string => {
     return Date.now().toString(36) + Math.random().toString(36).substring(2);
   };
@@ -261,7 +104,172 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
       console.error('Error restoring highlights:', error);
     }
   };
+
+  const handleAskAI = async () => {
+    setIsLoading(true);
+    setShowModal(true);
+    setAiResponse('');
+
+    const selection = window.getSelection();
+    const selectedText = selection?.toString();
+
+    try {
+      const response = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ input: selectedText }),
+      });
+
+      if (!response.ok) throw new Error('Network response was not ok');
+
+      const reader = response.body?.getReader();
+      if (!reader) return;
+
+      let responseText = '';
+
+      // Read the stream and accumulate content
+      const decoder = new TextDecoder();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const parsedChunk = chunk.match(/{"content":"(.*?)"}/g);
+
+        if (parsedChunk) {
+          parsedChunk.forEach((jsonStr) => {
+            const content = JSON.parse(jsonStr)?.content || '';
+            responseText += content;
+            setAiResponse(responseText); // Update the state with the content
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setAiResponse('Error getting AI response');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowModal(false);
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeydown);
+    return () => document.removeEventListener('keydown', handleKeydown);
+  }, [onClose]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Close context menu if the click is outside both the menu and the modal
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        !showModal
+      ) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [onClose, showModal]);
+
+  const highlightText = async (grade: string, course: string, chapter: string, sub_chapter: string) => {
+    console.log('Highlight button clicked');
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) {
+      console.log('No text selected or range count is 0');
+      return;
+    }
   
+    const range = selection.getRangeAt(0);
+    const selectedTextR = range.toString();
+    console.log('Selected text:', selectedTextR);
+  
+    const container = document.getElementById('content');
+    if (!container) {
+      console.error('Content container not found');
+      return;
+    }
+  
+    const marker = new Mark(container);
+    const selectedText = range.toString();
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const highlightColor = isDarkMode ? '#5294e2' : 'yellow';
+  
+    // Check if text is already highlighted
+    const markElement = range.commonAncestorContainer.parentElement?.closest('mark');
+    
+    if (markElement) {
+      // Remove highlight
+      const highlightId = markElement.dataset.highlightId;
+      if (highlightId) {
+        await removeHighlightFromDatabase(highlightId);
+        marker.unmark({
+          done: () => {
+            console.log('Highlight removed');
+          }
+        });
+      }
+    } else {
+      // Add new highlight
+      const highlightInstance: HighlightInstance = {
+        id: generateUniqueId(),
+        text: selectedText,
+        color: highlightColor,
+        grade,
+        course,
+        chapter,
+        sub_chapter,
+        startOffset: range.startOffset,
+        endOffset: range.endOffset,
+      };
+  
+      await saveHighlightToDatabase(highlightInstance);
+      marker.mark(selectedText, {
+        element: 'mark',
+        className: 'custom-highlight',
+        acrossElements: true,
+        separateWordSearch: false,
+        done: () => {
+          const marks = document.querySelectorAll('mark.custom-highlight');
+          marks.forEach(mark => {
+            if (mark.textContent === selectedText) {
+              (mark as HTMLElement).dataset.highlightId = highlightInstance.id;
+              (mark as HTMLElement).style.backgroundColor = highlightColor;
+            }
+          });
+        }
+      });
+    }
+  
+    // Clear selection
+    selection.removeAllRanges();
+  };
+
+  const menuItems = [
+    { label: 'Ask AI', action: handleAskAI },
+    { label: 'Copy', action: () => document.execCommand('copy') },
+    { label: 'Highlight', action: () => highlightText(`Grade12`, `Physics`, `Chapter1`, `3_1`) },
+    {
+      label: 'Search',
+      action: () => {
+        const selection = window.getSelection()?.toString();
+        if (selection) {
+          const query = encodeURIComponent(selection);
+          window.open(`https://www.google.com/search?q=${query}`, '_blank');
+        } else {
+          alert('No text selected to search.');
+        }
+      },
+    },
+  ];
 
   return (
     <>
