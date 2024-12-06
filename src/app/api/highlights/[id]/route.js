@@ -1,15 +1,11 @@
-// app/api/highlights/[id]/route.ts
+// app/api/highlights/[id]/route.js
 import { NextResponse } from 'next/server';
 import db from '@/lib/db';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+// import { getServerSession } from 'next-auth';
+// import { authOptions } from '@/lib/auth';
 
-//Don't forget session: session.user.id
 // DELETE /api/highlights/[id]
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request, { params }) {
   try {
     // const session = await getServerSession(authOptions);
     const session = "1";
@@ -33,10 +29,7 @@ export async function DELETE(
 }
 
 // PATCH /api/highlights/[id]
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(request, { params }) {
   try {
     // const session = await getServerSession(authOptions);
     const session = "1";
