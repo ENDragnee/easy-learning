@@ -8,18 +8,6 @@ interface ContextMenuProps {
   onClose: () => void;
 }
 
-interface HighlightInstance {
-  id: string;
-  text: string;
-  color: string;
-  grade: string;
-  course: string;
-  chapter: string;
-  sub_chapter: string;
-  startOffset?: number;
-  endOffset?: number;
-}
-
 export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -119,147 +107,70 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
       },
     },
   ];
-  const highlightText = async (grade: string, course: string, chapter: string, sub_chapter: string) => {
+  const highlightText = () => {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) return;
   
     const range = selection.getRangeAt(0);
+  
+    // Check if selection is collapsed (just a cursor)
     if (range.collapsed) return;
   
-    const container = document.getElementById('content');
-    if (!container) return;
-  
-    const marker = new Mark(container);
-    const selectedText = range.toString();
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    const highlightColor = isDarkMode ? '#5294e2' : 'yellow';
-  
-    // Check if text is already highlighted
-    const markElement = range.commonAncestorContainer.parentElement?.closest('mark');
+    // Helper function to check if node is highlighted
+    const isHighlighted = (node: Node): boolean => {
+      return (
+        node.nodeType === Node.ELEMENT_NODE &&
+        (node as Element).tagName === 'SPAN' &&
+        (node as HTMLElement).style.backgroundColor === 'yellow' // or use another color like 'blue'
+      );
+    };
     
-    if (markElement) {
+  
+    // Check if selection is entirely within a highlighted span
+    const startContainer = range.startContainer.parentElement;
+    const endContainer = range.endContainer.parentElement;
+    const sameHighlightedSpan = startContainer === endContainer && isHighlighted(startContainer!);
+  
+    if (sameHighlightedSpan) {
       // Remove highlight
-      const highlightId = markElement.dataset.highlightId;
-      if (highlightId) {
-        await removeHighlightFromDatabase(highlightId);
-        marker.unmark({
-          done: () => {
-            console.log('Highlight removed');
-          }
-        });
+      const span = startContainer as HTMLElement;
+      const parent = span.parentNode;
+      if (parent) {
+        while (span.firstChild) {
+          parent.insertBefore(span.firstChild, span);
+        }
+        parent.removeChild(span);
       }
     } else {
-      // Add new highlight
-      const highlightInstance: HighlightInstance = {
-        id: generateUniqueId(),
-        text: selectedText,
-        color: highlightColor,
-        grade,
-        course,
-        chapter,
-        sub_chapter,
-        startOffset: range.startOffset,
-        endOffset: range.endOffset,
-      };
+      // Get the current theme
+      const isDarkMode = document.documentElement.classList.contains('dark') as boolean;
   
-      await saveHighlightToDatabase(highlightInstance);
-      marker.mark(selectedText, {
-        element: 'mark',
-        className: 'custom-highlight',
-        acrossElements: true,
-        separateWordSearch: false,
-        done: () => {
-          const marks = document.querySelectorAll('mark.custom-highlight');
-          marks.forEach(mark => {
-            if (mark.textContent === selectedText) {
-              (mark as HTMLElement).dataset.highlightId = highlightInstance.id;
-              (mark as HTMLElement).style.backgroundColor = highlightColor;
-            }
-          });
+      // First remove any existing highlights in the range
+      const fragment = range.cloneContents();
+      const highlightedSpans = fragment.querySelectorAll('span[style*="background-color"]');
+      highlightedSpans.forEach(span => {
+        const parent = span.parentNode;
+        if (parent) {
+          while (span.firstChild) {
+            parent.insertBefore(span.firstChild, span);
+          }
+          parent.removeChild(span);
         }
       });
+  
+      // Apply new highlight with blue for dark mode, yellow for light mode
+      const span = document.createElement('span');
+      span.style.backgroundColor = isDarkMode ? '#5294e2' : 'yellow'; // Use blue in dark mode
+      range.deleteContents();
+      span.appendChild(fragment);
+      range.insertNode(span);
+  
+      // Normalize to clean up any adjacent text nodes
+      span.parentNode?.normalize();
     }
   
     // Clear selection
     selection.removeAllRanges();
-  };
-
-  const generateUniqueId = (): string => {
-    return Date.now().toString(36) + Math.random().toString(36).substring(2);
-  };
-
-  const saveHighlightToDatabase = async (highlight: HighlightInstance) => {
-    try {
-      const response = await fetch('/api/highlights', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(highlight),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to save highlight');
-      }
-  
-      console.log('Highlight saved:', await response.json());
-    } catch (error) {
-      console.error('Error saving highlight:', error);
-      throw error;
-    }
-  };
-
-  const removeHighlightFromDatabase = async (highlightId: string) => {
-    try {
-      const response = await fetch(`/api/highlights/${highlightId}`, {
-        method: 'DELETE',
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to delete highlight');
-      }
-  
-      console.log('Highlight removed:', await response.json());
-    } catch (error) {
-      console.error('Error deleting highlight:', error);
-      throw error;
-    }
-  };
-  
-  const restoreHighlights = async (grade: string, course: string, chapter: string, sub_chapter: string) => {
-    try {
-      const response = await fetch(`/api/highlights?grade=${grade}&course=${course}&chapter=${chapter}&sub_chapter=${sub_chapter}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch highlights');
-      }
-  
-      const highlights: HighlightInstance[] = await response.json();
-  
-      const container = document.getElementById('content');
-      if (!container) return;
-  
-      const marker = new Mark(container);
-  
-      highlights.forEach(highlight => {
-        marker.mark(highlight.text, {
-          element: 'mark',
-          className: 'custom-highlight',
-          acrossElements: true,
-          separateWordSearch: false,
-          done: () => {
-            const marks = document.querySelectorAll('mark.custom-highlight');
-            marks.forEach(mark => {
-              if (mark.textContent === highlight.text) {
-                (mark as HTMLElement).dataset.highlightId = highlight.id;
-                (mark as HTMLElement).style.backgroundColor = highlight.color;
-              }
-            });
-          }
-        });
-      });
-    } catch (error) {
-      console.error('Error restoring highlights:', error);
-    }
   };
   
 
