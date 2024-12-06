@@ -43,8 +43,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   }
 
   // Paths to exclude specific components
-  const excludedExtrasPaths = ["/login", "/register", "/landing", "/"]
-  const excludedProgressBarPaths = ["/login", "/register", "/landing", "/"]
+  const excludedExtrasPaths = ["/auth/signin", "/auth/signup", "/landing", "/"]
+  const excludedProgressBarPaths = ["/auth/signin", "/auth/signup", "/landing", "/"]
 
   const shouldRenderExtras = !excludedExtrasPaths.includes(pathname)
   const shouldRenderProgressBar = !excludedProgressBarPaths.includes(pathname)
