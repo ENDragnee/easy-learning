@@ -4,20 +4,22 @@ import db from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+//Don't forget session: session.user.id
 // DELETE /api/highlights/[id]
 export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    // const session = await getServerSession(authOptions);
+    const session = "1";
+    // if (!session?.user) {
+    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    // }
 
     const [result] = await db.execute(
       'DELETE FROM Highlights WHERE highlight_id = ? AND user_id = ?',
-      [params.id, session.user.id]
+      [params.id, session]
     );
 
     return NextResponse.json(result);
@@ -36,16 +38,17 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    // const session = await getServerSession(authOptions);
+    const session = "1";
+    // if (!session?.user) {
+    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    // }
 
     const { color } = await request.json();
 
     const [result] = await db.execute(
       'UPDATE Highlights SET color = ? WHERE highlight_id = ? AND user_id = ?',
-      [color, params.id, session.user.id]
+      [color, params.id, session]
     );
 
     return NextResponse.json(result);
