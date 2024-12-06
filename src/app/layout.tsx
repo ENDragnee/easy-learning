@@ -51,6 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="en">
+<<<<<<< HEAD
       <body
         className="min-h-screen flex flex-col bg-white dark:bg-[#404552] text-black dark:text-white"
         onContextMenu={handleContextMenu}
@@ -62,6 +63,30 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             richColors
             closeButton
             className="mt-10"
+=======
+      <body className="min-h-screen flex flex-col bg-white dark:bg-[#404552] text-black dark:text-white" onContextMenu={handleContextMenu}>
+      <Toaster
+          position="top-center"
+          expand={false}
+          richColors
+          className="mt-10"
+        />
+        <ScrollProgressBar />
+        <Clock onSessionEnd={handleSessionEnd} />
+        <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
+          <ThemeToggle />
+          <MainMenu />
+        </header>
+        {children}
+
+        {/* Conditionally render the ContextMenu when there is a menu position */}
+        {menuPosition && (
+          <ContextMenu2
+            x={menuPosition.x}
+            y={menuPosition.y}
+            onClose={handleCloseMenu}
+            onAskAI={handleAskAI}
+>>>>>>> 1ce2e36 (adding minor changes)
           />
           {shouldRenderProgressBar && <ScrollProgressBar />}
           {shouldRenderExtras && <Clock onSessionEnd={handleSessionEnd} />}

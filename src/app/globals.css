@@ -83,4 +83,16 @@ body {
   
 }
 
+<<<<<<< HEAD
 
+=======
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+  appearance: none;
+}
+>>>>>>> 1ce2e36 (adding minor changes)

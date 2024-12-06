@@ -154,7 +154,7 @@ export function Clock({ onSessionEnd }: ClockProps) {
               <div className="font-medium tabular-nums text-lg">
                 {formatTime(timerSeconds)}
               </div>
-              <div className="text-sm">
+              <div className="md:text-sm text-[12px]">
                 {isStudyPeriod ? 'Study' : 'Rest'}
               </div>
               {isTimerOn && (
@@ -167,27 +167,27 @@ export function Clock({ onSessionEnd }: ClockProps) {
                   }}
                   className="p-2"
                 >
-                  {isPaused ? <PlayIcon size={20} /> : <PauseIcon size={20} />}
+                  {isPaused ? <PlayIcon size={20} className="text-slate-600"/> : <PauseIcon size={20} className="text-slate-600"/>}
                 </Button>
               )}
             </div>
             <div className="flex items-center md:gap-4 gap-2">
-              <Label htmlFor="studyDuration" className="text-sm">Study</Label>
+              <Label htmlFor="studyDuration" className="md:text-sm text-[12px]">Study</Label>
               <Input
                 id="studyDuration"
                 type="number"
                 value={studyDuration}
                 onChange={(e) => handleStudyDurationChange(e.target.value)}
-                className="md:w-20 w-11 h-8 text-sm"
+                className="md:w-15 w-11 h-8 md:text-sm text-[12px] align-center border-slate-500"
                 min={1}
               />
-              <Label htmlFor="restDuration" className="text-sm">Rest</Label>
+              <Label htmlFor="restDuration" className="md:text-sm text-[12px]">Rest</Label>
               <Input
                 id="restDuration"
                 type="number"
                 value={restDuration}
                 onChange={(e) => handleRestDurationChange(e.target.value)}
-                className="md:w-20 w-10 h-8 text-sm"
+                className="md:w-15 w-10 h-8 md:text-sm text-[12px] text-center border-slate-500"
                 min={1}
               />
               <Switch
