@@ -114,6 +114,11 @@ export default function PlanetaryMotionAndKeplersLaws() {
           </tr>
         </tbody>
       </table>
+      <iframe src="https://phet.colorado.edu/sims/html/keplers-laws/latest/keplers-laws_en.html"
+        width="800"
+        height="600"
+        allowFullScreen>
+      </iframe>
     </div>
   );
 }

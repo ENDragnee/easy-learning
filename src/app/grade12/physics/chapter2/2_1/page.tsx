@@ -131,11 +131,10 @@ export default function ProjectileMotion() {
           simulation below:
         </p>
         <iframe
-          src="https://phet.colorado.edu/sims/html/buoyancy-basics/latest/buoyancy-basics_en.html"
+          src="https://phet.colorado.edu/sims/html/projectile-motion/latest/projectile-motion_en.html"
           width="800"
           height="600"
           allowFullScreen
-          className="mt-4"
         ></iframe>
       </div>
     </div>

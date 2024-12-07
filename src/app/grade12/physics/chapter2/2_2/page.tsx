@@ -26,6 +26,14 @@ export default function RotationalMotion() {
       <h2 className="text-2xl font-semibold mt-6 mb-4">
         Angular Displacement and Angular Velocity
       </h2>
+      <iframe
+        src="https://www.youtube.com/embed/Rlj3ikcTYu0"
+        width="1000"
+        height="600"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+
       <h3 className="text-xl font-semibold mt-4">Angular Displacement</h3>
       <p>
         As shown in Figure 2.8, a particle on a rigid disc moves through an

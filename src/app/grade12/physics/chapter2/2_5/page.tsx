@@ -9,7 +9,7 @@ export default function UniversalGravitation() {
       <h1 className="text-3xl font-bold mb-6">2.5 Newton’s Law of Universal Gravitation</h1>
       <p>
         Planets orbit the Sun. If we look more closely at the Solar System, we see almost
-        unimaginable numbers of stars, galaxies, and other celestial objects orbiting one another 
+        unimaginable numbers of stars, galaxies, and other celestUniversalGravitationial objects orbiting one another 
         and interacting through gravity. All these motions are governed by gravitational force.
       </p>
 
@@ -38,6 +38,11 @@ export default function UniversalGravitation() {
         ), <InlineMath math="m_1" /> and <InlineMath math="m_2" /> are the masses of the two 
         objects, and <InlineMath math="r" /> is the distance between their centers.
       </p>
+      <iframe src="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab_en.html"
+        width="800"
+        height="600"
+        allowFullScreen>
+      </iframe>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Acceleration Due to Gravity</h2>
       <p>
@@ -92,6 +97,11 @@ export default function UniversalGravitation() {
         This is Kepler’s third law, where the square of the period is proportional to the cube of 
         the distance from the Sun.
       </p>
+      <iframe src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html"
+        width="800"
+        height="600"
+        allowFullScreen>
+      </iframe>
     </div>
   );
 }

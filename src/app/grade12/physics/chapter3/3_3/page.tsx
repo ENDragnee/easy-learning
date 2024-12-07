@@ -60,6 +60,13 @@ export default function FluidMechanics() {
       <p>
         This equation shows that the fraction of the volume of a floating object submerged in a fluid is equal to the ratio of the density of the object to that of the fluid.
       </p>
+      <iframe
+        scrolling="no"
+        src="https://www.geogebra.org/material/iframe/id/58095/width/900/height/620/border/888888/rc/false/ai/false/sdz/false/smb/false/stb/false/stbh/true/ld/false/sri/true/at/auto"
+        width="900px"
+        height="620px"
+        style={{ border: "0px" }}
+      ></iframe>
     </div>
   );
 }
