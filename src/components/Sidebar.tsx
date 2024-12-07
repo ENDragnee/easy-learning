@@ -52,9 +52,11 @@ const Sidebar: React.FC = () => {
   return (
     <div
       className={cn(
-        "fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out",
+        "fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out pt-5",
         isOpen ? "w-64" : "w-12",
-        theme === "dark" ? "bg-[#383c4a] text-[#7c818c]" : "bg-gray-200 text-black"
+        theme === "dark"
+          ? "bg-[#383c4a] text-[#7c818c]"
+          : "bg-gray-200 text-black"
       )}
     >
       <div className="flex items-center justify-between p-2">
@@ -64,7 +66,7 @@ const Sidebar: React.FC = () => {
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
             "text-[#7c818c] hover:rounded-md hover:bg-slate-500",
-            !isOpen && "rounded-full hover:bg-[#383c4a]"
+            !isOpen && "rounded-full hover:bg-[#767c93] text-white"
           )}
         >
           <Menu className="w-6 h-6" />
@@ -79,7 +81,9 @@ const Sidebar: React.FC = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={cn(
                   "w-full bg-[#404552] border-none rounded-full pl-8",
-                  theme === "dark" ? "text-black placeholder-[#7c818c] bg-gray-500" : "text-black placeholder-gray-400 bg-gray-300"
+                  theme === "dark"
+                    ? "text-black placeholder-slate-300 bg-gray-200"
+                    : "text-black placeholder-gray-200 bg-gray-300"
                 )}
               />
               <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4" />
@@ -91,7 +95,7 @@ const Sidebar: React.FC = () => {
         <ScrollArea className="h-[calc(100vh-56px)]">
           <div className="p-2">
             <Collapsible open={isGradesOpen} onOpenChange={setIsGradesOpen}>
-              <CollapsibleTrigger className="flex items-center w-full text-left py-1 px-2 hover:bg-[#4b5162] rounded">
+              <CollapsibleTrigger className="flex items-center w-full text-left my-1.5 py-1 px-2 rounded">
                 <ChevronRight
                   className={cn(
                     "w-4 h-4 mr-1 transition-transform",
@@ -152,7 +156,7 @@ const GradeSelector: React.FC<{
   onSelectGrade: (grade: string) => void;
 }> = ({ grades, selectedGrade, onSelectGrade }) => {
   return (
-    <div className="flex flex-wrap gap-2 mb-2">
+    <div className="flex flex-wrap gap-2 mb-2 pl-6">
       {grades.map((grade) => (
         <motion.div
           key={grade}
@@ -165,7 +169,7 @@ const GradeSelector: React.FC<{
               "w-8 h-8 rounded-full p-0",
               selectedGrade === grade
                 ? "bg-[#5294e2] text-white"
-                : "bg-[#404552] text-[#7c818c] hover:bg-[#4b5162]"
+                : "bg-gray-300 dark:bg-[#404552] text-[#7c818c] hover:text-white hover:bg-[#4b5162]"
             )}
             onClick={() => onSelectGrade(grade)}
           >
@@ -184,18 +188,18 @@ const SubjectList: React.FC<{
 }> = ({ subjects, selectedSubject, onSelectSubject }) => {
   return (
     <Collapsible defaultOpen>
-      <CollapsibleTrigger className="flex items-center w-full text-left py-1 px-2 hover:bg-[#4b5162] rounded">
+      <CollapsibleTrigger className="flex items-center w-full text-left my-1.5 py-1 px-2 rounded">
         <ChevronRight className="w-4 h-4 mr-1" />
         Subjects
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <ul className="ml-4 border-l border-[#4b5162]">
+        <ul className="ml-4 border-l border-[#7d859a]">
           {subjects.map((subject) => (
             <li key={subject} className="relative">
               <Button
                 variant="ghost"
                 className={cn(
-                  "w-full justify-start rounded-none border-l-2 border-transparent",
+                  "w-full justify-start rounded-md border-l-2 border-transparent my-0.5",
                   selectedSubject === subject
                     ? "bg-[#4b5162] text-white font-bold border-l-[#5294e2]"
                     : "hover:bg-[#4b5162] hover:text-white"
@@ -219,7 +223,7 @@ const ChapterList: React.FC<{
 }> = ({ chapters, selectedGrade, selectedSubject }) => {
   return (
     <Collapsible defaultOpen>
-      <CollapsibleTrigger className="flex items-center w-full text-left py-1 px-2 hover:bg-[#4b5162] rounded">
+      <CollapsibleTrigger className="flex items-center w-full text-left my-1.5 py-1 px-2 rounded">
         <ChevronRight className="w-4 h-4 mr-1" />
         Chapters
       </CollapsibleTrigger>
@@ -228,7 +232,7 @@ const ChapterList: React.FC<{
           {chapters.map((chapter) => (
             <li key={chapter.name}>
               <Collapsible>
-                <CollapsibleTrigger className="flex items-center w-full text-left py-1 px-2 hover:bg-[#4b5162]">
+                <CollapsibleTrigger className="flex items-center w-full text-left my-0.5 py-1 px-2 hover:bg-[#4b5162] hover:text-white rounded-md">
                   <ChevronRight className="w-4 h-4 mr-1" />
                   {chapter.name}
                 </CollapsibleTrigger>
@@ -242,7 +246,7 @@ const ChapterList: React.FC<{
                           >
                             <Button
                               variant="ghost"
-                              className="w-full text-left rounded-none hover:bg-[#4b5162] hover:text-white"
+                              className="w-full text-left rounded-md my-0.5 hover:bg-[#4b5162] hover:text-white"
                             >
                               {subChapter}
                             </Button>
