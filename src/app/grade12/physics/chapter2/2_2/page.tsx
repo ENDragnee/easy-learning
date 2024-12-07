@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { InlineMath, BlockMath } from 'react-katex';
-import 'katex/dist/katex.min.css';
+import { InlineMath, BlockMath } from "react-katex";
+import "katex/dist/katex.min.css";
 
 export default function RotationalMotion() {
   return (
@@ -14,8 +14,8 @@ export default function RotationalMotion() {
       </p>
       <p>
         A disc performing rotational motion (see Figure 2.7) rotates all its
-        particles around a fixed axis called the axis of rotation. An object
-        can rotate clockwise or counterclockwise.
+        particles around a fixed axis called the axis of rotation. An object can
+        rotate clockwise or counterclockwise.
       </p>
       <h2 className="text-2xl font-semibold mt-6 mb-4">Rigid Body</h2>
       <p>
@@ -29,9 +29,9 @@ export default function RotationalMotion() {
       <h3 className="text-xl font-semibold mt-4">Angular Displacement</h3>
       <p>
         As shown in Figure 2.8, a particle on a rigid disc moves through an
-        angle <InlineMath math="\theta" />. Because the object is rigid, all its particles rotate
-        through the same angle. This angle is defined as the angular
-        displacement, <InlineMath math="\Delta \theta" />:
+        angle <InlineMath math="\theta" />. Because the object is rigid, all its
+        particles rotate through the same angle. This angle is defined as the
+        angular displacement, <InlineMath math="\Delta \theta" />:
       </p>
       <BlockMath math="\Delta \theta = \theta_f - \theta_0" />
       <p>
@@ -46,7 +46,8 @@ export default function RotationalMotion() {
       <BlockMath math="\omega = \frac{\Delta \theta}{\Delta t}" />
       <p>
         Angular velocity is measured in radians per second (
-        <InlineMath math="\text{rad/s}" />).
+        <InlineMath math="\text{rad/s}" />
+        ).
       </p>
       <h3 className="text-xl font-semibold mt-4">Angular Acceleration</h3>
       <p>
@@ -56,16 +57,17 @@ export default function RotationalMotion() {
       <BlockMath math="\alpha = \frac{\Delta \omega}{\Delta t}" />
       <p>
         Angular acceleration is measured in radians per second squared (
-        <InlineMath math="\text{rad/s}^2" />).
+        <InlineMath math="\text{rad/s}^2" />
+        ).
       </p>
       <h2 className="text-2xl font-semibold mt-6 mb-4">
         Direction of Angular Velocity and Angular Acceleration
       </h2>
       <p>
         Angular velocity and acceleration are vectors. Their directions follow
-        the right-hand rule: curl the fingers of your right hand in the direction
-        of rotation, and your thumb points in the direction of the angular
-        velocity.
+        the right-hand rule: curl the fingers of your right hand in the
+        direction of rotation, and your thumb points in the direction of the
+        angular velocity.
       </p>
       <h2 className="text-2xl font-semibold mt-6 mb-4">
         Equations of Motion for Constant Angular Acceleration
@@ -94,18 +96,27 @@ export default function RotationalMotion() {
       </p>
       <ul className="list-disc ml-6 mb-4">
         <li>
-          Angular displacement <InlineMath math="\Delta \theta" /> corresponds to linear
-          displacement <InlineMath math="\Delta s" />.
+          Angular displacement <InlineMath math="\Delta \theta" /> corresponds
+          to linear displacement <InlineMath math="\Delta s" />.
         </li>
         <li>
-          Angular velocity <InlineMath math="\omega" /> corresponds to linear velocity
+          Angular velocity <InlineMath math="\omega" /> corresponds to linear
+          velocity
           <InlineMath math="v" />.
         </li>
         <li>
-          Angular acceleration <InlineMath math="\alpha" /> corresponds to linear
-          acceleration <InlineMath math="a" />.
+          Angular acceleration <InlineMath math="\alpha" /> corresponds to
+          linear acceleration <InlineMath math="a" />.
         </li>
       </ul>
+
+      <iframe
+        scrolling="no"
+        src="https://www.geogebra.org/material/iframe/id/177707/width/850/height/600/border/888888/rc/false/ai/false/sdz/false/smb/false/stb/false/stbh/true/ld/false/sri/true/at/auto"
+        width="850px"
+        height="600px"
+        style={{ border: "0px" }}
+      ></iframe>
     </div>
   );
 }

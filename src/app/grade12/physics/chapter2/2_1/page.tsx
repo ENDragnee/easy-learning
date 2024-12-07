@@ -1,6 +1,6 @@
 'use client';
 
-import { InlineMath, BlockMath } from 'react-katex';
+import { InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 
 export default function ProjectileMotion() {
@@ -121,6 +121,23 @@ export default function ProjectileMotion() {
           Range: <InlineMath math="R = \frac{v_0^2 \sin 2\theta}{g}" />
         </li>
       </ul>
+
+      <div className="mt-10">
+        <h2 className="text-2xl font-semibold mt-6 mb-4">
+          Interactive Simulation
+        </h2>
+        <p>
+          Explore the concepts of projectile motion using the interactive
+          simulation below:
+        </p>
+        <iframe
+          src="https://phet.colorado.edu/sims/html/buoyancy-basics/latest/buoyancy-basics_en.html"
+          width="800"
+          height="600"
+          allowFullScreen
+          className="mt-4"
+        ></iframe>
+      </div>
     </div>
   );
 }

@@ -79,7 +79,7 @@ const Sidebar: React.FC = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={cn(
                   "w-full bg-[#404552] border-none rounded-full pl-8",
-                  theme === "dark" ? "text-[#7c818c] placeholder-[#7c818c]" : "text-black placeholder-gray-500"
+                  theme === "dark" ? "text-black placeholder-[#7c818c] bg-gray-500" : "text-black placeholder-gray-400 bg-gray-300"
                 )}
               />
               <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4" />
@@ -129,13 +129,13 @@ const Sidebar: React.FC = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="max-w-10 rounded-full justify-center text-[#7c818c] hover:text-white bottom-0"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="max-w-10 rounded-full justify-center text-[#7c818c] bottom-0"
+              onClick={() => setTheme(theme === "dark" ? "dark" : "light")}
             >
               {theme === "dark" ? (
-                <Sun className="h-5 w-5" />
+                <Moon className="h-5 w-5 dark:hover:text-white" />
               ) : (
-                <Moon className="h-5 w-5" />
+                <Sun className="h-5 w-5" />
               )}
               <span className="sr-only">Toggle theme</span>
             </Button>
@@ -238,7 +238,7 @@ const ChapterList: React.FC<{
                       <li key={subChapter} className="relative">
                         {selectedGrade && selectedSubject && (
                           <Link
-                            href={`/${selectedGrade}/${selectedSubject}/${subChapter}`}
+                            href={`/${selectedGrade}/${selectedSubject}/${chapter.name}/${subChapter}`}
                           >
                             <Button
                               variant="ghost"
