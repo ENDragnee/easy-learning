@@ -78,9 +78,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <ThemeToggle />
             {shouldRenderExtras && <MainMenu />}
           </header>
-          <div id="content">
-            {children}
-          </div>
 
           {shouldRenderExtras && menuPosition && (
             <ContextMenu2
