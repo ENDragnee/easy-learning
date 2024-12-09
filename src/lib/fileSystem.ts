@@ -39,8 +39,8 @@ export interface Chapter {
         {
           name: 'physics',
           chapters: [
-            { name: 'chapter2', subChapters: ['2_1', '2_2'] },
-            { name: 'Chapter Two', subChapters: ['Newtown Abate', 'Inheritance'] },
+            { name: 'chapter2', subChapters: ['2_1', '2_2', '2_3', '2_4', '2_5'] },
+            { name: 'Chapter3', subChapters: ['3_1', '3_2', '3_3', '3_4'] },
           ],
         },
         {

@@ -1,33 +1,37 @@
-"use client"
+"use client";
 
-import { ReactNode, useState } from "react"
-import { usePathname } from "next/navigation"
-import { Clock } from "@/components/clock"
-import { Toaster, toast } from "sonner"
-import { MainMenu } from "@/components/main-menu"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { ScrollProgressBar } from "@/components/scroll-progress-bar"
-import ContextMenu2 from "@/components/context-menu"
-import { ThemeProvider } from "next-themes"
-import "./globals.css"
-import Sidebar from "@/components/Sidebar"
+import { ReactNode, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Clock } from "@/components/clock";
+import { Toaster, toast } from "sonner";
+import { MainMenu } from "@/components/main-menu";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { ScrollProgressBar } from "@/components/scroll-progress-bar";
+import ContextMenu2 from "@/components/context-menu";
+import { ThemeProvider } from "next-themes";
+import "./globals.css";
+import Sidebar from "@/components/Sidebar";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
-  const [menuPosition, setMenuPosition] = useState<{ x: number; y: number } | null>(null)
+  const pathname = usePathname();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
 
   const handleContextMenu = (event: React.MouseEvent) => {
-    event.preventDefault()
-    setMenuPosition({ x: event.clientX, y: event.clientY })
-  }
+    event.preventDefault();
+    setMenuPosition({ x: event.clientX, y: event.clientY });
+  };
 
   const handleCloseMenu = () => {
-    setMenuPosition(null)
-  }
+    setMenuPosition(null);
+  };
 
   const handleSessionEnd = (isStudySession: boolean) => {
-    const message = isStudySession ? "Time to focus!" : "Time to take a break!"
-    const borderColor = isStudySession ? "red" : "green"
+    const message = isStudySession ? "Time to focus!" : "Time to take a break!";
+    const borderColor = isStudySession ? "red" : "green";
 
     toast(message, {
       duration: 0,
@@ -40,15 +44,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         marginTop: "15px",
         width: "300px",
       },
-    })
-  }
+    });
+  };
 
   // Paths to exclude specific components
-  const excludedExtrasPaths = ["/auth/signin", "/auth/signup", "/landing", "/"]
-  const excludedProgressBarPaths = ["/auth/signin", "/auth/signup", "/landing", "/"]
+  const excludedExtrasPaths = ["/auth/signin", "/auth/signup", "/landing", "/"];
+  const excludedProgressBarPaths = [
+    "/auth/signin",
+    "/auth/signup",
+    "/landing",
+    "/",
+  ];
 
-  const shouldRenderExtras = !excludedExtrasPaths.includes(pathname)
-  const shouldRenderProgressBar = !excludedProgressBarPaths.includes(pathname)
+  const shouldRenderExtras = !excludedExtrasPaths.includes(pathname);
+  const shouldRenderProgressBar = !excludedProgressBarPaths.includes(pathname);
 
   return (
     <html lang="en">
@@ -56,19 +65,23 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         className="min-h-screen flex flex-col bg-white dark:bg-[#404552] text-black dark:text-white"
         onContextMenu={handleContextMenu}
       >
-        <ThemeProvider attribute="class" enableSystem={true} defaultTheme="light">
-          <Sidebar />
+        <ThemeProvider
+          attribute="class"
+          enableSystem={true}
+          defaultTheme="light"
+        >
+          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen}/>
           <Toaster
             position="top-center"
             expand={false}
             richColors
             closeButton
             className="mt-10"
-        />
-        <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
-          <ThemeToggle />
-        </header>
-          <div id="content" className="pt-10">
+          />
+          <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
+            <ThemeToggle />
+          </header>
+          <div id="content" className={`pt-10 transition-all duration-300 ${ isSidebarOpen ? "md:pl-64" : "md:pl-12"}`}>
             {children}
           </div>
 
@@ -76,7 +89,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {shouldRenderExtras && <Clock onSessionEnd={handleSessionEnd} />}
           <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
             <ThemeToggle />
-            {shouldRenderExtras && <MainMenu />}
+            {/* {shouldRenderExtras && <MainMenu />} */}
           </header>
 
           {shouldRenderExtras && menuPosition && (
@@ -101,5 +114,5 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
