@@ -7,9 +7,13 @@ import { authOptions } from '@/lib/auth';
 // POST /api/highlights
 export async function POST(request) {
   try {
-    const session = "1";
-
+    const session = await getServerSession(authOptions);
+    // const session = "1";
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const {
+      id,
       grade,
       course,
       chapter,
@@ -38,6 +42,7 @@ export async function POST(request) {
 
     const [result] = await db.execute(
       `INSERT INTO Highlights (
+        highlight_id,
         user_id,
         grade,
         course,
@@ -47,9 +52,10 @@ export async function POST(request) {
         color,
         start_offset,
         end_offset
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        session,
+        id,
+        session.user.id,
         grade,
         course,
         chapter,
@@ -74,8 +80,11 @@ export async function POST(request) {
 // GET /api/highlights
 export async function GET(request) {
   try {
-    const session = "1";
-
+    const session = await getServerSession(authOptions);
+    // const session = "1";
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { searchParams } = new URL(request.url);
     const grade = searchParams.get('grade');
     const course = searchParams.get('course');
@@ -83,7 +92,7 @@ export async function GET(request) {
     const sub_chapter = searchParams.get('sub_chapter');
 
     let query = 'SELECT * FROM Highlights WHERE user_id = ?';
-    const params = [session];
+    const params = [session.user.id];
 
     const filters = { grade, course, chapter, sub_chapter };
     Object.keys(filters).forEach((key) => {
