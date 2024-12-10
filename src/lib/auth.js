@@ -46,9 +46,7 @@ export const authOptions = {
   session: {
     strategy: 'jwt',
   },
-  jwt: {
-    secret: process.env.JWT_SECRET || 'default_secret', // Replace with a strong secret in production
-  },
+
   pages: {
     signIn: '/auth/signin',
     signOut: '/auth/signout',

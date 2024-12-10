@@ -4,10 +4,20 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { GraduationCap, Lightbulb, Zap, Rocket } from 'lucide-react'
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react" // Add this import
 
 
 export default function LandingPage() {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  const handleGetStarted = () => {
+    if (session) {
+      router.push("/mock");
+    } else {
+      router.push("/auth/signup");
+    }
+  };
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -32,7 +42,7 @@ export default function LandingPage() {
                   </p>
                 </div>
                 <div className="space-x-4">
-                  <Button onClick={() => router.push("/auth/signup")}>Get Started</Button>
+                  <Button onClick={handleGetStarted}>Get Started</Button>
                   <Button variant="outline">Learn More</Button>
                 </div>
               </div>

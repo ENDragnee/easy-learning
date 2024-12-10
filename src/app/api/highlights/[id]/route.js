@@ -13,11 +13,6 @@ export async function DELETE(request, context) {
     if (!session?.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-
-    // Debugging output to check values
-    console.log('params:', params);
-    console.log('session:', session);
-
     // Use the ID as a string, no need to parse as int
     const highlightId = params.id;
     const userId = parseInt(session.user.id, 10);
