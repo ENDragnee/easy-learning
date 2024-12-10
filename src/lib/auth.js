@@ -26,7 +26,7 @@ export const authOptions = {
           const user = userRows[0];
 
           // Verify password (optional, implement hashing as needed)
-          const isValid = await verifyPassword(credentials.password, user.password);
+          const isValid = await verifyPassword(credentials.password, user.password_hash);
           if (!isValid) {
             throw new Error('Invalid credentials');
           }
