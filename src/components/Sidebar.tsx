@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useRouter } from "next/navigation";
+
 import {
   getGrades,
   getSubjects,
@@ -33,6 +35,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [isThemeReady, setIsThemeReady] = useState(false);
+  const router = useRouter();
+
 
   // Ensure the theme is fully initialized before rendering
   useEffect(() => {
@@ -66,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   return (
     <div
       className={cn(
-        "fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out pt-5",
+        "fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out pt-5 flex flex-col",
         isOpen ? 
           theme === "dark"
             ? "w-64 bg-[#383c4a] text-[#7c818c]"
@@ -76,6 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
          : "w-12 md:bg-gray-200 text-black",
       )}
     >
+      <>
       <div className="flex items-center justify-between p-2">
         <Button
           variant="ghost"
@@ -163,8 +168,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
               )}
             </AnimatePresence>
           </div>
-        </ScrollArea>
-      )}
+          </ScrollArea>
+        )}
+      </>
+      <>
+        <button className="text-white p-4" onClick={() => router.push("/flashcard")}>
+          Flash card
+        </button>
+      </>
     </div>
   );
 };
@@ -207,32 +218,34 @@ const SubjectList: React.FC<{
   onSelectSubject: (subject: string) => void;
 }> = ({ subjects, selectedSubject, onSelectSubject }) => {
   return (
-    <Collapsible defaultOpen>
-      <CollapsibleTrigger className="flex items-center w-full text-left my-1.5 py-1 px-2 rounded">
-        <ChevronRight className="w-4 h-4 mr-1" />
-        Subjects
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <ul className="ml-4 border-l border-[#7d859a]">
-          {subjects.map((subject) => (
-            <li key={subject} className="relative">
-              <Button
-                variant="ghost"
-                className={cn(
-                  "w-full justify-start rounded-md border-l-2 border-transparent my-0.5",
-                  selectedSubject === subject
-                    ? "bg-[#4b5162] text-white font-bold border-l-[#5294e2]"
-                    : "hover:bg-[#4b5162] hover:text-white"
-                )}
-                onClick={() => onSelectSubject(subject)}
-              >
-                {subject}
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </CollapsibleContent>
-    </Collapsible>
+    <>
+      <Collapsible defaultOpen>
+        <CollapsibleTrigger className="flex items-center w-full text-left my-1.5 py-1 px-2 rounded">
+          <ChevronRight className="w-4 h-4 mr-1" />
+          Subjects
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <ul className="ml-4 border-l border-[#7d859a]">
+            {subjects.map((subject) => (
+              <li key={subject} className="relative">
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    "w-full justify-start rounded-md border-l-2 border-transparent my-0.5",
+                    selectedSubject === subject
+                      ? "bg-[#4b5162] text-white font-bold border-l-[#5294e2]"
+                      : "hover:bg-[#4b5162] hover:text-white"
+                  )}
+                  onClick={() => onSelectSubject(subject)}
+                >
+                  {subject}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </CollapsibleContent>
+      </Collapsible>
+    </>
   );
 };
 
