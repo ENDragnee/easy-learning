@@ -5,17 +5,21 @@ import db from '@/lib/db';
 // import { authOptions } from '@/lib/auth';
 
 // DELETE /api/highlights/[id]
-export async function DELETE(request, { params }) {
+export async function DELETE(request, context) {
   try {
+    const params = await context.params;
     // const session = await getServerSession(authOptions);
     const session = "1";
     // if (!session?.user) {
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     // }
 
+    const highlightId = parseInt(params.id, 10);
+    const userId = parseInt(session, 10);
+
     const [result] = await db.execute(
       'DELETE FROM Highlights WHERE highlight_id = ? AND user_id = ?',
-      [params.id, session]
+      [highlightId, userId]
     );
 
     return NextResponse.json(result);
@@ -29,19 +33,22 @@ export async function DELETE(request, { params }) {
 }
 
 // PATCH /api/highlights/[id]
-export async function PATCH(request, { params }) {
+export async function PATCH(request, context) {
   try {
+    const params = await context.params;
     // const session = await getServerSession(authOptions);
     const session = "1";
     // if (!session?.user) {
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     // }
 
+    const highlightId = parseInt(params.id, 10);
+    const userId = parseInt(session, 10);
     const { color } = await request.json();
 
     const [result] = await db.execute(
       'UPDATE Highlights SET color = ? WHERE highlight_id = ? AND user_id = ?',
-      [color, params.id, session]
+      [color, highlightId, userId]
     );
 
     return NextResponse.json(result);

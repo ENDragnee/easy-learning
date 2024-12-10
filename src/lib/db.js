@@ -1,15 +1,21 @@
 // lib/db.js
 import mysql from 'mysql2/promise';
+const caPem = Buffer.from(process.env.MYSQL_CA_PEM || '', 'base64').toString('utf-8');
+
 
 const db = mysql.createPool({
-  host: "localhost",
-  user: "END",
-  port: "3306",
-  password: "1234",
-  database: "lumo",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  port: process.env.DB_PORT,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  ssl: {
+    ca: caPem,
+    rejectUnauthorized: false
+  },
 });
 
 // Test the connection
