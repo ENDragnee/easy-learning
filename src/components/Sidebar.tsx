@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, Search, Menu } from "lucide-react";
-import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -32,7 +31,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const [selectedGrade, setSelectedGrade] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [isThemeReady, setIsThemeReady] = useState(false);
+
+  // Ensure the theme is fully initialized before rendering
+  useEffect(() => {
+    if (resolvedTheme) {
+      setIsThemeReady(true);
+    }
+  }, [resolvedTheme]);
 
   const grades = getGrades();
   const subjects = selectedGrade ? getSubjects(selectedGrade) : [];
@@ -53,6 +60,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       )
   );
 
+  if (!isThemeReady) {
+    return null; // Avoid rendering until the theme is resolved
+  }
   return (
     <div
       className={cn(
@@ -66,107 +76,99 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
          : "w-12 md:bg-gray-200 text-black",
       )}
     >
-      <div>
-        <div className="flex items-center justify-between p-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsOpen(!isOpen)}
-            className={cn(
-              "text-[#7c818c] hover:rounded-md hover:bg-slate-300 dark:text-white dark:hover:bg-slate-500",
-              !isOpen && "rounded-full"
-            )}
-          >
-            <Menu className="w-6 h-6" />
-          </Button>
-          {isOpen && (
-            <div className="flex-1 ml-2">
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className={cn(
-                    "w-full bg-[#404552] border-none rounded-full pl-8",
-                    theme === "dark"
-                      ? "text-black placeholder-slate-300 bg-gray-200"
-                      : "text-black placeholder-gray-200 bg-gray-300"
-                  )}
-                />
-                <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4" />
-              </div>
-            </div>
-          )}
-        </div>
-        {isOpen && (
-          <ScrollArea className="h-[calc(100vh-56px)]">
-            <div className="p-2">
-              <Collapsible open={isGradesOpen} onOpenChange={setIsGradesOpen}>
-                <CollapsibleTrigger className="flex items-center w-full text-left my-1.5 py-1 px-2 rounded">
-                  <ChevronRight
-                    className={cn(
-                      "w-4 h-4 mr-1 transition-transform",
-                      isGradesOpen && "transform rotate-90"
-                    )}
-                  />
-                  Grades
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <GradeSelector
-                    grades={grades}
-                    selectedGrade={selectedGrade}
-                    onSelectGrade={(grade) => {
-                      setSelectedGrade(grade);
-                      setSelectedSubject(null);
-                    }}
-                  />
-                </CollapsibleContent>
-              </Collapsible>
-              {selectedGrade && (
-                <SubjectList
-                  subjects={filteredSubjects}
-                  selectedSubject={selectedSubject}
-                  onSelectSubject={setSelectedSubject}
-                />
-              )}
-              {selectedSubject && (
-                <ChapterList
-                  chapters={filteredChapters}
-                  selectedGrade={selectedGrade}
-                  selectedSubject={selectedSubject}
-                />
-              )}
-            </div>
-          </ScrollArea>
-        )}
-      </div>
-      <div
-        className={cn(
-          "absolute bottom-4 left-0 right-0 flex justify-center",
-          isOpen ? "w-64" : "w-12"
-        )}
-      >
+      <div className="flex items-center justify-between p-2">
         <Button
           variant="ghost"
           size="icon"
+          onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            "rounded-full justify-center text-[#7c818c] ",
-            !isOpen && "w-10 h-10"
+            "text-[#7c818c] hover:rounded-md hover:bg-slate-500",
+            !isOpen && "rounded-full hover:bg-[#767c93] text-white"
           )}
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
-          {theme === "dark" ? (
-            <Moon className="h-5 w-5 hover:text-[#eaeff9]" />
-          ) : (
-            <Sun className="h-5 w-5 hover:text-[#545d75]" />
-          )}
-          <span className="sr-only">Toggle theme</span>
+          <Menu className="w-6 h-6" />
         </Button>
+        {isOpen && (
+          <div className="flex-1 ml-2">
+            <div className="relative">
+              <Input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={cn(
+                  "w-full bg-[#404552] border-none rounded-full pl-8",
+                  theme === "dark"
+                    ? "text-black placeholder-slate-300 bg-gray-200"
+                    : "text-black placeholder-gray-200 bg-gray-300"
+                )}
+              />
+              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4" />
+            </div>
+          </div>
+        )}
       </div>
+      {isOpen && (
+        <ScrollArea className="h-[calc(100vh-56px)]">
+          <div className="p-2">
+            <Collapsible open={isGradesOpen} onOpenChange={setIsGradesOpen}>
+              <CollapsibleTrigger className="flex items-center w-full text-left my-1.5 py-1 px-2 rounded">
+                <ChevronRight
+                  className={cn(
+                    "w-4 h-4 mr-1 transition-transform",
+                    isGradesOpen && "transform rotate-90"
+                  )}
+                />
+                Grades
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <GradeSelector
+                  grades={grades}
+                  selectedGrade={selectedGrade}
+                  onSelectGrade={(grade) => {
+                    setSelectedGrade(grade);
+                    setSelectedSubject(null);
+                  }}
+                />
+              </CollapsibleContent>
+            </Collapsible>
+            <AnimatePresence>
+              {selectedGrade && (
+                <motion.div
+                  key="subjects"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  <SubjectList
+                    subjects={filteredSubjects}
+                    selectedSubject={selectedSubject}
+                    onSelectSubject={setSelectedSubject}
+                  />
+                </motion.div>
+              )}
+              {selectedSubject && (
+                <motion.div
+                  key="chapters"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  <ChapterList
+                    chapters={filteredChapters}
+                    selectedGrade={selectedGrade}
+                    selectedSubject={selectedSubject}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </ScrollArea>
+      )}
     </div>
   );
 };
+
 
 const GradeSelector: React.FC<{
   grades: string[];
