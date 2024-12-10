@@ -40,6 +40,7 @@ export default function SignUp() {
               <button
                 className="bg-[#5294e2] hover:bg-[#4a84c9] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105"
                 type="button"
+                onClick={ ()=> router.push("/mock")}
               >
                 Sign Up
               </button>

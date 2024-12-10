@@ -1,16 +1,15 @@
 "use client";
 
-import { ReactNode, useState } from "react";;
-import { usePathname } from "next/navigation";;
-import { Clock } from "@/components/clock";;
-import { Toaster, toast } from "sonner";;
-import { MainMenu } from "@/components/main-menu";;
-import { ThemeToggle } from "@/components/theme-toggle";;
-import { ScrollProgressBar } from "@/components/scroll-progress-bar";;
-import ContextMenu2 from "@/components/context-menu";;
-import { ThemeProvider } from "next-themes";;
-import "./globals.css";;
-import Sidebar from "@/components/Sidebar";;
+import { ReactNode, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Clock } from "@/components/clock";
+import { Toaster, toast } from "sonner";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { ScrollProgressBar } from "@/components/scroll-progress-bar";
+import ContextMenu2 from "@/components/context-menu";
+import { ThemeProvider } from "next-themes";
+import "./globals.css";
+import Sidebar from "@/components/Sidebar";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();;
@@ -81,7 +80,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {!excludedSidebarPaths.includes(pathname) && <Clock onSessionEnd={handleSessionEnd} />}
           <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
             <ThemeToggle />
-            {!excludedSidebarPaths.includes(pathname) && <MainMenu />}
+            {!excludedSidebarPaths.includes(pathname)}
           </header>
 
           {menuPosition && (
