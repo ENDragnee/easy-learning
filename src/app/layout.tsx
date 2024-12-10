@@ -46,21 +46,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       },
     });
   };
-
-  // Paths to exclude specific components
-  const excludedExtrasPaths = ["/auth/signin", "/auth/signup", "/landing", "/"];
-  const excludedProgressBarPaths = [
-    "/auth/signin",
-    "/auth/signup",
-    "/landing",
-    "/",
-  ];
-  const excludedSidebarPaths = ["/", "/landing", "/signup", "/login"];
-
-
-
-  const shouldRenderExtras = !excludedExtrasPaths.includes(pathname);
-  const shouldRenderProgressBar = !excludedProgressBarPaths.includes(pathname);
+  const excludedSidebarPaths = ["/", "/landing", "/signup", "/login", "/auth/signin", "/auth/signup"];
+  
   const shouldRenderSidebar = !excludedSidebarPaths.includes(pathname);
 
   return (
@@ -74,7 +61,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           enableSystem={true}
           defaultTheme="light"
         >
-          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen}/>
+          {shouldRenderSidebar && <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen}/>}
+
           <Toaster
             position="top-center"
             expand={false}
@@ -93,7 +81,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {!excludedSidebarPaths.includes(pathname) && <Clock onSessionEnd={handleSessionEnd} />}
           <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
             <ThemeToggle />
-            {!excludedSidebarPaths.includes(pathname)}
+            {!excludedSidebarPaths.includes(pathname) && <MainMenu />}
           </header>
 
           {menuPosition && (
