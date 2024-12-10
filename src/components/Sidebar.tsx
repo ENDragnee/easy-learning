@@ -82,8 +82,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           size="icon"
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            "text-[#7c818c] hover:rounded-md hover:bg-slate-500",
-            !isOpen && "rounded-full hover:bg-[#767c93] text-white"
+            "text-[#7c818c] hover:rounded-md hover:bg-slate-300 dark:text-white dark:hover:bg-slate-500",
+            !isOpen && "rounded-full"
           )}
         >
           <Menu className="w-6 h-6" />
