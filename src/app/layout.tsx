@@ -87,7 +87,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               {!excludedSidebarPaths.includes(pathname)}
             </header>
 
-            {menuPosition && (
+            {menuPosition && !excludedSidebarPaths.includes(pathname) && (
               <ContextMenu2
                 x={menuPosition.x}
                 y={menuPosition.y}
