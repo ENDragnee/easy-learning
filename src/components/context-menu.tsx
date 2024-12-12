@@ -105,51 +105,126 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
     }
   };
 
-  const handleAskAI = async () => {
-    setIsLoading(true);
-    setShowModal(true);
-    setAiResponse('');
-
+  
+  const handleAskAI = async (
+    grade: string,
+    course: string,
+    chapter: string,
+    sub_chapter: string
+  ) => {
+    console.log('Highlight and Ask AI button clicked');
     const selection = window.getSelection();
-    const selectedText = selection?.toString();
-
-    try {
-      const response = await fetch('/api/ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input: selectedText }),
-      });
-
-      if (!response.ok) throw new Error('Network response was not ok');
-
-      const reader = response.body?.getReader();
-      if (!reader) return;
-
-      let responseText = '';
-
-      // Read the stream and accumulate content
-      const decoder = new TextDecoder();
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value, { stream: true });
-        const parsedChunk = chunk.match(/{"content":"(.*?)"}/g);
-
-        if (parsedChunk) {
-          parsedChunk.forEach((jsonStr) => {
-            const content = JSON.parse(jsonStr)?.content || '';
-            responseText += content;
-            setAiResponse(responseText); // Update the state with the content
-          });
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setAiResponse('Error getting AI response');
-    } finally {
-      setIsLoading(false);
+    if (!selection || selection.rangeCount === 0) {
+      console.log('No text selected or range count is 0');
+      return;
     }
+  
+    const range = selection.getRangeAt(0);
+    const selectedText = range.toString();
+    console.log('Selected text:', selectedText);
+  
+    const container = document.getElementById('content');
+    if (!container) {
+      console.error('Content container not found');
+      return;
+    }
+  
+    const marker = new Mark(container);
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const highlightColor = isDarkMode ? '#5294e2' : 'yellow';
+  
+    // Check if the text is already highlighted
+    const markElement = range.commonAncestorContainer.parentElement?.closest('mark');
+  
+    if (markElement) {
+      // Remove highlight if it already exists
+      const highlightId = markElement.dataset.highlightId;
+      if (highlightId) {
+        await removeHighlightFromDatabase(highlightId);
+        marker.unmark({
+          done: () => {
+            console.log('Highlight removed');
+          },
+        });
+      }
+    } else {
+      // Add new highlight and fetch AI response
+      const highlightInstance: HighlightInstance = {
+        id: generateUniqueId(),
+        text: selectedText,
+        color: highlightColor,
+        grade,
+        course,
+        chapter,
+        sub_chapter,
+        startOffset: range.startOffset,
+        endOffset: range.endOffset,
+      };
+  
+      setIsLoading(true); // Start loading spinner
+      setShowModal(true); // Show modal
+      setAiResponse(''); // Clear previous response
+  
+      try {
+        // Save the highlight to the database
+        await saveHighlightToDatabase(highlightInstance);
+        marker.mark(selectedText, {
+          element: 'mark',
+          className: 'custom-highlight',
+          acrossElements: true,
+          separateWordSearch: false,
+          done: () => {
+            const marks = document.querySelectorAll('mark.custom-highlight');
+            marks.forEach((mark) => {
+              if (mark.textContent === selectedText) {
+                (mark as HTMLElement).dataset.highlightId = highlightInstance.id;
+                (mark as HTMLElement).style.backgroundColor = highlightColor;
+              }
+            });
+          },
+        });
+  
+        // Fetch AI response for the selected text
+        const response = await fetch('/api/ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ input: selectedText }),
+        });
+  
+        if (!response.ok) throw new Error('Network response was not ok');
+  
+        const reader = response.body?.getReader();
+        if (!reader) return;
+  
+        let responseText = '';
+  
+        // Read the stream and accumulate content
+        const decoder = new TextDecoder();
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+  
+          const chunk = decoder.decode(value, { stream: true });
+          const parsedChunk = chunk.match(/{"content":"(.*?)"}/g);
+  
+          if (parsedChunk) {
+            parsedChunk.forEach((jsonStr) => {
+              const content = JSON.parse(jsonStr)?.content || '';
+              responseText += content;
+              setAiResponse(responseText); // Update modal with AI response
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setAiResponse('Error getting AI response');
+      } finally {
+        setIsLoading(false); // Stop loading spinner
+      }
+    }
+  
+    // Clear selection
+    selection.removeAllRanges();
   };
 
   useEffect(() => {
@@ -288,7 +363,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
               <button
                 key={index}
                 onClick={() => {
-                  item.action();
+                  item.action('gradeValue', 'courseValue', 'chapterValue', 'subChapterValue');
                   if (item.label !== 'Ask AI') onClose(); // Close on click outside Ask AI
                 }}
                 className="w-full text-center px-4 py-2 rounded-lg text-left text-sm hover:bg-gray-100 dark:hover:bg-[#4b5162] transition-colors"

@@ -1,5 +1,7 @@
 import Groq from 'groq-sdk';
 import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
@@ -7,17 +9,67 @@ const groq = new Groq({
 
 export async function POST(request) {
   try {
-    const body = await request.json();
-    const selectedText = body.input?.trim();
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    const {
+      id,
+      selectedText,
+      grade,
+      course,
+      chapter,
+      sub_chapter,
+      text,
+      color,
+      startOffset: start_offset, // Map startOffset to start_offset
+      endOffset: end_offset,     // Map endOffset to end_offset
+    } = await request.json();
 
-    if (!selectedText) {
+    if (
+      !grade ||
+      !course ||
+      !selectedText ||
+      !chapter ||
+      !sub_chapter ||
+      !text ||
+      !color ||
+      start_offset === undefined ||
+      end_offset === undefined
+    ) {
       return NextResponse.json(
-        { error: 'No text was selected' },
+        { error: 'Missing required fields' },
         { status: 400 }
       );
     }
 
-    // Create a new stream
+    const [result] = await db.execute(
+      `INSERT INTO Highlights (
+        highlight_id,
+        user_id,
+        grade,
+        course,
+        chapter,
+        sub_chapter,
+        text,
+        color,
+        start_offset,
+        end_offset
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        id,
+        session.user.id,
+        grade,
+        course,
+        chapter,
+        sub_chapter,
+        text,
+        color,
+        start_offset,
+        end_offset,
+      ]
+    );
+
     const stream = new TransformStream();
     const writer = stream.writable.getWriter();
 
@@ -88,10 +140,11 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    console.error('Error during chat completion:', error);
+    console.error('Error creating highlight:', error.message);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Failed to create highlight' },
       { status: 500 }
     );
   }
 }
+
