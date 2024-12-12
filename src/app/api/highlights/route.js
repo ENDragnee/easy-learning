@@ -3,12 +3,10 @@ import db from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-//Don't forget session: session.user.id
 // POST /api/highlights
 export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);
-    // const session = "1";
     if (!session?.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -81,7 +79,6 @@ export async function POST(request) {
 export async function GET(request) {
   try {
     const session = await getServerSession(authOptions);
-    // const session = "1";
     if (!session?.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
