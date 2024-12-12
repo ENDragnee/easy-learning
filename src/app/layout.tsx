@@ -11,11 +11,13 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import { SessionProvider } from "next-auth/react"
+import AIButton from "@/components/ai-feature"; 
 
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAIOpen, setIsAIOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState<{
     x: number;
     y: number;
@@ -72,9 +74,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               closeButton
               className="mt-10"
             />
-            <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
-              <ThemeToggle />
-            </header>
+            {excludedSidebarPaths.includes(pathname) ? 
+              <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
+                <ThemeToggle />
+              </header> :
+              <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
+                <AIButton/>
+              </header>
+            }
             
             <div id="content">
                 {children}
@@ -82,10 +89,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
             {!excludedSidebarPaths.includes(pathname) && <ScrollProgressBar />}
             {!excludedSidebarPaths.includes(pathname) && <Clock onSessionEnd={handleSessionEnd} />}
-            <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
-              <ThemeToggle />
-              {!excludedSidebarPaths.includes(pathname)}
-            </header>
 
             {menuPosition && !excludedSidebarPaths.includes(pathname) && (
               <ContextMenu2

@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useRouter } from "next/navigation";
-import { useSession, signOut } from "next-auth/react" 
-
+import { useSession, signOut } from "next-auth/react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 import {
   getGrades,
@@ -41,6 +41,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const { data: session } = useSession();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
+
   // Ensure the theme is fully initialized before rendering
   useEffect(() => {
     if (resolvedTheme) {
@@ -48,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     }
   }, [resolvedTheme]);
   
-
+  
   const grades = getGrades();
   const subjects = selectedGrade ? getSubjects(selectedGrade) : [];
   const chapters =
@@ -196,28 +197,32 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       ) : ("")}
       </>
       <div className="mt-auto mb-4 p-2">
+        
         {session?.user?.name && (
         <div className="relative">
-          <button
-            onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-            className={cn(
-              "flex items-center w-full",
-              isOpen ? "justify-start px-2" : "md:justify-center hidden"
+          <div className="flex">
+            <button
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+              className={cn(
+                "flex items-center w-full",
+                isOpen ? "justify-start px-2" : "md:justify-center hidden"
+              )}
+            >
+              <div className={cn(
+              "w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold",
+              !isOpen && "w-6 h-6 text-sm"
+            )}>
+              {session.user.name.charAt(0).toUpperCase()}
+            </div>
+            {isOpen && (
+              <span className="ml-2 text-sm font-medium">
+                {session.user.name}
+              </span>
             )}
-          >
-            <div className={cn(
-            "w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold",
-            !isOpen && "w-6 h-6 text-sm"
-          )}>
-            {session.user.name.charAt(0).toUpperCase()}
+          </button>
+          {isOpen && <ThemeToggle/>}
+
           </div>
-          {isOpen && (
-            <span className="ml-2 text-sm font-medium">
-              {session.user.name}
-            </span>
-          )}
-        </button>
-      
       {isUserMenuOpen && isOpen && (
       <div className={cn(
           "absolute bottom-full left-0 mb-2 w-48 rounded-md shadow-lg",
@@ -225,16 +230,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       )}>
           <div className="py-1">
             <button
-              onClick={() => signOut()}
-              className="block w-full text-left px-4 py-2 text-sm hover:bg-[#4b5162] hover:text-white"
+              onClick={() => router.push('/progress')}
+              className="block w-full text-left px-4 py-2 text-sm hover:bg-[#4b5162] hover:text-white rounded-md p-4"
             >
-              Logout
+              Progress
             </button>
             <button
               onClick={() => {/* Add settings logic */}}
               className="block w-full text-left px-4 py-2 text-sm hover:bg-[#4b5162] hover:text-white"
             >
               Settings
+            </button>
+            <button
+              onClick={() => signOut()}
+              className="block w-full text-left px-4 py-2 text-sm hover:bg-[#4b5162] hover:text-white"
+            >
+              Logout
             </button>
           </div>
         </div>

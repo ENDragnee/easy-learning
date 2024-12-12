@@ -42,33 +42,33 @@ export async function POST(request) {
         { status: 400 }
       );
     }
-
-    const [result] = await db.execute(
-      `INSERT INTO Highlights (
-        highlight_id,
-        user_id,
-        grade,
-        course,
-        chapter,
-        sub_chapter,
-        text,
-        color,
-        start_offset,
-        end_offset
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        id,
-        session.user.id,
-        grade,
-        course,
-        chapter,
-        sub_chapter,
-        text,
-        color,
-        start_offset,
-        end_offset,
-      ]
-    );
+    //Coment it out when the db is back
+    // const [result] = await db.execute(
+    //   `INSERT INTO Highlights (
+    //     highlight_id,
+    //     user_id,
+    //     grade,
+    //     course,
+    //     chapter,
+    //     sub_chapter,
+    //     text,
+    //     color,
+    //     start_offset,
+    //     end_offset
+    //   ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    //   [
+    //     id,
+    //     session.user.id,
+    //     grade,
+    //     course,
+    //     chapter,
+    //     sub_chapter,
+    //     text,
+    //     color,
+    //     start_offset,
+    //     end_offset,
+    //   ]
+    // );
 
     const stream = new TransformStream();
     const writer = stream.writable.getWriter();
@@ -88,7 +88,11 @@ export async function POST(request) {
               role: 'user',
               content: `Please explain: "${selectedText}"
               In a simple and concise manner and give examples if necessary.`,
-            }
+            },
+            {
+              role: 'assistant',
+              content: `${selectedText}`,
+            },
           ],
           model: 'llama3-8b-8192',
           temperature: 0.7,
@@ -97,6 +101,7 @@ export async function POST(request) {
           stream: true,
           stop: null,
         });
+        
 
         const encoder = new TextEncoder();
 
