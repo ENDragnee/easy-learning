@@ -82,10 +82,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <AIButton/>
               </header>
             }
-            
-            <div id="content">
-                {children}
-            </div>
+            <main>
+              <div id="content" className="flex-1">
+                  {children}
+              </div>
+            </main>
 
             {!excludedSidebarPaths.includes(pathname) && <ScrollProgressBar />}
             {!excludedSidebarPaths.includes(pathname) && <Clock onSessionEnd={handleSessionEnd} />}
@@ -98,8 +99,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               />
             )}
 
-            {!excludedSidebarPaths.includes(pathname) && (
-              <footer className="border-t border-gray-200 dark:border-[#4b5162] py-8">
+            {excludedSidebarPaths.includes(pathname) && pathname!="/" && (
+              <footer className="border-t border-gray-200 dark:border-[#4b5162] py-8 sm:max-h-48 md:max-h-32">
                 <div className="container mx-auto px-4">
                   <div className="flex justify-center">
                     <p className="text-sm text-gray-500 dark:text-[#7c818c]">

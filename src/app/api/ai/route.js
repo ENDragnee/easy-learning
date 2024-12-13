@@ -14,61 +14,8 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     const {
-      id,
       selectedText,
-      grade,
-      course,
-      chapter,
-      sub_chapter,
-      text,
-      color,
-      startOffset: start_offset, // Map startOffset to start_offset
-      endOffset: end_offset,     // Map endOffset to end_offset
     } = await request.json();
-
-    if (
-      !grade ||
-      !course ||
-      !selectedText ||
-      !chapter ||
-      !sub_chapter ||
-      !text ||
-      !color ||
-      start_offset === undefined ||
-      end_offset === undefined
-    ) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
-    //Coment it out when the db is back
-    // const [result] = await db.execute(
-    //   `INSERT INTO Highlights (
-    //     highlight_id,
-    //     user_id,
-    //     grade,
-    //     course,
-    //     chapter,
-    //     sub_chapter,
-    //     text,
-    //     color,
-    //     start_offset,
-    //     end_offset
-    //   ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    //   [
-    //     id,
-    //     session.user.id,
-    //     grade,
-    //     course,
-    //     chapter,
-    //     sub_chapter,
-    //     text,
-    //     color,
-    //     start_offset,
-    //     end_offset,
-    //   ]
-    // );
 
     const stream = new TransformStream();
     const writer = stream.writable.getWriter();
