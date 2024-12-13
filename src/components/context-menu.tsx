@@ -110,7 +110,8 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
     grade: string,
     course: string,
     chapter: string,
-    sub_chapter: string
+    sub_chapter: string,
+    color: string = "red"
   ) => {
     console.log('Highlight and Ask AI button clicked');
     const selection = window.getSelection();
@@ -131,7 +132,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
   
     const marker = new Mark(container);
     const isDarkMode = document.documentElement.classList.contains('dark');
-    const highlightColor = isDarkMode ? '#5294e2' : 'yellow';
+    const highlightColor = isDarkMode ? color : color;
   
     // Check if the text is already highlighted
     const markElement = range.commonAncestorContainer.parentElement?.closest('mark');
@@ -255,8 +256,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [onClose, showModal]);
 
-  const highlightText = async (grade: string, course: string, chapter: string, sub_chapter: string) => {
-    console.log('Highlight button clicked');
+  const highlightText = async (grade: string, course: string, chapter: string, sub_chapter: string, color: string = "yellow") => {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
       console.log('No text selected or range count is 0');
@@ -276,7 +276,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
     const marker = new Mark(container);
     const selectedText = range.toString();
     const isDarkMode = document.documentElement.classList.contains('dark');
-    const highlightColor = isDarkMode ? '#5294e2' : 'yellow';
+    const highlightColor = isDarkMode ? '#5294e2' : color;
   
     // Check if text is already highlighted
     const markElement = range.commonAncestorContainer.parentElement?.closest('mark');
