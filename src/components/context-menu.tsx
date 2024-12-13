@@ -80,10 +80,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
       console.error('Content container not found');
       return;
     }
-  
     const marker = new Mark(container);
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    const highlightColor = isDarkMode ? color : color;
   
     // Check if the text is already highlighted
     const markElement = range.commonAncestorContainer.parentElement?.closest('mark');
@@ -100,42 +97,13 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
         });
       }
     } else {
-      // Add new highlight and fetch AI response
-      const highlightInstance: HighlightInstance = {
-        id: generateUniqueId(),
-        text: selectedText,
-        color: highlightColor,
-        grade,
-        course,
-        chapter,
-        sub_chapter,
-        startOffset: range.startOffset,
-        endOffset: range.endOffset,
-      };
   
       setIsLoading(true); // Start loading spinner
       setShowModal(true); // Show modal
       setAiResponse(''); // Clear previous response
   
+      highlightText(grade, course, chapter, sub_chapter, color);  
       try {
-        // Save the highlight to the database
-        await saveHighlightToDatabase(highlightInstance);
-        marker.mark(selectedText, {
-          element: 'mark',
-          className: 'custom-highlight',
-          acrossElements: true,
-          separateWordSearch: false,
-          done: () => {
-            const marks = document.querySelectorAll('mark.custom-highlight');
-            marks.forEach((mark) => {
-              if (mark.textContent === selectedText) {
-                (mark as HTMLElement).dataset.highlightId = highlightInstance.id;
-                (mark as HTMLElement).style.backgroundColor = highlightColor;
-              }
-            });
-          },
-        });
-  
         // Fetch AI response for the selected text
         const response = await fetch('/api/ai', {
           method: 'POST',
@@ -207,7 +175,13 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [onClose, showModal]);
 
-  const highlightText = async (grade: string, course: string, chapter: string, sub_chapter: string, color: string = "yellow") => {
+  const highlightText = async (
+    grade: string, 
+    course: string, 
+    chapter: string, 
+    sub_chapter: string, 
+    color: string = "yellow"
+  ) => {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
       console.log('No text selected or range count is 0');
@@ -215,8 +189,11 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
     }
   
     const range = selection.getRangeAt(0);
-    const selectedTextR = range.toString();
-    console.log('Selected text:', selectedTextR);
+    const selectedText = range.toString().trim();
+    if (!selectedText) {
+      console.log('Selected text is empty');
+      return;
+    }
   
     const container = document.getElementById('content');
     if (!container) {
@@ -224,29 +201,34 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
       return;
     }
   
-    const marker = new Mark(container);
-    const selectedText = range.toString();
     const isDarkMode = document.documentElement.classList.contains('dark');
-    const highlightColor = isDarkMode ? '#5294e2' : color;
+    const highlightColor = isDarkMode ? color : color;
   
     // Check if text is already highlighted
     const markElement = range.commonAncestorContainer.parentElement?.closest('mark');
-    
     if (markElement) {
       // Remove highlight
       const highlightId = markElement.dataset.highlightId;
       if (highlightId) {
         await removeHighlightFromDatabase(highlightId);
-        marker.unmark({
-          done: () => {
-            console.log('Highlight removed');
-          }
-        });
+        markElement.replaceWith(document.createTextNode(markElement.textContent || ""));
+        console.log('Highlight removed');
       }
     } else {
-      // Add new highlight
+      // Wrap the selected text with a <mark> element
+      const mark = document.createElement('mark');
+      mark.className = 'custom-highlight';
+      mark.style.backgroundColor = highlightColor;
+      mark.dataset.highlightId = generateUniqueId();
+      mark.textContent = selectedText;
+  
+      // Insert the mark element into the range
+      range.deleteContents();
+      range.insertNode(mark);
+  
+      // Save the highlight to the database
       const highlightInstance: HighlightInstance = {
-        id: generateUniqueId(),
+        id: mark.dataset.highlightId!,
         text: selectedText,
         color: highlightColor,
         grade,
@@ -258,25 +240,13 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
       };
   
       await saveHighlightToDatabase(highlightInstance);
-      marker.mark(selectedText, {
-        element: 'mark',
-        className: 'custom-highlight',
-        acrossElements: true,
-        separateWordSearch: false,
-        done: () => {
-          const marks = document.querySelectorAll('mark.custom-highlight');
-          marks.forEach(mark => {
-            if (mark.textContent === selectedText) {
-              (mark as HTMLElement).dataset.highlightId = highlightInstance.id;
-              (mark as HTMLElement).style.backgroundColor = highlightColor;
-            }
-          });
-        }
-      });
+      console.log('Highlight added');
     }
-    // Clear selection
+  
+    // Clear the selection
     selection.removeAllRanges();
   };
+  
 
   const menuItems = [
     { label: 'Ask AI', action: handleAskAI },

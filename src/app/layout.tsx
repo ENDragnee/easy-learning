@@ -11,8 +11,8 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import { SessionProvider } from "next-auth/react"
-import AIButton from "@/components/ai-feature"; 
-
+import AIButton from "@/components/ai-feature";
+import TabManager from "@/components/Tab";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();;
@@ -80,11 +80,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </header> :
               <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
                 <AIButton/>
+                <TabManager/>
               </header>
             }
             <main>
               <div id="content" className="flex-1">
-                  {children}
+                    {children}
               </div>
             </main>
 
