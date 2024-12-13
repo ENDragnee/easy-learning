@@ -40,7 +40,35 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const sidebarRef = React.useRef<HTMLDivElement>(null);
+  const userMenuRef = React.useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Handle sidebar close
+      if (
+        isOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+
+      // Handle user menu close
+      if (
+        isUserMenuOpen &&
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, isUserMenuOpen, setIsOpen]);
 
   // Ensure the theme is fully initialized before rendering
   useEffect(() => {
@@ -74,6 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   }
   return (
     <div
+      ref={sidebarRef}
       className={cn(
         "fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out pt-5 flex flex-col",
         isOpen ? 
@@ -199,7 +228,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       <div className="mt-auto mb-4 p-2">
         
         {session?.user?.name && (
-        <div className="relative">
+        <div className="relative" ref={userMenuRef}>
           <div className="flex">
             <button
               onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
