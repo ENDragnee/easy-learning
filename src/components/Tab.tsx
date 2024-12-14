@@ -6,6 +6,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { IoMdAdd } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 import { MdTab } from 'react-icons/md';
+import { TbLayoutList } from 'react-icons/tb';
+import Split from 'split.js';
 
 interface Tab {
   id: string;
@@ -14,34 +16,117 @@ interface Tab {
 }
 
 const TabManager: React.FC = () => {
-  const [tabs, setTabs] = useState<Tab[]>([]);
-  const [activeTab, setActiveTab] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const tabManagerRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (tabs.length === 0) {
-      const newTab = createNewTab(pathname);
-      setTabs([newTab]);
-      setActiveTab(newTab.id);
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (tabManagerRef.current && !tabManagerRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+    const [tabs, setTabs] = useState<Tab[]>([]);
+    const [activeTab, setActiveTab] = useState<string | null>(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const [isSplitMode, setIsSplitMode] = useState(false);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const tabManagerRef = useRef<HTMLDivElement>(null);
+    const splitInstanceRef = useRef<Split.Instance | null>(null);
+    const pathname = usePathname();
+    const router = useRouter();
+  
+    useEffect(() => {
+      if (tabs.length === 0) {
+        const newTab = createNewTab(pathname);
+        setTabs([newTab]);
+        setActiveTab(newTab.id);
+      }
+    }, []);
+  
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (tabManagerRef.current && !tabManagerRef.current.contains(event.target as Node)) {
+          setIsOpen(false);
+        }
+      };
+  
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, []);
+    useEffect(() => {
+        // Exit split mode if tabs are less than 2
+        if (tabs.length < 2 && isSplitMode) {
+          setIsSplitMode(false);
+          
+          // Clean up split view
+          if (splitInstanceRef.current) {
+            splitInstanceRef.current.destroy();
+            splitInstanceRef.current = null;
+            
+            const splitContainer = document.getElementById('split-container');
+            const originalContent = document.getElementById('content');
+            
+            if (splitContainer && originalContent) {
+              splitContainer.parentNode?.insertBefore(originalContent, splitContainer);
+              splitContainer.remove();
+            }
+          }
+        }
+      }, [tabs.length, isSplitMode]);
+  
+    const toggleSplitMode = () => {
+        if (tabs.length <= 1) return; // Early return if not enough tabs
+      if (!isSplitMode && tabs.length >= 2) {
+        setIsSplitMode(true);
+        
+        // Create split view
+        const contentElement = document.getElementById('content');
+        if (contentElement) {
+          // Clone the content for the second pane
+          const clone = contentElement.cloneNode(true) as HTMLElement;
+          clone.id = 'content-clone';
+          
+          // Create container for split views
+          const splitContainer = document.createElement('div');
+          splitContainer.id = 'split-container';
+          splitContainer.className = 'flex h-full';
+          
+          // Wrap original content
+          const wrapper1 = document.createElement('div');
+          wrapper1.id = 'split-1';
+          wrapper1.className = 'split-pane';
+          
+          // Wrap cloned content
+          const wrapper2 = document.createElement('div');
+          wrapper2.id = 'split-2';
+          wrapper2.className = 'split-pane';
+          
+          // Move original content and append clone
+          contentElement.parentNode?.insertBefore(splitContainer, contentElement);
+          wrapper1.appendChild(contentElement);
+          wrapper2.appendChild(clone);
+          splitContainer.appendChild(wrapper1);
+          splitContainer.appendChild(wrapper2);
+          
+          // Initialize Split.js
+          splitInstanceRef.current = Split(['#split-1', '#split-2'], {
+            sizes: [50, 50],
+            minSize: 100,
+            gutterSize: 8,
+            cursor: 'col-resize'
+          });
+        }
+      } else {
+        setIsSplitMode(false);
+        
+        // Clean up split view
+        if (splitInstanceRef.current) {
+          splitInstanceRef.current.destroy();
+          splitInstanceRef.current = null;
+          
+          const splitContainer = document.getElementById('split-container');
+          const originalContent = document.getElementById('content');
+          
+          if (splitContainer && originalContent) {
+            splitContainer.parentNode?.insertBefore(originalContent, splitContainer);
+            splitContainer.remove();
+          }
+        }
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
@@ -130,28 +215,35 @@ const TabManager: React.FC = () => {
       {/* Expanded Tab Manager */}
       <div
         ref={tabManagerRef}
-        className={`fixed top-[25%] h-[50vh] transform right-0 z-30 w-32 bg-white dark:bg-[#2d303a] rounded-l-lg shadow-lg border border-gray-200 dark:border-[#4b5162] transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-[25%] h-[50vh] transform right-0 z-30 w-32 bg-white dark:bg-[#2d303a] rounded-l-lg shadow-lg transition-transform duration-300 ease-in-out ${
+            isOpen ? 'translate-x-0' : 'translate-x-full'
         } flex flex-col`}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-      >
-        <div className="flex justify-between items-center p-2 border-b border-gray-200 dark:border-[#4b5162]">
-          <div className="flex items-center space-x-1">
-            <button
-              onClick={addNewTab}
-              className="p-0.5 hover:bg-gray-100 dark:hover:bg-[#363945] rounded-md transition-colors"
-            >
-              <IoMdAdd className="w-6 h-8 mr-6" />
-            </button>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-0.5 hover:bg-gray-100 dark:hover:bg-[#363945] rounded-md transition-colors"
-            >
-              <IoClose className="w-6 h-8 ml-6" />
-            </button>
-          </div>
+    >
+        <div className="flex justify-between items-center p-2">
+            <div className="flex items-center space-x-1">
+                <button
+                    onClick={addNewTab}
+                    className="p-0.5 hover:bg-gray-100 dark:hover:bg-[#363945] rounded-md transition-colors"
+                >
+                    <IoMdAdd className="w-6 h-8 mr-6" />
+                </button>
+                <button
+                    onClick={toggleSplitMode}
+                    className={`p-0.5 rounded-md transition-colors ${
+                        tabs.length <= 1 
+                            ? 'opacity-50 cursor-not-allowed' 
+                            : 'hover:bg-gray-100 dark:hover:bg-[#363945]'
+                    } ${
+                        isSplitMode ? 'bg-gray-200 dark:bg-[#4b5162]' : ''
+                    }`}
+                    disabled={tabs.length <= 1}
+                >
+                    <TbLayoutList className="w-6 h-8 ml-6" />
+                </button>
+            </div>
         </div>
         <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-[#4b5162] scrollbar-track-transparent">
           {tabs.map(tab => (
@@ -165,8 +257,8 @@ const TabManager: React.FC = () => {
                 transition-colors
               `}
             >
-              <MdTab className="w-6 h-16 m-2" />
-              <span className="text-sm truncate flex-1">{tab.title}</span>
+              {/* <MdTab className="w-6 h-16 m-2" /> */}
+              <span className="text-sm truncate flex-1 text-center m-4 pl-4">{tab.title}</span>
               <button
                 onClick={(e) => removeTab(tab.id, e)}
                 className="p-0.5 hover:bg-gray-200 dark:hover:bg-[#4b5162] rounded-md ml-1"
