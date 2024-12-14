@@ -138,19 +138,18 @@ const TabManager: React.FC = () => {
         onTouchEnd={handleTouchEnd}
       >
         <div className="flex justify-between items-center p-2 border-b border-gray-200 dark:border-[#4b5162]">
-          <span className="text-base font-medium">Tabs</span>
           <div className="flex items-center space-x-1">
             <button
               onClick={addNewTab}
               className="p-0.5 hover:bg-gray-100 dark:hover:bg-[#363945] rounded-md transition-colors"
             >
-              <IoMdAdd className="w-6 h-8" />
+              <IoMdAdd className="w-6 h-8 mr-6" />
             </button>
             <button
               onClick={() => setIsOpen(false)}
               className="p-0.5 hover:bg-gray-100 dark:hover:bg-[#363945] rounded-md transition-colors"
             >
-              <IoClose className="w-6 h-8" />
+              <IoClose className="w-6 h-8 ml-6" />
             </button>
           </div>
         </div>

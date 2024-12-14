@@ -148,7 +148,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         )}
       </div>
       {isOpen && (
-        <ScrollArea className="h-[calc(100vh-56px)]">
+        <ScrollArea className="h-screen">
           <div className="p-2">
             <Collapsible open={isGradesOpen} onOpenChange={setIsGradesOpen}>
               <CollapsibleTrigger className="flex items-center w-full text-left my-1.5 py-1 px-2 rounded">

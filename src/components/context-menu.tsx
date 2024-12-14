@@ -286,7 +286,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
                   item.action('gradeValue', 'courseValue', 'chapterValue', 'subChapterValue');
                   if (item.label !== 'Ask AI') onClose(); // Close on click outside Ask AI
                 }}
-                className="w-full text-center px-4 py-2 rounded-lg text-left text-sm hover:bg-gray-100 dark:hover:bg-[#4b5162] transition-colors"
+                className="w-full text-center px-4 py-2 rounded-lg  text-sm hover:bg-gray-100 dark:hover:bg-[#4b5162] transition-colors"
               >
                 {item.label}
               </button>
