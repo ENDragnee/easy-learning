@@ -28,7 +28,7 @@ export function ResponseTab() {
         >
           <span
             className={`inline-block p-2 rounded-lg ${
-              message.role === "user" ? "bg-primary text-primary-foreground" : "bg-secondary"
+              message.role === "user" ? "bg-gray-200 dark:bg-[#363a45] text-gray-900 dark:text-[#D3DAE3]" : "bg-gray-100 dark:bg-[#404552] text-gray-800 dark:text-[#D3DAE3]"
             }`}
           >
             {message.content}

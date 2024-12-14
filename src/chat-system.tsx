@@ -1,11 +1,9 @@
-// chat-system.tsx
 "use client"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Send } from 'lucide-react'
 
 export function ChatSystem() {
   const [messages, setMessages] = useState<{ role: "user" | "assistant" | "sent"; content: string }[]>([])
@@ -14,7 +12,7 @@ export function ChatSystem() {
 
   const handleSend = async () => {
     if (input.trim()) {
-      setMessages(prev => [...prev, { role: "user", content: input }])
+      setMessages(prev => [...prev, { role: "assistant", content: input }])
       setIsLoading(true)
 
       try {
@@ -68,52 +66,53 @@ export function ChatSystem() {
   }
 
   return (
-    <div className="space-y-4">
-      {messages.map((message, index) => (
-        <div
-          key={index}
-          className={`flex ${
-            message.role === "user" ? "justify-end" : "justify-start"
-          }`}
-        >
+    <div className="flex flex-col h-full bg-white dark:bg-[#2F343F] text-gray-900 dark:text-[#D3DAE3] rounded-lg">
+      <ScrollArea className="flex-grow p-4">
+        {messages.map((message, index) => (
           <div
-            className={`rounded-lg p-4 max-w-[80%] ${
-              message.role === "user"
-                ? "bg-[#5294e2] text-white"
-                : "bg-[#4b5162] text-[#7c818c]"
+            key={index}
+            className={`mb-4 ${
+              message.role === "user" ? "text-right" : "text-left"
             }`}
           >
-            {message.content}
+            <span
+              className={`inline-block p-2 rounded-lg ${
+                message.role === "user" 
+                  ? "bg-blue-500 text-white" 
+                  : message.role === "assistant"
+                  ? "bg-gray-100 text-gray-900 dark:bg-[#404552] dark:text-[#D3DAE3]"
+                  : "bg-gray-50 dark:bg-[#3B404C]"
+              }`}
+            >
+              {message.content}
+            </span>
           </div>
-        </div>
-      ))}
-      {isLoading && (
-        <div className="flex justify-start">
-          <div className="rounded-lg p-4 max-w-[80%] bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C]">
-            AI is typing...
+        ))}
+        {isLoading && (
+          <div className="text-left mb-4">
+            <span className="inline-block p-2 rounded-lg bg-gray-100 text-gray-900 dark:bg-[#404552] dark:text-[#D3DAE3] animate-pulse">
+              Thinking...
+            </span>
           </div>
-        </div>
-      )}
-      <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C] p-4">
-        <form onSubmit={(e) => {
-          e.preventDefault()
-          handleSend()
-        }} className="flex items-center space-x-2">
-          <div className="flex-grow bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C]rounded-full p-1">
-            <Input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              className="bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C]"
-            />
-          </div>
-          <Button 
-            type="submit" 
-            className="bg-[#5294e2] text-white hover:bg-[#5294e2]/90 rounded-full p-2"
-          >
-            <Send className="w-5 h-5" />
-            <span className="sr-only">Send</span>
+        )}
+      </ScrollArea>
+      <div className="p-4 border-t border-gray-200 dark:border-[#3B404C]">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            handleSend()
+          }}
+          className="flex space-x-2"
+        >
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type your message..."
+            disabled={isLoading}
+            className="bg-white text-gray-900 dark:text-[#D3DAE3] border-gray-200 dark:border-[#3B404C]"
+          />
+          <Button type="submit" disabled={isLoading} className="bg-blue-500 hover:bg-blue-600 text-white dark:bg-[#5294E2] dark:hover:bg-[#4584d2]">
+            Send
           </Button>
         </form>
       </div>

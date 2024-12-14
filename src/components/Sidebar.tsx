@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
+
 import {
   getGrades,
   getSubjects,
@@ -42,6 +43,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const sidebarRef = React.useRef<HTMLDivElement>(null);
   const userMenuRef = React.useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
