@@ -6,7 +6,7 @@ import 'katex/dist/katex.min.css';
 export default function CommonIonEffect() {
   return (
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
-      <h1 className="text-3xl font-bold mb-6">Common-Ion Effect and Buffer Solutions</h1>
+      <h1 className="text-3xl font-bold mb-6">1.3 Common-Ion Effect and Buffer Solutions</h1>
 
       <p>
         The common-ion effect is the shift in an ionic equilibrium caused by the addition of a solute that provides an ion that

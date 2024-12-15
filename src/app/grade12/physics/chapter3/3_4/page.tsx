@@ -8,7 +8,7 @@ export default function FluidMechanics() {
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Fluid Mechanics</h1>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">Fluid Flow</h2>
+      <h2 className="text-2xl font-semibold mt-6 mb-4">3.4 Fluid Flow</h2>
       <p>
         Fluid flow is caused by differences in pressure. When the pressure in one region of the fluid is lower than in another region, the fluid tends to flow from the higher pressure region toward the lower pressure region. For example, large masses of air in Earth’s atmosphere move from regions of high pressure into regions of low pressure, creating what we call wind.
       </p>

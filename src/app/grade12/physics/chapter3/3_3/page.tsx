@@ -8,7 +8,7 @@ export default function FluidMechanics() {
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Fluid Mechanics</h1>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">Archimedes' Principle</h2>
+      <h2 className="text-2xl font-semibold mt-6 mb-4">3.3 Archimedes' Principle</h2>
       <p>
         It is extremely difficult to push a ball down under water because of the large upward force exerted by the water on the ball. The upward force exerted by a fluid on any immersed object is called a buoyant force. Where does this buoyant force come from? Buoyant force is based on the fact that pressure increases with depth in a fluid. This means that the upward force on the bottom of an object in a fluid is greater than the downward force on the top of the object. There is a net upward, or buoyant force on any object in any fluid. Buoyant force is also called up-thrust force. 
       </p>

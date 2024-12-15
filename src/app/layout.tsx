@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Clock } from "@/components/clock";
 import { Toaster, toast } from "sonner";
@@ -10,31 +10,56 @@ import ContextMenu2 from "@/components/context-menu";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
-import { SessionProvider } from "next-auth/react"
+import { SidebarProvider } from './hooks/SidebarContext';
+import { SessionProvider } from "next-auth/react";
 import AIButton from "@/components/ai-feature";
 import TabManager from "@/components/Tab";
 
+const useScrollDirection = () => {
+  const [scrollDirection, setScrollDirection] = useState("down");
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY < lastScrollY) {
+        setScrollDirection("up");
+      } else {
+        setScrollDirection("down");
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  return scrollDirection;
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname();;
+  const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAIOpen, setIsAIOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState<{
     x: number;
     y: number;
-  } | null>(null);;
-
+  } | null>(null);
+  
+  const scrollDirection = useScrollDirection();
+  
   const handleContextMenu = (event: React.MouseEvent) => {
-    event.preventDefault();;
-    setMenuPosition({ x: event.clientX, y: event.clientY });;
-  };;
+    event.preventDefault();
+    setMenuPosition({ x: event.clientX, y: event.clientY });
+  };
 
   const handleCloseMenu = () => {
     setMenuPosition(null);
   };
 
   const handleSessionEnd = (isStudySession: boolean) => {
-    const message = isStudySession ? "Time to focus!" : "Time to take a break!";;
-    const borderColor = isStudySession ? "red" : "green";;
+    const message = isStudySession ? "Time to focus!" : "Time to take a break!";
+    const borderColor = isStudySession ? "red" : "green";
 
     toast(message, {
       duration: 0,
@@ -49,6 +74,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       },
     });
   };
+
   const excludedSidebarPaths = ["/", "/landing", "/signup", "/login", "/auth/signin", "/auth/signup"];
   
   const shouldRenderSidebar = !excludedSidebarPaths.includes(pathname);
@@ -65,7 +91,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             enableSystem={true}
             defaultTheme="light"
           >
-            {shouldRenderSidebar && <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen}/>}
+            <SidebarProvider>
+              {shouldRenderSidebar && <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen}/>}
+            </SidebarProvider>
 
             <Toaster
               position="top-center"
@@ -89,8 +117,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </div>
             </main>
 
+            {!excludedSidebarPaths.includes(pathname) && scrollDirection === "up" && (
+              <Clock onSessionEnd={handleSessionEnd} />
+            )}
             {!excludedSidebarPaths.includes(pathname) && <ScrollProgressBar />}
             {!excludedSidebarPaths.includes(pathname) && <Clock onSessionEnd={handleSessionEnd} />}
+            <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
+              <ThemeToggle />
+              {!excludedSidebarPaths.includes(pathname)}
+            </header>
 
             {menuPosition && !excludedSidebarPaths.includes(pathname) && (
               <ContextMenu2
@@ -112,7 +147,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </footer>
             )}
           </ThemeProvider>
-
+            
         </SessionProvider>
       </body>
     </html>

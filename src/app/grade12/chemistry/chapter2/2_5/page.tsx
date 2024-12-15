@@ -6,7 +6,7 @@ import 'katex/dist/katex.min.css';
 export default function VoltaicCells() {
   return (
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
-      <h1 className="text-3xl font-bold mb-6">Voltaic Cells</h1>
+      <h1 className="text-3xl font-bold mb-6">2.5 Voltaic Cells</h1>
 
       <p>
         After completing this subunit, you will be able to understand what makes a Galvanic cell different from an electrolytic cell.

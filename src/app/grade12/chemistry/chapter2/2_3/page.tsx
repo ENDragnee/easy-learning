@@ -6,14 +6,14 @@ import 'katex/dist/katex.min.css';
 export default function QuantitativeAspectsOfElectrolysis() {
   return (
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
-      <h1 className="text-3xl font-bold mb-6">Quantitative Aspects of Electrolysis</h1>
+      <h1 className="text-3xl font-bold mb-6">2.3 Quantitative Aspects of Electrolysis</h1>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Is it possible to calculate the amount of product formed at the electrodes?</h2>
       <div>
         The quantitative treatment of electrolysis was developed primarily by Michael Faraday in the year 1834. His early research on electrolysis led him to propose a relationship between the amount of current passed through a solution and the amount of substance decomposed or produced by the current.
       </div>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">Faraday's First Law of Electrolysis</h2>
+      <h2 className="text-2xl font-semibol1d mt-6 mb-4">Faraday's First Law of Electrolysis</h2>
       <div>
         Faraday’s First Law of Electrolysis states that when an electrolyte, either in molten state or solution state, is electrolyzed, the mass of a substance (m) deposited or dissolved at the electrodes is directly proportional to the quantity of electricity (coulombs, Q) passed through the electrolyte.
       </div>

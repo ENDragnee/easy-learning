@@ -6,7 +6,7 @@ import 'katex/dist/katex.min.css';
 export default function ApplicationAndSafety() {
   return (
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
-      <h1 className="text-3xl font-bold mb-6">Application and Safety</h1>
+      <h1 className="text-3xl font-bold mb-6">4.7 Application and Safety</h1>
 
       <p>
         Over the last 200 years, physicists have discovered a lot about the natural world. Many of these discoveries, initially thought to be of little practical use, have led to revolutionary applications. Modern society now relies on electromagnetism in numerous ways. For example, computer hard drives use the principle of electromagnetism to record data. Historically, the reading of data on hard drives worked through electromagnetic induction, although most data is now carried in digital form as a series of 0s or 1s.

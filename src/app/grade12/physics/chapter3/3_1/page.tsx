@@ -13,7 +13,7 @@ const FluidMechanics = () => {
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold text-center">Unit 3: Fluid Mechanics</h1>
 
-      <h2 className="text-2xl font-semibold mt-4">Properties of Solids, Liquids, and Gases</h2>
+      <h2 className="text-2xl font-semibold mt-4">3.1 Properties of Solids, Liquids, and Gases</h2>
       <p className="text-lg leading-relaxed">
         Atoms in solids are very close to each other. The forces between them act as a spring that allows the atoms to vibrate without changing positions relative to their neighboring atoms. Thus, a solid resists all types of stress because the atoms are not able to move about freely. Solids also resist compression, because their atoms are relatively fixed distance apart. Under compression, the atoms would be forced into one another.
       </p>

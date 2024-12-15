@@ -6,7 +6,7 @@ import 'katex/dist/katex.min.css';
 export default function ClassificationOfPolymers() {
   return (
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
-      <h1 className="text-3xl font-bold mb-6">Classification of Polymers</h1>
+      <h1 className="text-3xl font-bold mb-6">4.3 Classification of Polymers</h1>
 
       <p>
         There are a number of methods of classifying polymers. A few of the methods of polymers classification are listed below.

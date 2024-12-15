@@ -8,7 +8,7 @@ export default function Electromagnetism() {
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Unit 4: Electromagnetism</h1>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">Introduction</h2>
+      <h2 className="text-2xl font-semibold mt-6 mb-4">4.1 Introduction</h2>
       <p>
         Electromagnetism is one of the fundamental forces of nature, consisting of the elements of electricity and
         magnetism. It involves the study of the electromagnetic force, which is carried by electromagnetic fields composed

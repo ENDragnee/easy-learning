@@ -8,7 +8,7 @@ export default function SafetyAndHighPressure() {
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Safety and High Pressure</h1>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">High Pressure Systems</h2>
+      <h2 className="text-2xl font-semibold mt-6 mb-4">3.5 High Pressure Systems</h2>
       <p>
         Pressure far greater than 1 atmosphere (most of the time greater than 50 atm) is considered high pressure. High pressure is used for many applications such as:
       </p>

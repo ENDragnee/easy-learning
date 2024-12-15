@@ -6,7 +6,7 @@ import 'katex/dist/katex.min.css';
 export default function ManufacturingIndustriesInEthiopia() {
   return (
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
-      <h1 className="text-3xl font-bold mb-6">Some Manufacturing Industries in Ethiopia</h1>
+      <h1 className="text-3xl font-bold mb-6">3.4 Some Manufacturing Industries in Ethiopia</h1>
 
       <p>
         The chemical industry in Ethiopia is still at a nascent stage. Therefore, there is a strong demand to develop the chemical industry to meet the requirements of the rapidly growing Ethiopian economy. Currently, imports fulfill domestic demand for chemicals/manufacturing products. According to ADDISBIZ.com news of the year 2022, more than 2228 manufacturing industries are available in the country.

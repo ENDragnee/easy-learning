@@ -6,9 +6,9 @@ import 'katex/dist/katex.min.css';
 export default function Semiconductors() {
   return (
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
-      <h1 className="text-3xl font-bold mb-6">Semiconductors</h1>
+      <h1 className="text-3xl font-bold mb-6">5.Semiconductors</h1>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">Conductors, Insulators, and Semiconductors</h2>
+      <h2 className="text-2xl font-semibold mt-6 mb-4">5.1 Conductors, Insulators, and Semiconductors</h2>
       <p>
         Conductors are materials that allow electricity to flow through them. Metals are good conductors of electricity because they have free electrons that allow easy flow of electric current.
       </p>
