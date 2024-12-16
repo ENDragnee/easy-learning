@@ -122,10 +122,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             )}
             {!excludedSidebarPaths.includes(pathname) && <ScrollProgressBar />}
             {!excludedSidebarPaths.includes(pathname) && <Clock onSessionEnd={handleSessionEnd} />}
-            <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
-              <ThemeToggle />
-              {!excludedSidebarPaths.includes(pathname)}
-            </header>
 
             {menuPosition && !excludedSidebarPaths.includes(pathname) && (
               <ContextMenu2

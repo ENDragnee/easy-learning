@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import styled, { keyframes } from 'styled-components';
+import { useSession } from "next-auth/react" // Add this import
+
 
 const glow = keyframes`
   from {
@@ -82,6 +84,16 @@ const LoadingScreen = () => {
   const router = useRouter();
   const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { data: session, status } = useSession();
+
+  const handleRoute = () => {
+    if (status === "loading") return; // Wait for session to resolve
+    if (session) {
+      router.push("/mock");
+    } else {
+      router.push("/landing");
+    }
+  };
 
   // Ensure the theme has been resolved before rendering
   useEffect(() => {
@@ -110,12 +122,14 @@ const LoadingScreen = () => {
   }, [resolvedTheme, mounted]);
 
   useEffect(() => {
+    if (!mounted) return;
+
     const timer = setTimeout(() => {
-      router.push('/landing'); // Navigate to the LandingPage route
+      handleRoute();
     }, 3000); // 3 seconds
 
     return () => clearTimeout(timer);
-  }, [router]);
+  }, [mounted, session, status]);
 
   if (!mounted) return null; // Prevent initial flicker
 
