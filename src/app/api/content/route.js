@@ -1,7 +1,7 @@
 // Updated API Endpoint (api/nav/content/route.ts)
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
-import { transform } from "jsx-transform-json";
+import { transform } from "@/app/hooks/json";
 
 export async function GET() {
   try {
