@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const {
     course,
     chapter,
-    subchater,
+    subchapter,
     loading,
     error,
     fetchCourses,

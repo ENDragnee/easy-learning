@@ -130,11 +130,33 @@ export const useEducationData = () => {
     }
   }, []);
 
+  const fetchChapters = useCallback(async (grade: string, course: string) => {
+    try {
+      const data = await fetchData('chapters', { grade, course });
+      console.log('Chapters:', data);
+    } catch (error) {
+      console.error('Error fetching chapters:', error);
+    }
+  }, []);
+
+  const fetchCourses = useCallback(async (grade: string) => {
+    try {
+      const data = await fetchData('courses', { grade });
+      console.log('Courses:', data);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+    }
+  }, []);
+
   const preloadNextData = useCallback(async (grade: string, course?: string, chapter?: string) => {
     if (course && chapter) {
       fetchSubchapters(grade, course, chapter);
+    } else if (course) {
+      fetchChapters(grade, course);
+    } else {
+      fetchCourses(grade);
     }
-  }, [fetchSubchapters]);
+  }, [fetchSubchapters, fetchChapters, fetchCourses]);
 
   return {
     grade: state.grade,
@@ -148,6 +170,8 @@ export const useEducationData = () => {
     setChapter,
     setSubchapter,
     fetchSubchapters,
+    fetchChapters,
+    fetchCourses,
     preloadNextData,
   };
 };
