@@ -244,13 +244,16 @@ const TabManager: React.FC = () => {
       {/* Expanded Tab Manager */}
       <div
         ref={tabManagerRef}
-        className={`fixed top-[25%] h-[50vh] transform right-0 z-30 w-32 bg-white dark:bg-[#2d303a] rounded-l-lg shadow-lg transition-transform duration-300 ease-in-out ${
-            isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-[40%] transform right-0 z-30 w-32 bg-white dark:bg-[#2d303a] rounded-xl transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
         } flex flex-col`}
+        style={{
+          height: `${Math.min(Math.max(tabs.length * 3 + 10, 3 * 3 + 10), 50)}vh`, 
+        }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-    >
+      >
         <div className="flex justify-between items-center p-2">
             <div className="flex items-center space-x-1">
                 <button
