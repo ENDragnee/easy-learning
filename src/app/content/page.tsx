@@ -4,16 +4,17 @@ import { useEffect, useState } from "react";
 import 'katex/dist/katex.min.css';
 import { BlockMath, InlineMath } from 'react-katex';
 import { LoaderContainer, Loader } from "@/components/ui/StyledComponent";
-import { Suspense } from "react";
-
+import { Suspense, ReactNode } from "react";
+import { createElement } from 'react';
 
 interface ContentItem {
   type: string;
-  className?: string;
-  content?: string | ContentItem[] | any;
-  children?: ContentItem[];
-  items?: string[];
-  math?: string;
+  props?: {
+    className?: string;
+    children?: (ContentItem | string)[] | string;
+    math?: string;
+    [key: string]: any;
+  };
 }
 
 interface ContentResponse {
@@ -66,76 +67,42 @@ const ContentComponent = () => {
     fetchContent();
   }, [grade, course, chapter, subChapter]);
 
-  const renderContent = (item: ContentItem): JSX.Element | null => {
+  const renderContent = (item: ContentItem): ReactNode => {
     if (!item.type) return null;
 
-    const Element = item.type as keyof JSX.IntrinsicElements;
-
-    // Handle BlockMath components
+    // Handle special components
     if (item.type === "BlockMath") {
-      return (
-        <div key={Math.random()} className={item.className}>
-          <BlockMath math={item.math || ''} />
-        </div>
-      );
+      return createElement(BlockMath, {
+        key: Math.random(),
+        math: item.props?.math || ''
+      });
     }
 
-    // Handle InlineMath components
     if (item.type === "InlineMath") {
-      return <InlineMath key={Math.random()} math={item.math || ''} />;
+      return createElement(InlineMath, {
+        key: Math.random(),
+        math: item.props?.math || ''
+      });
     }
 
-    // Handle table structures
-    if (item.type === "table") {
-      return (
-        <table key={Math.random()} className={item.className}>
-          {item.children?.map((child) => renderContent(child))}
-        </table>
-      );
+    // Prepare props
+    const elementProps: { [key: string]: any } = {
+      key: Math.random(),
+      ...item.props
+    };
+
+    // Handle children
+    if (item.props?.children) {
+      if (Array.isArray(item.props.children)) {
+        elementProps.children = item.props.children.map(child => 
+          typeof child === 'string' ? child : renderContent(child as ContentItem)
+        );
+      } else {
+        elementProps.children = item.props.children;
+      }
     }
 
-    if (item.type === "thead" || item.type === "tbody") {
-      return (
-        <Element key={Math.random()}>
-          {item.children?.map((child) => renderContent(child))}
-        </Element>
-      );
-    }
-
-    if (item.type === "tr") {
-      return (
-        <tr key={Math.random()} className={item.className}>
-          {item.children?.map((child) => renderContent(child))}
-        </tr>
-      );
-    }
-
-    if (item.type === "th" || item.type === "td") {
-      return (
-        <Element key={Math.random()} className={item.className}>
-          {item.content}
-        </Element>
-      );
-    }
-
-    // Handle regular elements with children
-    if (item.children) {
-      return (
-        <Element key={Math.random()} className={item.className}>
-          {item.children.map((child) => renderContent(child))}
-        </Element>
-      );
-    }
-
-    // Handle elements with direct content
-    return (
-      <Element
-        key={Math.random()}
-        className={item.className}
-      >
-        {item.content}
-      </Element>
-    );
+    return createElement(item.type, elementProps);
   };
 
   if (isLoading) {
@@ -155,9 +122,11 @@ const ContentComponent = () => {
   }
 
   return (
+    <div className="relative overflow-x-hidden">
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
       {content.map((item) => renderContent(item))}
     </div>
+  </div>
   );
 };
 

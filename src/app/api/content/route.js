@@ -1,6 +1,7 @@
-// Updated API Endpoint
+// Updated API Endpoint (api/nav/content/route.ts)
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
+import { transform } from "jsx-transform-json";
 
 export async function GET() {
   try {
@@ -25,10 +26,14 @@ export async function GET() {
       return NextResponse.json({ error: "Content format is invalid" }, { status: 500 });
     }
 
-    return NextResponse.json(value);
+    // Transform the content using jsx-transform-json
+    const transformedContent = {
+      content: value.content.map((item) => transform(item))
+    };
+
+    return NextResponse.json(transformedContent);
   } catch (error) {
     console.error("Error fetching content:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
-

@@ -13,6 +13,12 @@ interface Tab {
   id: string;
   path: string;
   title: string;
+  params?: {
+    grade?: string;
+    course?: string;
+    chapter?: string;
+    subChapter?: string;
+  };
 }
 
 const TabManager: React.FC = () => {
@@ -149,13 +155,30 @@ const TabManager: React.FC = () => {
     setTouchStart(null);
   };
 
-  const createNewTab = (path: string): Tab => ({
-    id: uuidv4(),
-    path: path,
-    title: getTabTitle(path),
-  });
+  const createNewTab = (path: string): Tab => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const grade = searchParams.get('grade') || undefined;
+    const course = searchParams.get('course') || undefined;
+    const chapter = searchParams.get('chapter') || undefined;
+    const subChapter = searchParams.get('subChapter') || undefined;
+  
+    return {
+      id: uuidv4(),
+      path: `${path}?${searchParams.toString()}`, // Include query parameters in the path
+      title: getTabTitle(path, searchParams),
+      params: { grade, course, chapter, subChapter },
+    };
+  };
 
-  const getTabTitle = (path: string): string => {
+  const getTabTitle = (path: string, searchParams: URLSearchParams): string => {
+    if (path === '/content') {
+      const course = searchParams.get('course');
+      const chapter = searchParams.get('chapter');
+      const subChapter = searchParams.get('subChapter');
+      if (course && chapter && subChapter) {
+        return `${course.charAt(0).toUpperCase() + course.slice(1)} ${chapter}.${subChapter}`;
+      }
+    }
     const parts = path.split('/');
     return parts[parts.length - 1] || 'Home';
   };
@@ -182,18 +205,24 @@ const TabManager: React.FC = () => {
 
   const switchTab = (tab: Tab) => {
     setActiveTab(tab.id);
-    router.push(tab.path);
+    router.push(tab.path); // Switch to the full path with query parameters
   };
 
   useEffect(() => {
-    if (activeTab) {
-      setTabs(prevTabs =>
-        prevTabs.map(tab =>
-          tab.id === activeTab ? { ...tab, path: pathname, title: getTabTitle(pathname) } : tab
+    if (typeof window !== 'undefined' && activeTab) {
+      const searchParams = new URLSearchParams(window.location.search);
+      const updatedPath = `${pathname}?${searchParams.toString()}`;
+      setTabs((prevTabs) =>
+        prevTabs.map((tab) =>
+          tab.id === activeTab
+            ? { ...tab, path: updatedPath, title: getTabTitle(pathname, searchParams) }
+            : tab
         )
       );
     }
-  }, [pathname]);
+  }, [pathname, activeTab]); // Removed window.location.search from dependencies
+  
+  
 
   return (
     <>

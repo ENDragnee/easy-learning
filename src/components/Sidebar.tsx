@@ -123,13 +123,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   );
 
   if (!isThemeReady) {
-    return null; // Avoid rendering until the theme is resolved
+    return null;
   }
   return (
     <div
       ref={sidebarRef}
       className={cn(
-        "fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out pt-5 flex flex-col",
+        "fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out pt-5 z-40 flex flex-col",
         isOpen ?
           theme === "dark"
             ? "w-64 bg-[#383c4a] text-[#7c818c]"
