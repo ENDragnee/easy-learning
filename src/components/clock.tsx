@@ -6,7 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { PauseIcon, PlayIcon } from "lucide-react"; // Import these icons from lucide-react
+import { PauseIcon, PlayIcon } from 'lucide-react'; // Import these icons from lucide-react
 
 interface ClockProps {
   onSessionEnd: (isStudySession: boolean) => void;
@@ -64,7 +64,8 @@ export function Clock({ onSessionEnd, style }: ClockProps) {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         clockRef.current &&
-        !clockRef.current.contains(event.target as Node)
+        !clockRef.current.contains(event.target as Node) &&
+        !(event.target as HTMLElement).closest('.clock-input')
       ) {
         setIsExpanded(false);
       }
@@ -74,7 +75,7 @@ export function Clock({ onSessionEnd, style }: ClockProps) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [clockRef]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -140,7 +141,7 @@ export function Clock({ onSessionEnd, style }: ClockProps) {
           width: isExpanded ? "md:50% 75%" : "auto",
         }}
         transition={{
-          duration: 0.5,
+          duration: 1,
           ease: [0.19, 1, 0.22, 1],
         }}
       >
@@ -152,14 +153,18 @@ export function Clock({ onSessionEnd, style }: ClockProps) {
             borderRadius: isExpanded ? "24px" : "40px",
           }}
           transition={{
-            duration: 0.5,
-            ease: [0.19, 1, 0.22, 1],
+            duration: 1,
+            ease: [0.5, 1, 0.22, 1],
           }}
         >
           <motion.div
             layout
             className="flex items-center justify-between p-2"
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={(e) => {
+              if (!(e.target as HTMLElement).closest('.clock-input')) {
+                setIsExpanded(!isExpanded);
+              }
+            }}
           >
             <div className="flex items-center md:gap-4 gap-2">
               <motion.div
@@ -168,7 +173,7 @@ export function Clock({ onSessionEnd, style }: ClockProps) {
               />
               <motion.div
                 layout
-                className="font-medium tabular-nums md:text-lg text-md"
+                className={`font-medium tabular-nums ${isExpanded ? "md:text-md text-sm" : "md:text-lg text-md"}`}
               >
                 {isExpanded ? formatTime(timerSeconds) : time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </motion.div>
@@ -197,23 +202,23 @@ export function Clock({ onSessionEnd, style }: ClockProps) {
                 transition={{ delay: 0.2 }}
               >
                 <Label htmlFor="studyDuration" className={`md:text-sm text-[12px] ${isStudyPeriod ? "text-green-500 font-bold":""}`}>Study</Label>
-                  <Input
-                    id="studyDuration"
-                    type="number"
-                    value={studyDuration}
-                    onChange={(e) => handleStudyDurationChange(e.target.value)}
-                    className="md:w-15 w-11 md:h-8 h-6 md:text-sm text-[12px] align-center border-slate-500"
-                    min={1}
-                  />
+                <Input
+                  id="studyDuration"
+                  type="number"
+                  value={studyDuration}
+                  onChange={(e) => handleStudyDurationChange(e.target.value)}
+                  className="md:w-15 w-11 md:h-8 h-6 md:text-sm text-[12px] align-center border-slate-500 clock-input"
+                  min={1}
+                />
                 <Label htmlFor="restDuration" className={`md:text-sm text-[12px] ${!isStudyPeriod ? "text-red-500 font-bold":""}`}>Rest</Label>
-                  <Input
-                    id="restDuration"
-                    type="number"
-                    value={restDuration}
-                    onChange={(e) => handleRestDurationChange(e.target.value)}
-                    className="md:w-15 w-10 md:h-8 h-6 md:text-sm text-[12px] text-center border-slate-500"
-                    min={1}
-                  />
+                <Input
+                  id="restDuration"
+                  type="number"
+                  value={restDuration}
+                  onChange={(e) => handleRestDurationChange(e.target.value)}
+                  className="md:w-15 w-10 md:h-8 h-6 md:text-sm text-[12px] text-center border-slate-500 clock-input"
+                  min={1}
+                />
                 <Switch
                   checked={isTimerOn}
                   onCheckedChange={handleTimerToggle}
