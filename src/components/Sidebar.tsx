@@ -135,8 +135,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             ? "w-64 bg-[#383c4a] text-[#7c818c]"
             : "w-64 bg-gray-200 text-black"
           : theme === "dark"
-            ? "w-12 md:bg-[#383c4a] text-[#7c818c]"
-            : "w-12 md:bg-gray-200 text-black",
+            ? "w-12 text-[#7c818c]"
+            : "w-12 text-black",
       )}
     >
       <>
@@ -396,22 +396,16 @@ const ChapterList: React.FC<{
               <Collapsible>
                 <CollapsibleTrigger className="flex items-start w-full text-left my-0.5 py-1 px-2 hover:bg-[#4b5162] hover:text-white rounded-md">
                   <ChevronRight className="w-4 h-4 mr-1" />
-                  {`Chapter ${chapter.name}`}
+                  {`${chapter.name}`}
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <ul className="ml-4 border-l border-[#4b5162]">
+                  <ul className="ml-4 border-l border-[#4b5162] items-start flex flex-col">
                     {chapter.subChapters.map((subChapter) => (
                       <li key={subChapter} className="relative items-start">
                         {selectedGrade && selectedCourse && (
                           <Link
                             href={{
-                              pathname: '/content',
-                              query: {
-                                grade: selectedGrade,
-                                course: selectedCourse,
-                                chapter: chapter.name,
-                                subChapter: subChapter
-                              }
+                              pathname: `/${selectedGrade}/${selectedCourse}/${chapter.name}/${subChapter}`,
                             }}
                           >
                             <Button

@@ -130,12 +130,13 @@ export default function ProjectileMotion() {
           Explore the concepts of projectile motion using the interactive
           simulation below:
         </p>
-        <iframe
-          src="https://phet.colorado.edu/sims/html/projectile-motion/latest/projectile-motion_en.html"
-          width="800"
-          height="600"
-          allowFullScreen
-        ></iframe>
+        <div className='relative w-full overflow-hidden aspect-video'>
+          <iframe
+            src="https://phet.colorado.edu/sims/html/projectile-motion/latest/projectile-motion_en.html"
+            allowFullScreen
+            className='responsive-iframe top-0 left-0 w-full h-full'
+          ></iframe>
+        </div>
       </div>
     </div>
   );

@@ -131,11 +131,9 @@ const ContentComponent = () => {
   }
 
   return (
-    <div className="relative overflow-x-hidden">
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
       {content.map((item) => renderContent(item))}
     </div>
-  </div>
   );
 };
 
