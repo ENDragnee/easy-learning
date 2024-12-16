@@ -10,13 +10,13 @@ import ContextMenu2 from "@/components/context-menu";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
-import { SidebarProvider } from './hooks/SidebarContext';
+import { SidebarProvider } from "./hooks/SidebarContext";
 import { SessionProvider } from "next-auth/react";
 import AIButton from "@/components/ai-feature";
 import TabManager from "@/components/Tab";
 
 const useScrollDirection = () => {
-  const [scrollDirection, setScrollDirection] = useState("down");
+  const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
@@ -45,9 +45,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     x: number;
     y: number;
   } | null>(null);
-  
+
   const scrollDirection = useScrollDirection();
-  
+
   const handleContextMenu = (event: React.MouseEvent) => {
     event.preventDefault();
     setMenuPosition({ x: event.clientX, y: event.clientY });
@@ -75,8 +75,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     });
   };
 
-  const excludedSidebarPaths = ["/", "/landing", "/signup", "/login", "/auth/signin", "/auth/signup"];
-  
+  const excludedSidebarPaths = [
+    "/",
+    "/landing",
+    "/signup",
+    "/login",
+    "/auth/signin",
+    "/auth/signup",
+  ];
+
   const shouldRenderSidebar = !excludedSidebarPaths.includes(pathname);
 
   return (
@@ -92,36 +99,47 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             defaultTheme="light"
           >
             <SidebarProvider>
-              {shouldRenderSidebar && <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen}/>}
+              {shouldRenderSidebar && (
+                <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+              )}
             </SidebarProvider>
 
             <Toaster
               position="top-center"
               expand={false}
               richColors
-              closeButton
-              className="mt-10"
+              className="mt-10 "
             />
-            {excludedSidebarPaths.includes(pathname) ? 
+            {excludedSidebarPaths.includes(pathname) ? (
               <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
                 <ThemeToggle />
-              </header> :
-              <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
-                <AIButton/>
-                <TabManager/>
               </header>
-            }
+            ) : (
+              <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
+                <AIButton />
+                <TabManager />
+              </header>
+            )}
             <main>
               <div id="content" className="flex-1">
-                    {children}
+                {children}
               </div>
             </main>
 
-            {!excludedSidebarPaths.includes(pathname) && scrollDirection === "up" && (
-              <Clock onSessionEnd={handleSessionEnd} />
+            {!excludedSidebarPaths.includes(pathname) && (
+              <Clock
+                onSessionEnd={handleSessionEnd}
+                style={{
+                  display: scrollDirection === "down" ? "none" : "block",
+                }}
+              />
             )}
+
             {!excludedSidebarPaths.includes(pathname) && <ScrollProgressBar />}
-            {!excludedSidebarPaths.includes(pathname) && <Clock onSessionEnd={handleSessionEnd} />}
+            <header className="fixed top-4 right-4 z-40 flex items-center space-x-2">
+              <ThemeToggle />
+              {!excludedSidebarPaths.includes(pathname)}
+            </header>
 
             {menuPosition && !excludedSidebarPaths.includes(pathname) && (
               <ContextMenu2
@@ -131,7 +149,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               />
             )}
 
-            {excludedSidebarPaths.includes(pathname) && pathname!="/" && (
+            {excludedSidebarPaths.includes(pathname) && pathname != "/" && (
               <footer className="border-t border-gray-200 dark:border-[#4b5162] py-8 sm:max-h-48 md:max-h-32">
                 <div className="container mx-auto px-4">
                   <div className="flex justify-center">
@@ -143,7 +161,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </footer>
             )}
           </ThemeProvider>
-            
         </SessionProvider>
       </body>
     </html>

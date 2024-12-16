@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import 'katex/dist/katex.min.css';
 import { BlockMath, InlineMath } from 'react-katex';
 import { LoaderContainer, Loader } from "@/components/ui/StyledComponent";
+import ErrorMessage from "@/components/ErrorMessage";
 import { Suspense, ReactNode } from "react";
 import { createElement } from 'react';
 
@@ -114,11 +115,19 @@ const ContentComponent = () => {
   }
 
   if (error) {
-    return <div className="px-6 py-10 max-w-4xl mx-auto text-justify">Error: {error}</div>;
+    return (
+      <div className="px-6 py-10 max-w-4xl mx-auto">
+        <ErrorMessage type="error" message={error} />
+      </div>
+    )
   }
 
   if (!content) {
-    return <div className="px-6 py-10 max-w-4xl mx-auto text-justify">No content available.</div>;
+    return (
+      <div className="px-6 py-10 max-w-4xl mx-auto">
+        <ErrorMessage type="info" message="No content available." />
+      </div>
+    )
   }
 
   return (
