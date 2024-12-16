@@ -13,14 +13,27 @@ export async function POST(request) {
     if (!session?.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    const {
-      selectedText,
-    } = await request.json();
 
+    // Parse the request body
+    const body = await request.json();
+    const { selectedText } = body;
+
+    // Log for debugging
+    console.log('Received request body:', body);
+
+    if (!selectedText || selectedText.trim() === '') {
+      return NextResponse.json(
+        { error: 'Invalid input: selectedText is required' },
+        { status: 400 }
+      );
+    }
+
+    console.log('Selected text:', selectedText);
+
+    // Continue with stream processing...
     const stream = new TransformStream();
     const writer = stream.writable.getWriter();
 
-    // Start the AI stream processing
     const processStream = async () => {
       try {
         const chatCompletion = await groq.chat.completions.create({
@@ -33,12 +46,8 @@ export async function POST(request) {
             },
             {
               role: 'user',
-              content: `Please explain: "${selectedText}"
-              In a simple and concise manner and give examples if necessary.`,
-            },
-            {
-              role: 'assistant',
-              content: `${selectedText}`,
+              content: `Please explain: "${selectedText}" 
+              in a simple and concise manner and give examples if necessary.`,
             },
           ],
           model: 'llama3-8b-8192',
@@ -48,49 +57,45 @@ export async function POST(request) {
           stream: true,
           stop: null,
         });
-        
 
         const encoder = new TextEncoder();
 
         // Write the opening bracket
         await writer.write(encoder.encode('['));
 
-        // Process each chunk
         let firstChunk = true;
         for await (const chunk of chatCompletion) {
           const content = chunk.choices[0]?.delta?.content || '';
           if (content) {
             const data = JSON.stringify({ content });
 
-            // Add a comma between JSON objects except for the first one
             const chunkData = firstChunk ? data : `,${data}`;
             await writer.write(encoder.encode(chunkData));
             firstChunk = false;
           }
         }
 
-        // Write the closing bracket
         await writer.write(encoder.encode(']'));
       } catch (error) {
         console.error('Stream processing error:', error);
-        const errorMessage = JSON.stringify({ error: 'Stream processing error' });
-        await writer.write(new TextEncoder().encode(errorMessage));
+        await writer.write(
+          new TextEncoder().encode(
+            JSON.stringify({ error: 'Stream processing error' })
+          )
+        );
       } finally {
         await writer.close();
       }
     };
 
-    // Start processing in the background
     processStream();
 
-    // Return the readable stream
     return new NextResponse(stream.readable, {
       headers: {
         'Content-Type': 'application/json',
         'Transfer-Encoding': 'chunked',
       },
     });
-
   } catch (error) {
     console.error('Error creating highlight:', error.message);
     return NextResponse.json(

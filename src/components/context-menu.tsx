@@ -108,7 +108,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
         const response = await fetch('/api/ai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ input: selectedText }),
+          body: JSON.stringify({ selectedText }),
         });
   
         if (!response.ok) throw new Error('Network response was not ok');
