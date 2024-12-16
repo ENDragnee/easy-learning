@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import 'katex/dist/katex.min.css';
 import { BlockMath, InlineMath } from 'react-katex';
 import { LoaderContainer, Loader } from "@/components/ui/StyledComponent";
+import { Suspense } from "react";
+
 
 interface ContentItem {
   type: string;
@@ -18,7 +20,7 @@ interface ContentResponse {
   content: ContentItem[];
 }
 
-const Content = () => {
+const ContentComponent = () => {
   const [content, setContent] = useState<ContentItem[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -156,6 +158,14 @@ const Content = () => {
     <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
       {content.map((item) => renderContent(item))}
     </div>
+  );
+};
+
+const Content = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ContentComponent />
+    </Suspense>
   );
 };
 

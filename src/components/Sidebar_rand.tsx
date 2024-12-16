@@ -47,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   } = useEducationData();
 
   // Ensure the theme is fully initialized before rendering
-  useEffect(() => {
+  useEffect(() => {fetchChapters
     if (resolvedTheme) {
       setIsThemeReady(true);
     }
