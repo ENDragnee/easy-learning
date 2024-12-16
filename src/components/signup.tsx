@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 import Logo from "../components/Logo";
 
 export default function SignUp() {
   const router = useRouter();
+  const { theme } = useTheme(); // Use theme from next-themes
 
   // State variables for form input and error messages
   const [email, setEmail] = useState("");
@@ -52,14 +54,26 @@ export default function SignUp() {
     }
   };
 
+  const isDarkTheme = theme === "dark";
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#404552] to-[#383c4a] text-[#4b5162] font-sans">
+    <div
+      className={`min-h-screen flex items-center justify-center transition-colors duration-300 font-sans ${
+        isDarkTheme
+          ? "bg-gradient-to-br from-[#373e47] to-[#2f343f] text-[#d3dae3]"
+          : "bg-gradient-to-br from-[#ffffff] to-[#f0f4f8] text-[#4b5162]"
+      }`}
+    >
       <div className="w-full max-w-md">
-        <div className="bg-[#383c4a] shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+        <div
+          className={`shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4 transition-all duration-300 ${
+            isDarkTheme ? "bg-[#2f343f] text-white" : "bg-white text-black"
+          }`}
+        >
           <div className="flex justify-center mb-8">
             <Logo />
           </div>
-          <h2 className="text-2xl font-bold mb-6 text-center text-white">Sign Up</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -73,7 +87,11 @@ export default function SignUp() {
             )}
             <div className="mb-4">
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 bg-[#404552] text-white leading-tight focus:outline-none focus:ring-2 focus:ring-[#5294e2] focus:border-transparent"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring-2 focus:border-transparent transition-colors duration-300 ${
+                  isDarkTheme
+                    ? "bg-[#373e47] text-white focus:ring-[#5294e2]"
+                    : "bg-[#f0f4f8] text-black focus:ring-[#3367d6]"
+                }`}
                 type="text"
                 placeholder="Username"
                 value={userName}
@@ -82,7 +100,11 @@ export default function SignUp() {
             </div>
             <div className="mb-4">
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 bg-[#404552] text-white leading-tight focus:outline-none focus:ring-2 focus:ring-[#5294e2] focus:border-transparent"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring-2 focus:border-transparent transition-colors duration-300 ${
+                  isDarkTheme
+                    ? "bg-[#373e47] text-white focus:ring-[#5294e2]"
+                    : "bg-[#f0f4f8] text-black focus:ring-[#3367d6]"
+                }`}
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -91,7 +113,11 @@ export default function SignUp() {
             </div>
             <div className="mb-6">
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 bg-[#404552] text-white mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-[#5294e2] focus:border-transparent"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring-2 focus:border-transparent transition-colors duration-300 ${
+                  isDarkTheme
+                    ? "bg-[#373e47] text-white focus:ring-[#5294e2]"
+                    : "bg-[#f0f4f8] text-black focus:ring-[#3367d6]"
+                }`}
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -100,7 +126,11 @@ export default function SignUp() {
             </div>
             <div className="mb-6">
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 bg-[#404552] text-white mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-[#5294e2] focus:border-transparent"
+                className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring-2 focus:border-transparent transition-colors duration-300 ${
+                  isDarkTheme
+                    ? "bg-[#373e47] text-white focus:ring-[#5294e2]"
+                    : "bg-[#f0f4f8] text-black focus:ring-[#3367d6]"
+                }`}
                 type="password"
                 placeholder="Confirm Password"
                 value={confirmPassword}
@@ -109,7 +139,11 @@ export default function SignUp() {
             </div>
             <div className="flex items-center justify-between mb-6">
               <button
-                className="bg-[#5294e2] hover:bg-[#4a84c9] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105"
+                className={`font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-transform duration-300 ease-in-out transform hover:scale-105 ${
+                  isDarkTheme
+                    ? "bg-[#5294e2] hover:bg-[#4a84c9] text-white"
+                    : "bg-[#3367d6] hover:bg-[#2851a3] text-white"
+                }`}
                 type="submit"
               >
                 Sign Up
@@ -117,10 +151,14 @@ export default function SignUp() {
             </div>
           </form>
           <div className="text-center">
-            <p className="text-sm text-[#7c818c]">
+            <p className="text-sm">
               Already have an account?
               <button
-                className="text-[#5294e2] hover:text-[#4a84c9] font-bold ml-1"
+                className={`font-bold ml-1 transition-colors duration-300 ${
+                  isDarkTheme
+                    ? "text-[#5294e2] hover:text-[#4a84c9]"
+                    : "text-[#3367d6] hover:text-[#2851a3]"
+                }`}
                 onClick={() => router.push("/auth/signin")}
               >
                 Sign In

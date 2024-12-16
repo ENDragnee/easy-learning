@@ -15,7 +15,7 @@ export default function LandingPage() {
     if (session) {
       router.push("/mock");
     } else {
-      router.push("/auth/signup");
+      router.push("/auth/signin");
     }
   };
   return (
