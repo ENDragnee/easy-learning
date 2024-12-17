@@ -13,7 +13,7 @@ export default function LandingPage() {
 
   const handleGetStarted = () => {
     if (session) {
-      router.push("/mock");
+      router.push("/main");
     } else {
       router.push("/auth/signin");
     }

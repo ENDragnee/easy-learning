@@ -89,7 +89,7 @@ const LoadingScreen = () => {
   const handleRoute = () => {
     if (status === "loading") return; // Wait for session to resolve
     if (session) {
-      router.push("/mock");
+      router.push("/main");
     } else {
       router.push("/landing");
     }

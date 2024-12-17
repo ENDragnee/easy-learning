@@ -82,6 +82,8 @@
       "/login",
       "/auth/signin",
       "/auth/signup",
+      "/main",
+      "/about",
     ];
 
     const shouldRenderSidebar = !excludedSidebarPaths.includes(pathname);

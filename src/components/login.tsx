@@ -26,7 +26,7 @@ export default function SignIn() {
     if (result?.error) {
       setError("Invalid email or password");
     } else {
-      router.push("/mock"); // Redirect to the desired page
+      router.push("/main"); // Redirect to the desired page
     }
   };
 
