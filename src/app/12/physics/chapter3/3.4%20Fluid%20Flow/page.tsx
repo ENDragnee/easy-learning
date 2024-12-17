@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function FluidMechanics() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Fluid Mechanics</h1>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">3.4 Fluid Flow</h2>
@@ -44,7 +44,9 @@ export default function FluidMechanics() {
       <p>
         Flow rate <InlineMath>{'Q'}</InlineMath> is defined as the volume of fluid passing by a certain point through an area over a period of time:
       </p>
-      <BlockMath>{'Q = \\frac{V}{t}'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'Q = \\frac{V}{t}'}</BlockMath>
+      </div>
       <p>
         Where <InlineMath>{'V'}</InlineMath> is the volume of fluid, and <InlineMath>{'t'}</InlineMath> is the elapsed time. The SI unit for flow rate is <InlineMath>{'m^3/s'}</InlineMath>, though other units are also commonly used.
       </p>
@@ -53,7 +55,9 @@ export default function FluidMechanics() {
       <p>
         The equation of continuity describes how an incompressible fluid flows through a pipe of varying radius. Since the fluid is incompressible, the same amount of fluid must flow past any point in the pipe during a given time. Thus, as the cross-sectional area of the pipe decreases, the velocity of the fluid must increase to maintain the flow rate. The equation of continuity is given by:
       </p>
-      <BlockMath>{'Q_1 = Q_2 \quad A_1 v_1 = A_2 v_2'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'Q_1 = Q_2 \quad A_1 v_1 = A_2 v_2'}</BlockMath>
+      </div>
       <p>
         Where <InlineMath>{'v_1'}</InlineMath> and <InlineMath>{'v_2'}</InlineMath> are the average speeds of the fluid at points 1 and 2, and <InlineMath>{'A_1'}</InlineMath> and <InlineMath>{'A_2'}</InlineMath> are the corresponding cross-sectional areas.
       </p>
@@ -65,7 +69,9 @@ export default function FluidMechanics() {
       <p>
         As a fluid’s speed increases, the pressure that the moving fluid exerts on a surface decreases. This is known as Bernoulli’s principle. It states that: 
       </p>
-      <BlockMath>{'P + \\frac{1}{2} \\rho v^2 + \\rho g h = \\text{constant}'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'P + \\frac{1}{2} \\rho v^2 + \\rho g h = \\text{constant}'}</BlockMath>
+      </div>
       <p>
         Where <InlineMath>{'P'}</InlineMath> is the pressure, <InlineMath>{'\\rho'}</InlineMath> is the fluid’s density, <InlineMath>{'v'}</InlineMath> is the velocity of the fluid, and <InlineMath>{'h'}</InlineMath> is the height. This principle explains why pressure decreases as the speed of the fluid increases.
       </p>

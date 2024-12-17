@@ -5,7 +5,7 @@ import { InlineMath, BlockMath } from 'react-katex';
 
 const FluidMechanics = () => {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold text-center">Unit 3: Fluid Mechanics</h1>
 
       <h2 className="text-2xl font-semibold mt-4">3.1 Properties of Solids, Liquids, and Gases</h2>
@@ -31,7 +31,7 @@ const FluidMechanics = () => {
       <p className="text-lg leading-relaxed mb-6">
         Pressure is defined as a normal force exerted by a fluid (or a solid) per unit area. If <InlineMath>{'F'}</InlineMath> is the magnitude of the force exerted on the fluid (or solid) at a particular point and <InlineMath>{'A'}</InlineMath> is the surface area at which this force is applied, the pressure <InlineMath>{'P'}</InlineMath> at this particular point is defined as the ratio of the force to the contact area <InlineMath>{'A'}</InlineMath> over which that force is exerted:
       </p>
-      <div className="mb-6">
+      <div className="overflow-x-auto text-wrap text-xs">
         <BlockMath>{'P = \\frac{F}{A}'}</BlockMath>
       </div>
 
@@ -39,13 +39,13 @@ const FluidMechanics = () => {
       <p className="text-lg leading-relaxed mb-6">
         The unit of pressure is newtons per square meter (N/m²) in the SI system. Another name for the SI unit of pressure is the pascal (Pa):
       </p>
-      <div className="mb-6">
+      <div className="overflow-x-auto text-wrap text-xs">
         <BlockMath>{'1\\,Pa = 1\\,N/m^2'}</BlockMath>
       </div>
       <p className="text-lg leading-relaxed mb-6">
         In addition to pascal, there are other units of pressure such as millimeter mercury (mmHg), torr, atmosphere (atm), and pounds per square inch (psi) with their relations shown as follows:
       </p>
-      <div className="mb-6">
+      <div className="overflow-x-auto text-wrap text-xs">
         <BlockMath>{'1\\,atm = 760\\,mmHg = 760\\,torr = 101.3\\,kPa = 14.7\\,psi'}</BlockMath>
       </div>
 
@@ -62,7 +62,7 @@ const FluidMechanics = () => {
       <p className="text-lg leading-relaxed mb-6">
         The actual pressure at a given position is called the absolute pressure, and it is measured relative to absolute vacuum (i.e., absolute zero pressure). Most pressure-measuring devices, however, are calibrated to read zero in the atmosphere, and so they indicate the difference between the absolute pressure and the local atmospheric pressure. This difference is called the gauge pressure <InlineMath>{'P_{gauge}'}</InlineMath>.
       </p>
-      <div className="mb-6">
+      <div className="overflow-x-auto text-wrap text-xs">
         <BlockMath>{'P_{gauge} = P_{abs} - P_{atm}'}</BlockMath>
       </div>
 
@@ -74,7 +74,7 @@ const FluidMechanics = () => {
       <p className="text-lg leading-relaxed mb-6">usually 
         DensDensme:
       </p>
-      <div className="mb-6">
+      <div className="overflow-x-auto text-wrap text-xs">
         <BlockMath>{'\\rho = \\frac{m}{V}'}</BlockMath>
       </div>
       <div className="overflow-x-auto">
@@ -145,7 +145,7 @@ const FluidMechanics = () => {
       <p className="text-lg leading-relaxed mb-6">
         The density of a substance is sometimes given relative to the density of another substance, called the specific gravity or relative density. It is defined as the ratio of the density of a substance to the density of some standard substance (usually water at 4°C, for which <InlineMath>{'\\rho_{H_2O} = 1000 \\text{kg/m}^3'}</InlineMath>).
       </p>
-      <div className="mb-6">
+      <div className="overflow-x-auto text-wrap text-xs">
         <BlockMath>{'S = \\frac{\\rho}{\\rho_{H_2O}}'}</BlockMath>
       </div>
 
@@ -153,7 +153,7 @@ const FluidMechanics = () => {
       <p className="text-lg leading-relaxed mb-6">
         The ideal gas law relates the density and pressure of gases. It is expressed as:
       </p>
-      <div className="mb-6">
+      <div className="overflow-x-auto text-wrap text-xs">
         <BlockMath>{'P = \\frac{m}{V} R_{specific} T'}</BlockMath>
       </div>
       <div className="overflow-x-auto mt-8">

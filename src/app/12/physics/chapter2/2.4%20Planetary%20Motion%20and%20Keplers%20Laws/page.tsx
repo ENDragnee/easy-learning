@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function PlanetaryMotionAndKeplersLaws() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">2.4 Planetary Motion and Kepler’s Laws</h1>
       <p>
         The planets orbit the Sun, maintaining their respective distances and
@@ -64,7 +64,9 @@ export default function PlanetaryMotionAndKeplersLaws() {
         The law states that the ratio of <InlineMath math="T^2" /> (the square of the orbital period) 
         to <InlineMath math="R^3" /> (the cube of the average orbital radius) is the same for all planets:
       </p>
-      <BlockMath math="\frac{T^2}{R^3} = K" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="\frac{T^2}{R^3} = K" />
+      </div>
       <p>
         Here, <InlineMath math="K" /> is a proportionality constant that is nearly identical for all
         planets. This equation applies to both circular and elliptical orbits

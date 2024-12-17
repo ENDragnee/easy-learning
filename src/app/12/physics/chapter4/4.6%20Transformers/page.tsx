@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function Transformers() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">4.6 Transformers</h1>
 
       <p>
@@ -33,8 +33,9 @@ export default function Transformers() {
       <p>
         The voltage difference between the primary and secondary windings is determined by the ratio of turns between the coils. The relationship between the voltage applied to the primary winding (<InlineMath>{'V_p'}</InlineMath>) and the voltage produced on the secondary winding (<InlineMath>{'V_s'}</InlineMath>) is given by:
       </p>
-
-      <BlockMath>{'\\frac{N_p}{N_s} = \\frac{V_p}{V_s} = \\text{Turns Ratio}'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'\\frac{N_p}{N_s} = \\frac{V_p}{V_s} = \\text{Turns Ratio}'}</BlockMath>
+      </div>
 
       <p>
         Where <InlineMath>{'N_p'}</InlineMath> and <InlineMath>{'N_s'}</InlineMath> are the number of primary and secondary turns, and <InlineMath>{'V_p'}</InlineMath> and <InlineMath>{'V_s'}</InlineMath> are the primary and secondary voltages, respectively.
@@ -44,8 +45,9 @@ export default function Transformers() {
       <p>
         Transformers can operate with high efficiency, often reaching up to 98%. The efficiency <InlineMath>{'\\eta'}</InlineMath> of a transformer is given by:
       </p>
-
-      <BlockMath>{'\\eta = \\frac{\\text{output power}}{\\text{input power}} \\times 100%'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'\\eta = \\frac{\\text{output power}}{\\text{input power}} \\times 100%'}</BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Working Principle of Transformers in Household Appliances</h2>
       <p>

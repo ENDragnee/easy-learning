@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function CommonIonEffect() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">1.3 Common-Ion Effect and Buffer Solutions</h1>
 
       <p>
@@ -19,7 +19,9 @@ export default function CommonIonEffect() {
         Consider a solution of acetic acid, <InlineMath>{'CH_3COOH'}</InlineMath>, in which the following acid-ionization
         equilibrium exists:
       </p>
-      <BlockMath>{'CH_3COOH (aq) + H_2O (l) ⇌ CH_3COO⁻ (aq) + H₃O⁺ (aq)'}</BlockMath>
+      <div className='overflow-x-auto text-xs'>
+        <BlockMath>{'CH_3COOH (aq) + H_2O (l) ⇌ CH_3COO⁻ (aq) + H₃O⁺ (aq)'}</BlockMath>
+      </div>
       <p>
         If HCl (aq) is added to this solution, it dissociates to provide H₃O⁺ ions, which are present on the right side of the
         equation for acetic acid ionization. According to Le Châtelier’s principle, the equilibrium will shift to the left, suppressing
@@ -31,7 +33,9 @@ export default function CommonIonEffect() {
         When sodium acetate and acetic acid are dissolved in the same solution, they dissociate and ionize to produce CH₃COO⁻ ions.
         This results in a shift in the equilibrium, which can be represented as:
       </p>
-      <BlockMath>{'CH_3COOH (aq) + H_2O (l) ⇌ CH_3COO⁻ (aq) + H₃O⁺ (aq)'}</BlockMath>
+      <div className='overflow-x-auto text-xs'>
+        <BlockMath>{'CH_3COOH (aq) + H_2O (l) ⇌ CH_3COO⁻ (aq) + H₃O⁺ (aq)'}</BlockMath>
+      </div>
       <p>
         The degree of ionization of acetic acid decreases by the addition of a strong acid, which is an example of the common-ion effect.
       </p>

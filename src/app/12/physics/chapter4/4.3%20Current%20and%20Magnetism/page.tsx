@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function CurrentAndMagnetism() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">4.3 Current and Magnetism</h1>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Magnetic Field Created by a Long Straight Current-Carrying Wire</h2>
@@ -19,7 +19,9 @@ export default function CurrentAndMagnetism() {
         The magnitude of the magnetic field at a point a distance <InlineMath>{'r'}</InlineMath> from a long straight current-carrying
         wire is given by the formula:
       </p>
-      <BlockMath>{'B = \\frac{\\mu_0 I}{2\\pi r}'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'B = \\frac{\\mu_0 I}{2\\pi r}'}</BlockMath>
+      </div>
       <p>
         where <InlineMath>{'\\mu_0'}</InlineMath> is the permeability of free space, with a value of <InlineMath>{'\\mu_0 = 4\\pi \\times 10^{-7} T.m/A'}</InlineMath>, 
         <InlineMath>{'r'}</InlineMath> is the distance from the wire where the magnetic field is calculated, and <InlineMath>{'I'}</InlineMath> is the current through the wire.

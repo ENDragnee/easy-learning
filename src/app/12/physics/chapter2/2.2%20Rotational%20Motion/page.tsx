@@ -5,7 +5,7 @@ import "katex/dist/katex.min.css";
 
 export default function RotationalMotion() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-2xl sm:text-3xl font-bold mb-6">2.2 Rotational Motion</h1>
       <p>
         Rotational motion is the motion of an object in a circle around a fixed
@@ -43,7 +43,9 @@ export default function RotationalMotion() {
         particles rotate through the same angle. This angle is defined as the
         angular displacement, <InlineMath math="\Delta \theta" />:
       </p>
-      <BlockMath math="\Delta \theta = \theta_f - \theta_0" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="\Delta \theta = \theta_f - \theta_0" />
+      </div>
       <p>
         Angular displacement is typically measured in radians. One complete
         revolution equals <InlineMath math="2\pi" /> radians or 360 degrees.
@@ -53,7 +55,9 @@ export default function RotationalMotion() {
         The rate of change of angular displacement is angular velocity
         <InlineMath math="\omega" />:
       </p>
-      <BlockMath math="\omega = \frac{\Delta \theta}{\Delta t}" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="\omega = \frac{\Delta \theta}{\Delta t}" />
+      </div>
       <p>
         Angular velocity is measured in radians per second (
         <InlineMath math="\text{rad/s}" />
@@ -64,7 +68,9 @@ export default function RotationalMotion() {
         If angular velocity changes over time, the object experiences angular
         acceleration <InlineMath math="\alpha" />:
       </p>
-      <BlockMath math="\alpha = \frac{\Delta \omega}{\Delta t}" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="\alpha = \frac{\Delta \omega}{\Delta t}" />
+      </div>
       <p>
         Angular acceleration is measured in radians per second squared (
         <InlineMath math="\text{rad/s}^2" />
@@ -86,7 +92,7 @@ export default function RotationalMotion() {
         Analogous to linear motion, rotational motion with constant angular
         acceleration follows these equations:
       </p>
-      <ul className="list-disc ml-4 sm:ml-6 mb-4">
+      <ul className="list-disc ml-4 sm:ml-6 mb-4 overflow-x-auto text-wrap text-xs">
         <li>
           <BlockMath math="\omega_f = \omega_0 + \alpha \Delta t" />
         </li>

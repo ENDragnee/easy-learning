@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function GlobalWarmingAndClimateChange() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Global Warming and Climate Change</h1>
 
       <p>
@@ -20,7 +20,9 @@ export default function GlobalWarmingAndClimateChange() {
       <p>
         Certain types of chemical reactions, mainly from the combustion of fuel:
       </p>
-      <BlockMath>{`C_XH_Y + O_2 -> CO_2 + H_2O + \text{heat energy}`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`C_XH_Y + O_2 -> CO_2 + H_2O + \text{heat energy}`}</BlockMath>
+      </div>
       <p>Where X and Y represent the carbon and hydrogen numbers of the hydrocarbon compound.</p>
 
       <p>

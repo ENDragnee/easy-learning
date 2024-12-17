@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function LogicGates() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">5.6 Logic Gates and Logic Circuits</h1>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Digital and Analog Signals</h2>
@@ -93,7 +93,9 @@ export default function LogicGates() {
       <h3 className="text-xl font-semibold mt-6 mb-4">OR Gate</h3>
       <div>
         The OR gate is represented by the Boolean expression:
-        <BlockMath math="y = A + B" />
+        <div className='overflow-x-auto text-wrap text-xs'>
+          <BlockMath math="y = A + B" />
+        </div>
         The output is 1 if either input A or B is 1. The truth table for an OR gate is:
       </div>
       <div>
@@ -106,7 +108,9 @@ export default function LogicGates() {
       <h3 className="text-xl font-semibold mt-6 mb-4">AND Gate</h3>
       <div>
         The AND gate follows the Boolean expression:
-        <BlockMath math="y = A \cdot B" />
+        <div className='overflow-x-auto text-wrap text-xs'>
+          <BlockMath math="y = A \cdot B" />
+        </div>
         The output is 1 only if both inputs A and B are 1. The truth table for an AND gate is:
       </div>
       <div>
@@ -119,21 +123,27 @@ export default function LogicGates() {
       <h3 className="text-xl font-semibold mt-6 mb-4">NOT Gate</h3>
       <div>
         The NOT gate inverts its input and is represented by the Boolean expression:
-        <BlockMath math="y = \overline{A}" />
+        <div className='overflow-x-auto text-wrap text-xs'>
+          <BlockMath math="y = \overline{A}" />
+        </div>
         It inverts the input signal. If A is 0, the output is 1, and if A is 1, the output is 0.
       </div>
 
       <h3 className="text-xl font-semibold mt-6 mb-4">NOR Gate</h3>
       <div>
         A NOR gate combines an OR gate and a NOT gate, with the Boolean expression:
-        <BlockMath math="y = \overline{A + B}" />
+        <div className='overflow-x-auto text-wrap text-xs'>
+          <BlockMath math="y = \overline{A + B}" />
+        </div>
         It inverts the output of the OR gate. If both switches A and B are open, the lamp is ON (1), but for other conditions, it is OFF (0).
       </div>
 
       <h3 className="text-xl font-semibold mt-6 mb-4">NAND Gate</h3>
       <div>
         The NAND gate is a combination of an AND gate followed by a NOT gate, and follows the Boolean expression:
-        <BlockMath math="y = \overline{A \cdot B}" />
+        <div className='overflow-x-auto text-wrap text-xs'>
+          <BlockMath math="y = \overline{A \cdot B}" />
+        </div>
         The output is the inverse of the AND gate's output. If both switches are closed, the lamp is OFF (0), but otherwise, it is ON (1).
       </div>
 

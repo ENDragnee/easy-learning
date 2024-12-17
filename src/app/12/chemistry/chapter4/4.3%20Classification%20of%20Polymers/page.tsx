@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function ClassificationOfPolymers() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">4.3 Classification of Polymers</h1>
 
       <p>
@@ -17,21 +17,30 @@ export default function ClassificationOfPolymers() {
       <p>
         Homopolymers are those made from only one type of monomer. For example, polyethylene is synthesized by the polymerization of one type monomer, ethene (ethylene).
       </p>
-      <BlockMath>{`n CH_2 = CH_2 -> {\text{Catalyst}} -[CH_2 - CH_2]_n`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`n CH_2 = CH_2 -> {\text{Catalyst}} -[CH_2 - CH_2]_n`}</BlockMath>
+      </div>
       <p>(monomer: Ethene, polymer: Polyethylene)</p>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Copolymers</h2>
       <p>
         Copolymers are those prepared by polymerizing more than one kind of monomer unit. For instance, ethene (H<sub>2</sub>C=CH<sub>2</sub>) and propene (H<sub>2</sub>C=CH–CH<sub>3</sub>) can be copolymerized to produce a polymer that has two kinds of repeating units.
       </p>
-      <BlockMath>{`n CH_2 = CH_2 + m CH_2 = CHCH_3 -> {\text{Catalyst}} (CH_2 - CH_2)_n + (CH_2 - CHCH_3)_m`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`n CH_2 = CH_2 + m CH_2 = CHCH_3 -> {\text{Catalyst}} (CH_2 - CH_2)_n + (CH_2 - CHCH_3)_m`}</BlockMath>
+      </div>
+
       <p>Random and Regular Copolymers (Where, A and B represent monomer units).</p>
 
       <p className="text-xl font-semibold mt-6 mb-4">Random Copolymer</p>
-      <BlockMath>{`A - B - A - B - A - B - A`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`A - B - A - B - A - B - A`}</BlockMath>
+      </div>
 
       <p className="text-xl font-semibold mt-6 mb-4">Regular Copolymer</p>
-      <BlockMath>{`A - B - A - B - A - B - A - B - A`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`A - B - A - B - A - B - A - B - A`}</BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Condensation and Addition Polymers</h2>
       <p>
@@ -40,10 +49,13 @@ export default function ClassificationOfPolymers() {
       <p>
         Condensation polymers are those prepared from monomers where reaction is accompanied by the loss of a small molecule, usually of water, for example polyesters which are formed by the condensation shown in the reaction:
       </p>
-      <BlockMath>{`n HO - R - OH + n HOOC - R' - COOH -> {\text{Catalyst}} (HO - R - COO - R' - COO)_n + (n-1) H_2O`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`n HO - R - OH + n HOOC - R' - COOH -> {\text{Catalyst}} (HO - R - COO - R' - COO)_n + (n-1) H_2O`}</BlockMath>
+      </div>
       <p>By contrast, addition polymers are those formed by the addition reaction of an unsaturated monomer, such as takes place in the polymerization of vinyl chloride.</p>
-      <BlockMath>{`n CH_2 = CHCl -> {\text{Catalyst}} -(CH_2 - CHCl)_n`}</BlockMath>
-
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`n CH_2 = CHCl -> {\text{Catalyst}} -(CH_2 - CHCl)_n`}</BlockMath>
+      </div>
       <h2 className="text-2xl font-semibold mt-6 mb-4">Natural Polymers</h2>
       <p>
         Natural polymers occur in nature and can be extracted, and are often referred to as biopolymers. Common natural polymers include carbohydrates, proteins, and macromolecules such as polysaccharides and nucleic acids.

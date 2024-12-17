@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function ManufacturingOfValuableProducts() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">3.3 Manufacturing of Valuable Products' Chemicals</h1>
       
       <h2 className="text-2xl font-semibold mt-6 mb-4">Manufacturing of Some Valuable Products</h2>
@@ -17,9 +17,11 @@ export default function ManufacturingOfValuableProducts() {
       <p>
         Ammonia is lighter than air with a density of 0.769 kg/m<sup>3</sup> at STP. Ammonia is commercially and commonly available as an aqueous solution; the most common commercial formulation is 28–30% NH<sub>3</sub>. In the aqueous solution, ammonia is partially ionized according to the equilibrium:
       </p>
-      <BlockMath>
-        {`NH_3 + H_2O \\rightleftharpoons NH_4^+ + OH^-`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`NH_3 + H_2O \\rightleftharpoons NH_4^+ + OH^-`}
+        </BlockMath>
+      </div>
       <p>
         It is often referred to as ammonium hydroxide. It is a weak base. It is colorless with a sharp and intensely irritating gas at room temperature. Its melting point is -77.7°C, and its boiling point is -33.35°C. Its solubility in water at 25°C is 34% (w/w).
       </p>
@@ -33,9 +35,11 @@ export default function ManufacturingOfValuableProducts() {
       <p>
         Ammonia is easily made in the laboratory by heating an ammonium salt, such as ammonium chloride (NH<sub>4</sub>Cl) with a strong alkali, such as sodium hydroxide or calcium hydroxide.
       </p>
-      <BlockMath>
-        {`2NH_4Cl + Ca(OH)_2 \\rightarrow CaCl_2 + 2H_2O + 2NH_3(g)`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`2NH_4Cl + Ca(OH)_2 \\rightarrow CaCl_2 + 2H_2O + 2NH_3(g)`}
+        </BlockMath>
+      </div>
       <p>
         The gas may also be made by warming concentrated ammonium hydroxide. The development of the Haber-Bosch process for ammonia production has made it possible to meet the large demand for its production.
       </p>
@@ -44,17 +48,21 @@ export default function ManufacturingOfValuableProducts() {
       <p>Step 1: The primary requirements for the production of ammonia are hydrogen (H<sub>2</sub>) and nitrogen (N<sub>2</sub>). Hydrogen was initially obtained by electrolyzing water, thus splitting the water molecule into its components – hydrogen and oxygen. In recent times, this method has been replaced by the use of methane as a source. Methane is easily acquired from natural gas and requires very little external energy to produce hydrogen. The other substrate, nitrogen, is obtained by carrying out fractional distillation of air.</p>
 
       <p>Step 2: The hydrogen and nitrogen are then introduced into a chamber containing iron particles or lined internally with iron, and a pressure of 15 – 25 MPa at a temperature of 300 – 500°C is applied to the gases. These conditions cause the gases to react and produce ammonia, and the following reaction occurs:</p>
-      <BlockMath>
-        {`N_2 + 3H_2 \\rightarrow 2NH_3`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`N_2 + 3H_2 \\rightarrow 2NH_3`}
+        </BlockMath>
+      </div>
 
       <p>Step 3: The hot mixture of gases is then passed through a condenser. Since ammonia condenses easily compared to nitrogen and hydrogen, the liquefied ammonia is collected and removed. The leftover nitrogen and hydrogen gases are re-introduced into the reactor. This recycling of the raw materials allows a 97% conversion of initial reactants into ammonia.</p>
       
       <h2 className="text-2xl font-semibold mt-6 mb-4">Properties of Nitric Acid</h2>
       <p>Pure nitric acid has a density of 1.51 g/cm<sup>3</sup>. It is a colorless liquid, with a highly pungent odor, similar in appearance to water, but on exposure to light, it turns brown because of slight decomposition into NO<sub>2</sub> (brown) and O<sub>2</sub>.</p>
-      <BlockMath>
-        {`4HNO_3(l) \\rightarrow 4NO_2(g) + O_2(g) + 2H_2O(l)`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`4HNO_3(l) \\rightarrow 4NO_2(g) + O_2(g) + 2H_2O(l)`}
+        </BlockMath>
+      </div>
 
       <h3 className="text-xl font-semibold mt-6 mb-4">Uses of Nitric Acid</h3>
       <p>
@@ -63,19 +71,25 @@ export default function ManufacturingOfValuableProducts() {
 
       <h3 className="text-xl font-semibold mt-6 mb-4">Production of Nitric Acid</h3>
       <p>Nitric acid is produced industrially from ammonia by the three-step Ostwald process:</p>
-      <BlockMath>
-        {`Step 1: 4NH_3(g) + 5O_2(g) \\rightarrow 4NO(g) + 6H_2O(g)`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`Step 1: 4NH_3(g) + 5O_2(g) \\rightarrow 4NO(g) + 6H_2O(g)`}
+        </BlockMath>
+      </div>
+
       <p>Step 2: Additional air is added to cool the mixture and oxidize NO to NO<sub>2</sub>.</p>
-      <BlockMath>
-        {`2NO(g) + O_2(g) \\rightarrow 2NO_2(g)`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`2NO(g) + O_2(g) \\rightarrow 2NO_2(g)`}
+        </BlockMath>
+      </div>
 
       <p>Step 3: The NO<sub>2</sub> gas is bubbled into warm water, where it reacts to give nitric acid and nitric oxide:</p>
-      <BlockMath>
-        {`3NO_2(g) + H_2O(l) \\rightarrow 2HNO_3(aq) + NO(g)`}
-      </BlockMath>
-      
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`3NO_2(g) + H_2O(l) \\rightarrow 2HNO_3(aq) + NO(g)`}
+        </BlockMath>
+      </div>
       <h2 className="text-2xl font-semibold mt-6 mb-4">Fertilizers</h2>
       <p>
         The common forms of N-based fertilizers include anhydrous ammonia, urea, urea-ammonium nitrate (UAN) solutions, and Diammonium Monohydrogen Phosphate (DAP).

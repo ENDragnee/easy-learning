@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function EnvironmentalPollution() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Environmental Pollution</h1>
       
       <p>
@@ -64,11 +64,15 @@ export default function EnvironmentalPollution() {
       <p>
         These can be formed in the atmosphere by natural processes like thunderstorms. Combustion of fossil fuel containing nitrogen compounds as impurities and exhaust gases from furnaces and engines increase the amount of nitric oxide, NO, and nitrogen dioxide, NO<sub>2</sub>, in the atmosphere. Nitric oxide, NO, catalyzes the decomposition of ozone in the upper layer of the atmosphere to oxygen, thus decreasing the ozone layer:
       </p>
-      <BlockMath>{`2O (g) ⇌ NO → 3O (g)`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`2O (g) ⇌ NO → 3O (g)`}</BlockMath>
+      </div>
       <p>
         Nitric oxide is oxidized by oxygen to nitrogen dioxide in the presence of ultraviolet light:
       </p>
-      <BlockMath>{`2NO (g) + O_2 (g) → 2NO_2 (g)`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`2NO (g) + O_2 (g) → 2NO_2 (g)`}</BlockMath>
+      </div>
 
       <h3 className="text-xl font-semibold mt-6 mb-4">Carbon Monoxide</h3>
       <p>

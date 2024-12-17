@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function GreenChemistryAndCleanerProduction() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Green Chemistry and Cleaner Production</h1>
 
       <p>
@@ -49,9 +49,11 @@ export default function GreenChemistryAndCleanerProduction() {
       <p>
         The atom economy can be calculated by dividing the mass of the desired product by the total mass of the products. For an optimal process, the atom economy should be near or equal to 100%.
       </p>
-      <BlockMath>
-        {`\\text{Atom economy} = \\frac{\\text{Mass of C}}{\\text{Mass of C + D}} \\times 100`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`\\text{Atom economy} = \\frac{\\text{Mass of C}}{\\text{Mass of C + D}} \\times 100`}
+        </BlockMath>
+      </div>
 
       <h4 className="text-lg font-semibold mt-4 mb-2">3. Less Hazardous Chemical Synthesis</h4>
       <p>
@@ -112,19 +114,22 @@ export default function GreenChemistryAndCleanerProduction() {
         <li>Improve energy efficiency using low-temperature and low-pressure processes with new or improved catalysts.</li>
         <li>Minimize byproducts and achieve better "atom economy."</li>
       </ul>
-
-      <BlockMath>
-        {`\\text{Atom economy} = \\frac{\\text{Formula weight of the product}}{\\text{Sum of formula weights of all the reactants}} \\times 100`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`\\text{Atom economy} = \\frac{\\text{Formula weight of the product}}{\\text{Sum of formula weights of all the reactants}} \\times 100`}
+        </BlockMath>
+      </div>
 
       <h3 className="text-xl font-semibold mt-6 mb-4">Example of Atom Economy Calculation</h3>
       <p>
         For the reaction: Fe<sub>2</sub>O<sub>3</sub>(s) + 3CO(g) → 2Fe(l) + 3CO<sub>2</sub>(g),
         the atom economy is calculated as follows:
       </p>
-      <BlockMath>
-        {`\\text{Atom economy} = \\frac{112}{244} \\times 100 = 45.9%`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`\\text{Atom economy} = \\frac{112}{244} \\times 100 = 45.9%`}
+        </BlockMath>
+      </div>
     </div>
   );
 }

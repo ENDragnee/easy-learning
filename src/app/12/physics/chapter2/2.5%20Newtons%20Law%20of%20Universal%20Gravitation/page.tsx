@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function UniversalGravitation() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">2.5 Newton’s Law of Universal Gravitation</h1>
       <p>
         Planets orbit the Sun. If we look more closely at the Solar System, we see almost
@@ -30,8 +30,9 @@ export default function UniversalGravitation() {
         is directly proportional to the product of their masses and inversely proportional to the 
         square of the distance between their centers:
       </p>
-
-      <BlockMath math="F = \frac{G m_1 m_2}{r^2}" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="F = \frac{G m_1 m_2}{r^2}" />
+      </div>
       <p>
         where <InlineMath math="G" /> is the universal gravitational constant (
         <InlineMath math="6.67 \times 10^{-11} \, \text{Nm}^2/\text{kg}^2" />
@@ -51,17 +52,23 @@ export default function UniversalGravitation() {
         distance between them. By substituting <InlineMath math="g" /> for <InlineMath math="a" /> 
         in Newton’s second law of motion, <InlineMath math="F = ma" />, we get:
       </p>
-      <BlockMath math="F_g = mg" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="F_g = mg" />
+      </div>
       <p>
         Combining this with the universal gravitation equation gives:
       </p>
-      <BlockMath math="mg = \frac{G M_E m}{r_E^2}" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="mg = \frac{G M_E m}{r_E^2}" />
+      </div>
       <p>
         Cancelling <InlineMath math="m" /> and substituting values for <InlineMath math="G" />, 
         the Earth's mass <InlineMath math="M_E" />, and radius <InlineMath math="r_E" />, we 
         calculate <InlineMath math="g" />:
       </p>
-      <BlockMath math="g = \frac{(6.673 \times 10^{-11}) (5.97 \times 10^{24})}{(6.38 \times 10^6)^2} \approx 9.8 \, \text{m/s}^2" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="g = \frac{(6.673 \times 10^{-11}) (5.97 \times 10^{24})}{(6.38 \times 10^6)^2} \approx 9.8 \, \text{m/s}^2" />
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Centripetal Force and Orbital Motion</h2>
       <p>
@@ -69,8 +76,9 @@ export default function UniversalGravitation() {
         toward the center of a circle is called centripetal force. For planets, this force is the 
         gravitational pull of the Sun. Without it, planets would travel in straight lines.
       </p>
-
-      <BlockMath math="F_c = \frac{mv^2}{r}" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="F_c = \frac{mv^2}{r}" />
+      </div>
       <p>
         Here, <InlineMath math="v" /> is the tangential speed, <InlineMath math="r" /> is the radius 
         of the orbit, and <InlineMath math="m" /> is the mass of the planet.
@@ -80,20 +88,28 @@ export default function UniversalGravitation() {
         The gravitational attraction of the Sun provides the centripetal force. Combining centripetal 
         force with the universal gravitation equation:
       </p>
-      <BlockMath math="\frac{m_p v^2}{r} = \frac{G M_s m_p}{r^2}" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="\frac{m_p v^2}{r} = \frac{G M_s m_p}{r^2}" />
+      </div>
       <p>
         Simplifying:
       </p>
-      <BlockMath math="v^2 = \frac{G M_s}{r}" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="v^2 = \frac{G M_s}{r}" />
+      </div>
       <p>
         The orbital speed <InlineMath math="v" /> is related to the orbital period 
         <InlineMath math="T" /> by:
       </p>
-      <BlockMath math="v = \frac{2\pi r}{T}" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="v = \frac{2\pi r}{T}" />
+      </div>
       <p>
         Substituting:
       </p>
-      <BlockMath math="T^2 = \frac{4\pi^2 r^3}{G M_s}" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="T^2 = \frac{4\pi^2 r^3}{G M_s}" />
+      </div>
       <p>
         This is Kepler’s third law, where the square of the period is proportional to the cube of 
         the distance from the Sun.

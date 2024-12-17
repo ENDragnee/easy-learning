@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function ElectromagneticInduction() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justifyy">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">4.4 Electromagnetic Induction</h1>
 
       <p>
@@ -43,7 +43,9 @@ export default function ElectromagneticInduction() {
         For a plane surface with area <InlineMath>{'A'}</InlineMath> placed in a uniform magnetic field <InlineMath>{'B'}</InlineMath>, the magnetic flux is
         mathematically written as:
       </p>
-      <BlockMath>{'\\Phi_B = B A \\cos(\\theta) '}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'\\Phi_B = B A \\cos(\\theta) '}</BlockMath>
+      </div>
       <p>
         where <InlineMath>{'\\theta'}</InlineMath> is the angle between the magnetic field <InlineMath>{'B'}</InlineMath> and the area <InlineMath>{'A'}</InlineMath>.
         The SI unit of magnetic flux is the Weber (Wb).

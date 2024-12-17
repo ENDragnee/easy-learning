@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function VoltaicCells() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">2.5 Voltaic Cells</h1>
 
       <p>
@@ -16,7 +16,9 @@ export default function VoltaicCells() {
       <p>
         When a piece of zinc metal is placed in a CuSO<sub>4</sub> solution, Zn is oxidized to Zn<sup>2+</sup> ions while Cu<sup>2+</sup> ions are reduced to metallic copper.
       </p>
-      <BlockMath>{'Zn(s) + Cu^{2+}(aq) \\rightarrow Zn^{2+}(aq) + Cu(s)'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'Zn(s) + Cu^{2+}(aq) \\rightarrow Zn^{2+}(aq) + Cu(s)'}</BlockMath>
+      </div>
       <p>
         The electrons are transferred directly from the reducing agent (Zn) to the oxidizing agent (Cu<sup>2+</sup>) in solution. However, if we physically separate the oxidizing agent from the reducing agent, the transfer of electrons can take place via an external conducting medium (a metal wire). As the reaction progresses, it sets up a constant flow of electrons and hence generates electricity (producing electrical work such as driving an electric motor).
       </p>
@@ -32,7 +34,7 @@ export default function VoltaicCells() {
         This particular arrangement of electrodes (Zn and Cu) and solutions (ZnSO<sub>4</sub> and CuSO<sub>4</sub>) is called the Daniell cell. By definition, the anode in a galvanic cell is the electrode at which oxidation occurs, and the cathode is the electrode at which reduction occurs. The half-cell reactions for the Daniell cell are:
       </p>
 
-      <ul className="list-disc ml-6">
+      <ul className="list-disc ml-6 overflow-x-auto text-wrap text-xs">
         <li>Oxidation: <BlockMath>{'Zn(s) \\rightarrow Zn^{2+}(aq) + 2e^{-}'}</BlockMath></li>
         <li>Reduction: <BlockMath>{'Cu^{2+}(aq) + 2e^{-} \\rightarrow Cu(s)'}</BlockMath></li>
         <li>Overall Reaction: <BlockMath>{'Zn(s) + Cu^{2+}(aq) \\rightarrow Zn^{2+}(aq) + Cu(s)'}</BlockMath></li>
@@ -55,7 +57,9 @@ export default function VoltaicCells() {
       <p>
         The conventional notation for representing the components of a voltaic or galvanic cell is the cell diagram. For example, the cell notation for the Daniell cell shown is:
       </p>
-      <BlockMath>{'Zn(s) | Zn^{2+}(aq) || Cu^{2+}(aq) | Cu(s)'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'Zn(s) | Zn^{2+}(aq) || Cu^{2+}(aq) | Cu(s)'}</BlockMath>
+      </div>
       <p>
         In this notation, the components of the anode compartment (oxidation half-cell) are written to the left of the components of the cathode compartment (reduction half-cell).
       </p>
@@ -64,7 +68,7 @@ export default function VoltaicCells() {
       <p>
         A cell potential is a measure of the driving force of the cell reaction. This reaction occurs as separate half-reactions: an oxidation half-reaction and a reduction half-reaction. The general forms of these half-reactions are:
       </p>
-      <ul className="list-disc ml-6">
+      <ul className="list-disc ml-6 overflow-x-auto text-wrap text-xs">
         <li>Oxidation (Anode): <BlockMath>{'Reducing Species \\rightarrow Oxidized Species + ne^{-}'}</BlockMath></li>
         <li>Reduction (Cathode): <BlockMath>{'Oxidized Species + ne^{-} \\rightarrow Reducing Species'}</BlockMath></li>
       </ul>
@@ -76,7 +80,9 @@ export default function VoltaicCells() {
       <p>
         The standard hydrogen electrode consists of a platinum electrode with hydrogen gas at 1 atm bubbling through it, immersed in 1 M hydrochloric acid. The half-reaction for the hydrogen electrode is:
       </p>
-      <BlockMath>{'2H^{+}(1M) + 2e^{-} \\rightarrow H_2(1 atm), E^0 = 0V'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'2H^{+}(1M) + 2e^{-} \\rightarrow H_2(1 atm), E^0 = 0V'}</BlockMath>
+      </div>
 
       <h1 className="text-3xl font-bold mb-6">Voltaic Cells</h1>
       <p>
@@ -90,15 +96,21 @@ export default function VoltaicCells() {
       <ul className="list-disc ml-6">
         <li>
           When H<sub>2</sub> is oxidized, the reference half-cell is the anode, and reduction occurs at the unknown half-cell:
-          <BlockMath>
-            {`E_\\text{cell} = E_\\text{cathode} - E_\\text{anode} = E_\\text{unknown} - E_\\text{reference} = E_\\text{unknown} - 0.00V = E_\\text{unknown}`}
-          </BlockMath>
+          <div className='overflow-x-auto text-wrap text-xs'>
+            <BlockMath>
+              {`E_\\text{cell} = E_\\text{cathode} - E_\\text{anode} = E_\\text{unknown} - E_\\text{reference} = E_\\text{unknown} - 0.00V = E_\\text{unknown}`}
+            </BlockMath>
+          </div>
         </li>
         <li>
           When H<sub>2</sub> is reduced, the reference half-cell is the cathode, and oxidation occurs at the unknown half-cell:
-          <BlockMath>
-            {`E_\\text{cell} = E_\\text{reference} - E_\\text{unknown} = 0.00V - E_\\text{unknown} = -E_\\text{unknown}`}
-          </BlockMath>
+          <div className='overflow-x-auto text-wrap text-xs'>
+            <div className='overflow-x-auto text-wrap text-xs'>
+              <BlockMath>
+                {`E_\\text{cell} = E_\\text{reference} - E_\\text{unknown} = 0.00V - E_\\text{unknown} = -E_\\text{unknown}`}
+              </BlockMath>
+            </div>
+          </div>
         </li>
       </ul>
 
@@ -106,9 +118,11 @@ export default function VoltaicCells() {
       <p>
         Figure 2.11 shows a voltaic cell that has the Zn(s) | Zn<sup>2+</sup> half-reaction in one compartment and the H<sup>+</sup> | H<sub>2</sub> half-reaction in the other. The zinc electrode is negative relative to the hydrogen electrode, so we know that the zinc is being oxidized and is the anode, and the SHE is the cathode.
       </p>
-      <BlockMath>
-        {`Zn(s) | Zn^{2+}(1M) || H^{+}(1M) | H_2(1 atm) | Pt(s)`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`Zn(s) | Zn^{2+}(1M) || H^{+}(1M) | H_2(1 atm) | Pt(s)`}
+        </BlockMath>
+      </div>
 
       <p>
         The EMF of the cell at 25°C is 0.76 V, and we can write the half-cell reactions as follows:
@@ -122,9 +136,11 @@ export default function VoltaicCells() {
       <p>
         By convention, the standard EMF of the cell, E<sub>0</sub>, which is composed of contributions from both the anode and the cathode, is given by:
       </p>
-      <BlockMath>
-        {`E_\\text{cell} = E_\\text{cathode} - E_\\text{anode} = E_\\text{Zn2+/Zn} - E_\\text{H+/H2} = 0.76 V = 0.00 V - E_\\text{Zn2+/Zn}`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`E_\\text{cell} = E_\\text{cathode} - E_\\text{anode} = E_\\text{Zn2+/Zn} - E_\\text{H+/H2} = 0.76 V = 0.00 V - E_\\text{Zn2+/Zn}`}
+        </BlockMath>
+      </div>
       <p>
         Therefore, the standard reduction potential of zinc, E<sub>0</sub><sub>Zn2+/Zn</sub>, is -0.76 V. Note that we write the reaction as a reduction, even though it occurs in reverse as oxidation.
       </p>
@@ -144,9 +160,11 @@ export default function VoltaicCells() {
       <p>
         The EMF of the cell is 0.34 V, so we can calculate the standard reduction potential of copper:
       </p>
-      <BlockMath>
-        {`E_\\text{cell} = E_\\text{Cu2+/Cu} - E_\\text{H+/H2} = 0.34 V`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`E_\\text{cell} = E_\\text{Cu2+/Cu} - E_\\text{H+/H2} = 0.34 V`}
+        </BlockMath>
+      </div>
       <p>
         Thus, the standard reduction potential of copper, E<sub>0</sub><sub>Cu2+/Cu</sub>, is 0.34 V.
       </p>
@@ -163,9 +181,11 @@ export default function VoltaicCells() {
       <p>
         The EMF of the cell is:
       </p>
-      <BlockMath>
-        {`E_\\text{cell} = E_\\text{cathode} - E_\\text{anode} = 0.34 V - (-0.76 V) = 1.10 V`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`E_\\text{cell} = E_\\text{cathode} - E_\\text{anode} = 0.34 V - (-0.76 V) = 1.10 V`}
+        </BlockMath>
+      </div>
       <p>
         This positive value indicates that the reaction is spontaneous.
       </p>
@@ -174,9 +194,11 @@ export default function VoltaicCells() {
       <p>
         The EMF of a voltaic cell can change with the concentration of the electrolyte solutions. For example, we use the Nernst equation to account for this effect. The Nernst equation gives the relationship between the electrode potentials and the concentration of the electrolyte solutions.
       </p>
-      <BlockMath>
-        {`E = E_0 - 0.0592 log Q`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`E = E_0 - 0.0592 log Q`}
+        </BlockMath>
+      </div>
       <p>
         This equation shows that as the concentration of products increases and the concentration of reactants decreases, the cell potential will decrease, eventually reaching zero at equilibrium.
       </p>
@@ -187,28 +209,37 @@ export default function VoltaicCells() {
       <p>
         The anode reaction is given by:
       </p>
-      <BlockMath>{`Cu(s) → Cu^{2+} (aq; 0.1 M) + 2e^{-}`}</BlockMath>
+      <div>
+        <BlockMath>{`Cu(s) → Cu^{2+} (aq; 0.1 M) + 2e^{-}`}</BlockMath>
+      </div>
 
       <p>
         The cathode reaction is:
       </p>
-      <BlockMath>{`Cu^{2+} (aq; 1.0 M) + 2e^{-} → Cu(s)`}</BlockMath>
+      <div className='v'>
+        <BlockMath>{`Cu^{2+} (aq; 1.0 M) + 2e^{-} → Cu(s)`}</BlockMath>
+      </div>
 
       <h3 className="text-xl font-semibold mt-6 mb-4">Overall Cell Reaction</h3>
       <p>
         The overall cell reaction is the sum of the half-reactions:
       </p>
-      <BlockMath>{`Cu^{2+} (aq; 1.0 M) → Cu^{2+} (aq; 0.1 M)`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`Cu^{2+} (aq; 1.0 M) → Cu^{2+} (aq; 0.1 M)`}</BlockMath>
+      </div>
       <p>
         The cell potential at the initial concentrations of 0.10 M (dilute) and 1.0 M (concentrated), with \(n = 2\), is obtained from the Nernst equation:
       </p>
-      <BlockMath>{`E_{\text{cell}} = E^0 - 0.0592 \, V \, \log_{10} \left( \frac{[Cu^{2+}]_{\text{dilute}}}{[Cu^{2+}]_{\text{conc.}}} \right)`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`E = E^\\circ - \\frac{RT}{nF} \\ln Q`}</BlockMath>
+      </div>
       <p>
         Substituting the values:
       </p>
-      <BlockMath>{`E_{\text{cell}} = 0 V - \left( 0.0592 \, V \times \log_{10} \left( \frac{0.10 M}{1.0 M} \right) \right)`}</BlockMath>
-      <BlockMath>{`E_{\text{cell}} = 0 V - \left( 0.0592 \, V \times (-1.00) \right)`}</BlockMath>
-      <BlockMath>{`E_{\text{cell}} = 0.0296 V`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`E_{\text{cell}} = 0 V - \left( 0.0592 \, V \times (-1.00) \right)`}</BlockMath>
+        <BlockMath>{`E_{\text{cell}} = 0.0296 V`}</BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">How a Concentration Cell Works</h2>
       <p>
@@ -219,19 +250,27 @@ export default function VoltaicCells() {
       <p>
         The pH of a solution can be accurately determined by measuring the cell potential using the Nernst equation. In a typical experiment, a hydrogen electrode is used with a test solution, and the cell is connected to a standard zinc electrode:
       </p>
-      <BlockMath>{`Zn(s) | Zn^{2+} (1M) || H^+ (test solution) | H_2 (1 atm) | Pt`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`Zn(s) | Zn^{2+} (1M) || H^+ (test solution) | H_2 (1 atm) | Pt`}</BlockMath>
+      </div>
       <p>
         The cell reaction is:
       </p>
-      <BlockMath>{`Zn(s) + 2H^+ (test solution) → Zn^{2+} (1M) + H_2 (1 atm)`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`Zn(s) + 2H^+ (test solution) → Zn^{2+} (1M) + H_2 (1 atm)`}</BlockMath>
+      </div>
       <p>
         The cell potential is related to the hydrogen-ion concentration of the test solution:
       </p>
+      <div className='overflow-x-auto text-wrap text-xs'>
       <BlockMath>{`E_{\text{cell}} = 0.76 V - 0.0592 \times \frac{1}{2} \log \left( \frac{1}{[H^+]^2} \right)`}</BlockMath>
+      </div>
       <p>
         Rearranging the equation for pH, we get:
       </p>
-      <BlockMath>{`pH = 0.76 - \frac{E_{\text{cell}}}{0.0592}`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`pH = 0.76 - \frac{E_{\text{cell}}}{0.0592}`}</BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Comparison of Galvanic and Electrolytic Cells</h2>
       <table className="table-auto w-full text-sm mb-4">
@@ -266,10 +305,11 @@ export default function VoltaicCells() {
       <p>
         A fuel cell differs from a battery because it operates with a continuous supply of reactants. For example, a hydrogen-oxygen fuel cell consists of hydrogen and oxygen gases, with a proton-exchange membrane (PEM) to transfer protons between electrodes.
       </p>
-
-      <BlockMath>{`Anode: H_2(g) → 2H^+ (aq) + 2e^{-}`}</BlockMath>
-      <BlockMath>{`Cathode: O_2(g) + 4H^+ (aq) + 4e^{-} → 2H_2O(g)`}</BlockMath>
-      <BlockMath>{`Overall: 2H_2(g) + O_2(g) → 2H_2O(l)`}</BlockMath>
+      <div>
+        <BlockMath>{`Anode: H_2(g) → 2H^+ (aq) + 2e^{-}`}</BlockMath>
+        <BlockMath>{`Cathode: O_2(g) + 4H^+ (aq) + 4e^{-} → 2H_2O(g)`}</BlockMath>
+        <BlockMath>{`Overall: 2H_2(g) + O_2(g) → 2H_2O(l)`}</BlockMath>
+      </div>
 
       <p>
         Fuel cells are used in various applications, including power for lighting, emergency generators, communications equipment, and vehicles.
@@ -279,10 +319,11 @@ export default function VoltaicCells() {
       <p>
         Corrosion is the deterioration of metals through electrochemical processes. Iron corrosion, or rusting, occurs when iron is exposed to moisture and oxygen, forming iron oxide. The process involves both an anodic region (oxidation) and a cathodic region (reduction).
       </p>
-      
-      <BlockMath>{`Anodic region (oxidation): Fe(s) → Fe^{2+} (aq) + 2e^{-}`}</BlockMath>
-      <BlockMath>{`Cathodic region (reduction): O_2(g) + 4H^+ (aq) + 4e^{-} → 2H_2O`}</BlockMath>
-      <BlockMath>{`Overall reaction: 2Fe(s) + O_2(g) + 4H^+ (aq) → 2Fe^{2+} (aq) + 2H_2O(l)`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`Anodic region (oxidation): Fe(s) → Fe^{2+} (aq) + 2e^{-}`}</BlockMath>
+        <BlockMath>{`Cathodic region (reduction): O_2(g) + 4H^+ (aq) + 4e^{-} → 2H_2O`}</BlockMath>
+        <BlockMath>{`Overall reaction: 2Fe(s) + O_2(g) + 4H^+ (aq) → 2Fe^{2+} (aq) + 2H_2O(l)`}</BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Protecting Against Corrosion</h2>
       <p>

@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function RotationalDynamics() {
   return (
-    <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">2.3 Rotational Dynamics</h1>
       <p>
         Having developed the kinematics of rotational motion, we now turn to the
@@ -24,7 +24,9 @@ export default function RotationalDynamics() {
         of application of the force, as shown in Figure 2.14, the magnitude of
         the torque is given by:
       </p>
-      <BlockMath math="τ = r F \sin\theta" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="τ = r F \sin\theta" />
+      </div>
       <p>
         where <InlineMath math="\theta" /> is the angle between <InlineMath math="r" /> and <InlineMath math="F" /> when they are drawn from the
         same origin. Torque is a vector quantity, meaning it has both a
@@ -48,7 +50,9 @@ export default function RotationalDynamics() {
         point mass, as shown in Figure 2.16, rotating at radius <InlineMath math="r" /> from the
         axis of rotation, the moment of inertia is:
       </p>
-      <BlockMath math="I = m r^2" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="I = m r^2" />
+      </div>
       <p>
         From the formula, the SI unit of moment of inertia is <InlineMath math="\text{kg} \cdot \text{m}^2" />. Moment of
         inertia is a scalar quantity.
@@ -56,20 +60,26 @@ export default function RotationalDynamics() {
       <p>
         The moment of inertia for more than one particle around a fixed axis is:
       </p>
-      <BlockMath math="I = m_1 r_1^2 + m_2 r_2^2 + m_3 r_3^2 + \dots" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="I = m_1 r_1^2 + m_2 r_2^2 + m_3 r_3^2 + \dots" />
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Torque and Angular Acceleration</h2>
       <p>
         When a number of individual forces act on a rotating object, we can
         calculate the net torque:
       </p>
-      <BlockMath math="\tau_{\text{net}} = \tau_1 + \tau_2 + \tau_3 + \dots" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="\tau_{\text{net}} = \tau_1 + \tau_2 + \tau_3 + \dots" />
+      </div>
       <p>
         We can relate the net torque to angular acceleration <InlineMath math="\alpha" />, by analogy
         with Newton’s second law of motion (<InlineMath math="F = ma" />). We replace <InlineMath math="m" /> by{' '}
         <InlineMath math="I" /> and <InlineMath math="a" /> by <InlineMath math="\alpha" />.
       </p>
-      <BlockMath math="\tau = I \alpha" />
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath math="\tau = I \alpha" />
+      </div>
       <p>
         The angular acceleration of a rotating object is proportional to the net
         torque on the object.

@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function HydrolysisOfSalts() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">1.4 Hydrolysis of Salts</h1>
 
       <p>
@@ -36,7 +36,6 @@ export default function HydrolysisOfSalts() {
       <p>
         Consider the neutralization reaction between acetic acid (a weak acid) and sodium hydroxide (a strong base):
       </p>
-
       <BlockMath>{'CH_3COOH(aq) + NaOH(aq) → CH_3COONa(aq) + H_2O(aq)'}</BlockMath>
 
       <p>

@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function FluidMechanics() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
 
       <h2 className="text-3xl font-bold mb-6">3.2 Pressure in Fluids at Rest</h2>
       <p>
@@ -24,7 +24,9 @@ export default function FluidMechanics() {
       <p>
         One of the technical applications of Pascal’s Principle is a hydraulic press, which converts small forces into larger forces, or vice versa. For example, automobile mechanics use hydraulic presses to lift cars, and dentists and barbers use them to raise and lower their clients’ chairs.
       </p>
-      <BlockMath>{'P = \\frac{F_1}{A_1}'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'P = \\frac{F_1}{A_1}'}</BlockMath>
+      </div>
       <p>
         The pressure in the fluid just under piston 1 is given by the formula <InlineMath>{'P = F_1 / A_1'}</InlineMath>, where <InlineMath>{'F_1'}</InlineMath> is the downward force exerted by piston 1, and <InlineMath>{'A_1'}</InlineMath> is the area of the piston.
       </p>
@@ -33,7 +35,9 @@ export default function FluidMechanics() {
       <p>
         Consider a liquid of density <InlineMath>{'\\rho'}</InlineMath> at rest. The pressure exerted by the liquid on a parcel can be determined by the equation:
       </p>
-      <BlockMath>{'P = P_0 + \\rho g h'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'P = P_0 + \\rho g h'}</BlockMath>
+      </div>
       <p>
         where <InlineMath>{'P_0'}</InlineMath> is the pressure at the surface, <InlineMath>{'\\rho'}</InlineMath> is the density of the liquid, <InlineMath>{'g'}</InlineMath> is the acceleration due to gravity, and <InlineMath>{'h'}</InlineMath> is the depth.
       </p>
@@ -47,7 +51,9 @@ export default function FluidMechanics() {
       <p>
         Atmospheric pressure is measured by a device called a barometer. The pressure at the surface is given by the equation:
       </p>
-      <BlockMath>{'P_{atm} = \\rho g h'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'P_{atm} = \\rho g h'}</BlockMath>
+      </div>
       <p>
         where <InlineMath>{'\\rho'}</InlineMath> is the density of mercury, <InlineMath>{'g'}</InlineMath> is gravitational acceleration, and <InlineMath>{'h'}</InlineMath> is the height of the mercury column.
       </p>

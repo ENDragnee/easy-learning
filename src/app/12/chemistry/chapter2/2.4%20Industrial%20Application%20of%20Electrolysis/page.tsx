@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function IndustrialApplicationOfElectrolysis() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">2.4 Industrial Application of Electrolysis</h1>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Extraction of Metals</h2>
@@ -70,9 +70,11 @@ export default function IndustrialApplicationOfElectrolysis() {
       <p>
         Many nonmetals and compounds can be produced using electrolysis. For example, the chlorine-alkali industry is an important part of the chemical industry, which produces chlorine (a nonmetal) and sodium hydroxide (a compound) through the electrolysis of raw material brine. The reactions that take place at the electrodes (when graphite electrodes are used) are as follows:
       </p>
-      <BlockMath>{`Anode reaction: 2Cl^{-} (aq) → Cl_2 (g) + 2e^{-}`}</BlockMath>
-      <BlockMath>{`Cathode reaction: 2H_2O (l) + 2e^{-} → H_2 (g) + 2OH^{-} (aq)`}</BlockMath>
-      <BlockMath>{`Overall cell reaction: 2NaCl (aq) + 2H_2O (l) → 2Na^{+} (aq) + 2OH^{-} (aq) + Cl_2 (g) + H_2 (g)`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`Anode reaction: 2Cl^{-} (aq) → Cl_2 (g) + 2e^{-}`}</BlockMath>
+        <BlockMath>{`Cathode reaction: 2H_2O (l) + 2e^{-} → H_2 (g) + 2OH^{-} (aq)`}</BlockMath>
+        <BlockMath>{`Overall cell reaction: 2NaCl (aq) + 2H_2O (l) → 2Na^{+} (aq) + 2OH^{-} (aq) + Cl_2 (g) + H_2 (g)`}</BlockMath>
+      </div>
     </div>
   );
 }

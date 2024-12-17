@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function FaradaysLaw() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">4.5 Faraday’s Law of Electromagnetic Induction</h1>
 
       <p>
@@ -24,8 +24,9 @@ export default function FaradaysLaw() {
         Faraday’s law states that the magnitude of the induced electromotive force (emf) is directly proportional to the rate of
         change of the magnetic flux in a closed coil:
       </p>
-
-      <BlockMath>{'\\epsilon = - \\frac{\\Delta \\Phi_B}{\\Delta t}'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'\\epsilon = - \\frac{\\Delta \\Phi_B}{\\Delta t}'}</BlockMath>
+      </div>
       <p>
         where <InlineMath>{'\\epsilon'}</InlineMath> is the induced voltage (emf), <InlineMath>{'\\Delta \\Phi_B'}</InlineMath> is the change in magnetic flux,
         and <InlineMath>{'\\Delta t'}</InlineMath> is the change in time.
@@ -35,8 +36,9 @@ export default function FaradaysLaw() {
         For a coil with <InlineMath>{'N'}</InlineMath> turns, the change in flux associated with each turn is the same. Therefore,
         the expression for the total induced emf is:
       </p>
-
-      <BlockMath>{'\\epsilon = - \\frac{N \\Delta \\Phi_B}{\\Delta t}'}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{'\\epsilon = - \\frac{N \\Delta \\Phi_B}{\\Delta t}'}</BlockMath>
+      </div>
 
       <p>
         The negative sign in the equation is a result of Lenz’s law, which states that the direction of the induced current is such

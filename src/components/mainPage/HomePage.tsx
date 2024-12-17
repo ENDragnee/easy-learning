@@ -16,38 +16,17 @@ type PopularItem = {
 
 const popularItems: PopularItem[] = [
   {
-    title: "Introduction to Chemistry",
+    title: "MOE Curriculum",
     description: "Learn the fundamentals of chemistry",
     icon: <Atom className="h-5 w-5" />,
-    category: "Chemistry",
+    category: "MOE",
     link: "/12/chemistry/chapter1/1.1%20Acid-Base%20Concepts"
   },
   {
-    title: "Introduction to Python",
-    description: "Learn the basics of Python programming",
-    icon: <Code className="h-5 w-5" />,
-    category: "Programming",
-    link: "/"
-  },
-  {
-    title: "Advanced Mathematics",
-    description: "Complex algebra and calculus concepts",
-    icon: <PenTool className="h-5 w-5" />,
-    category: "Mathematics",
-    link: "/"
-  },
-  {
-    title: "Creative Writing",
-    description: "Master the art of storytelling",
-    icon: <BookOpen className="h-5 w-5" />,
-    category: "English",
-    link: "/"
-  },
-  {
-    title: "Physics Fundamentals",
+    title: "AASTU Curriculum",
     description: "Understanding mechanics and energy",
     icon: <Sparkles className="h-5 w-5" />,
-    category: "Science",
+    category: "AASTU",
     link: "/12/physics/chapter2/2.1%20Projectile%20Motion"
   },
 ]

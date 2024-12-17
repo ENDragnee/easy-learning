@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function ManufacturingIndustriesInEthiopia() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">3.4 Some Manufacturing Industries in Ethiopia</h1>
 
       <p>
@@ -55,9 +55,11 @@ export default function ManufacturingIndustriesInEthiopia() {
       <p>
         In cement production, when limestone (CaCO<sub>3</sub>) is heated, it decomposes to form calcium oxide (CaO) and carbon dioxide (CO<sub>2</sub>). The high-temperature reactions in the kiln produce compounds like calcium silicates and aluminates.
       </p>
-      <BlockMath>
-        {`CaCO_3 \\rightarrow CaO + CO_2`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`CaCO_3 \\rightarrow CaO + CO_2`}
+        </BlockMath>
+      </div>
 
       <h3 className="text-xl font-semibold mt-6 mb-4">Setting of Cement</h3>
       <p>
@@ -115,9 +117,11 @@ export default function ManufacturingIndustriesInEthiopia() {
                 <ul className="list-disc ml-8">
                 <li>
                     <strong>The Kraft Process:</strong> A widely used method that uses sodium hydroxide and sodium sulfide for digestion at high temperatures.
+                    <div className='overflow-x-auto text-wrap text-xs'>
                     <BlockMath>
-                    {`CaCO_3 + NaOH + Na_2S \\rightarrow Pulp`}
-                    </BlockMath>
+                      {`CaCO_3 + NaOH + Na_2S \\rightarrow Pulp`}
+                      </BlockMath>
+                    </div>
                 </li>
                 <li>
                     <strong>The Sulphite Process:</strong> This method uses sodium bisulphate or magnesium bisulphate at a low pH to break down lignin.
@@ -205,27 +209,29 @@ export default function ManufacturingIndustriesInEthiopia() {
       <p>
         Ethanol is manufactured industrially by fermentation of carbohydrates such as sugar. Fermentation is the slow decomposition of carbohydrates such as sucrose, starch, and cellulose in the presence of a suitable enzyme that results in the formation of ethanol and carbon dioxide.
       </p>
-
-      <BlockMath>
-        {`C_{12}H_{22}O_{11} \\xrightarrow{invertase} C_6H_{12}O_6 + C_6H_{12}O_6`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`C_{12}H_{22}O_{11} \\xrightarrow{invertase} C_6H_{12}O_6 + C_6H_{12}O_6`}
+        </BlockMath>
+      </div>
       
       <p>
         The reaction above shows sucrose decomposing into glucose and fructose. The fermentation process continues as follows:
       </p>
-
-      <BlockMath>
-        {`C_6H_{12}O_6 + H_2O \\xrightarrow{zymase} 2C_2H_5OH + 2CO_2`}
-      </BlockMath>
-
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`C_6H_{12}O_6 + H_2O \\xrightarrow{zymase} 2C_2H_5OH + 2CO_2`}
+        </BlockMath>
+      </div>
       <h3 className="text-xl font-semibold mt-6 mb-4">Catalytic Hydration of Ethene</h3>
       <p>
         Most ethanol is manufactured at present by this method. In this process, ethene is treated with steam at 573 K and 60 atm pressures in the presence of phosphoric acid (H<sub>3</sub>PO<sub>4</sub>) as a catalyst.
       </p>
-
-      <BlockMath>
-        {`CH_2=CH_2 (g) + H_2O (g) \\xrightarrow{H_3PO_4} CH_3CH_2OH (g)`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`CH_2=CH_2 (g) + H_2O (g) \\xrightarrow{H_3PO_4} CH_3CH_2OH (g)`}
+        </BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Beer and Wine Production</h2>
 
@@ -259,10 +265,11 @@ export default function ManufacturingIndustriesInEthiopia() {
       <p>
         Detergents are similar to soaps but are more effective in both soft and hard water. They are often made from long-chain alcohols or alkyl benzene sulphonic acids. One example is sodium lauryl sulfate (C<sub>12</sub>H<sub>25</sub>O–SO<sub>2</sub>–ONa), prepared by reacting dodecyl alcohol with sulfuric acid and sodium hydroxide.
       </p>
-
-      <BlockMath>
-        {`C_{12}H_{25}OH + H_2SO_4 \\rightarrow C_{12}H_{25}OSO_3H`}
-      </BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>
+          {`C_{12}H_{25}OH + H_2SO_4 \\rightarrow C_{12}H_{25}OSO_3H`}
+        </BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Dry Cleaning</h2>
       <p>

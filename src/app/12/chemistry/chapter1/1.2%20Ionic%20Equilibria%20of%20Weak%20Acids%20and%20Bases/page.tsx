@@ -5,9 +5,8 @@ import 'katex/dist/katex.min.css';
 
 export default function IonicEquilibria() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">1.2 Ionic Equilibria of Weak Acids and Bases</h1>
-
       <p>
         In aqueous solutions, water can act as both an acid and a base, as it can self-ionize to produce hydronium (<InlineMath>{'H_3O^+'}</InlineMath>) and hydroxide (<InlineMath>{'OH^-'}</InlineMath>) ions. This process is known as autoionization or self-ionization.
       </p>
@@ -144,9 +143,11 @@ export default function IonicEquilibria() {
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Percent Ionization</h2>
       <p>
-        Percent ionization is the proportion of acid or base molecules that dissociate in solution, expressed as a percentage. For an acid, it is given by:
+        Percent ionization is the proportion of acid or base molecules that dissociate in solution, expressed as a percentage. For an acid, it is given by: Percent Ionization =
       </p>
-      <BlockMath>{'\\text{Percent Ionization} = \\frac{\\text{Ionized Acid Concentration at Equilibrium}}{\\text{Initial Acid Concentration}} \\times 100%'}</BlockMath>
+      <div className='overflow-x-auto text-xs'>
+        <BlockMath>{'\\frac{\\text{Ionized Acid Concentration at Equilibrium}}{\\text{Initial Acid Concentration}} \\times 100%'}</BlockMath>
+      </div>
       <p>
         The percent ionization increases with acid or base strength. Strong acids and bases ionize nearly completely, while weak acids and bases ionize partially, resulting in a lower percent ionization.
       </p>

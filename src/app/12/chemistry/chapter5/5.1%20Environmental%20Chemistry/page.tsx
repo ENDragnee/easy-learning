@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function EnvironmentalChemistry() {
   return (
-    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Environmental Chemistry</h1>
 
       <p>
@@ -37,12 +37,15 @@ export default function EnvironmentalChemistry() {
       </p>
 
       <h4 className="text-lg font-semibold mt-4">Reaction I: Nitric Oxide and Oxygen</h4>
-      <BlockMath>{`2NO (g) + O_2 (g) ->{\text{UV}} 2NO_2 (g)`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`2NO (g) + O_2 (g) ->{\text{UV}} 2NO_2 (g)`}</BlockMath>
+      </div>
 
       <h4 className="text-lg font-semibold mt-4">Reaction II: Chlorofluorocarbons and Ozone Depletion</h4>
-      <BlockMath>{`CF_2Cl_2 + \text{UV} -> CF_2Cl + Cl`}</BlockMath>
-      <BlockMath>{`Cl + O_3 -> ClO + O_2`}</BlockMath>
-
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`CF_2Cl_2 + \text{UV} -> CF_2Cl + Cl`}</BlockMath>
+        <BlockMath>{`Cl + O_3 -> ClO + O_2`}</BlockMath>
+      </div>
       <h3 className="text-xl font-semibold mt-6 mb-4">The Hydrosphere</h3>
       <p>
         The hydrosphere is the combined mass of water found on, under, and above the surface of the Earth. The hydrosphere includes water that is on the surface of the planet, underground, and in the air. It is a collective term for all different forms of water, including oceans, seas, rivers, lakes, streams, reservoirs, glaciers, and groundwater.
@@ -59,9 +62,9 @@ export default function EnvironmentalChemistry() {
       <p>
         Ammonia (NH₃) discharged from agriculture, aquaculture, industry, and urban areas into large water bodies results in toxicity to fish or aquatic ecosystems. For example, the biological oxidation of NH₃ to nitrite and then nitrate is a key part of the complex nitrogen cycle and a fundamental process in aquatic environments, influencing ecosystem stability and functionality.
       </p>
-      
-      <BlockMath>{`2NH_3 + 3O_2 -> 2NO_3^- + 2H^+ + 2H_2O`}</BlockMath>
-
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`2NH_3 + 3O_2 -> 2NO_3^- + 2H^+ + 2H_2O`}</BlockMath>
+      </div>
       <h4 className="text-lg font-semibold mt-4">Example II: Nitrate and Nitrite Discharge</h4>
       <p>
         Nitrate (NO₃⁻) and Nitrite (NO₂⁻) that are discharged into water bodies from agriculture, industry, aquaculture, and sewage result in accelerating aquatic plant growth, leading to eutrophication.
@@ -81,14 +84,16 @@ export default function EnvironmentalChemistry() {
       <p>
         Different bacteria (mainly autotrophic, i.e., not dependent on organic material for their carbon supply) can affect the oxidation or reduction of minerals. For example:
       </p>
-      <BlockMath>{`FeCO_3 + \frac{1}{2} O_2 + 3H_2O ->{Ferro-bacillus} 2Fe(OH)_3 + 2CO_2`}</BlockMath>
-
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`FeCO_3 + \frac{1}{2} O_2 + 3H_2O ->{Ferro-bacillus} 2Fe(OH)_3 + 2CO_2`}</BlockMath>
+      </div>
       <h2 className="text-2xl font-semibold mt-6 mb-4">II. Chemical Weathering of Rocks</h2>
       <p>
         The chemical weathering of rocks is important in the lithosphere. For example:
       </p>
-      <BlockMath>{`Fe_2O_3 + 3H_2O -> Fe_2O_3 • 3H_2O`}</BlockMath>
-
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`Fe_2O_3 + 3H_2O -> Fe_2O_3 • 3H_2O`}</BlockMath>
+      </div>
       <h1 className="text-3xl font-bold mt-10 mb-6">The Biosphere</h1>
       <p>
         The biosphere refers to the realm of living organisms and their interactions with the environment. This compartment is divided into smaller units called ecosystems. Each ecosystem contains dynamic interrelationships between living forms and their physical environment. These interrelations manifest as natural cycles, such as the hydrologic, oxygen, nitrogen, phosphorus, and sulfur cycles. These cycles operate in a balanced manner, providing a continuous circulation of essential constituents.
@@ -98,13 +103,17 @@ export default function EnvironmentalChemistry() {
       <p>
         Photosynthesis is a key reaction in the biosphere:
       </p>
-      <BlockMath>{`6CO_2 + 6H_2O ->{Sunlight} C_6H_{12}O_6 + 6O_2`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`6CO_2 + 6H_2O ->{Sunlight} C_6H_{12}O_6 + 6O_2`}</BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">II. Respiration</h2>
       <p>
         Another vital process in the biosphere is respiration:
       </p>
-      <BlockMath>{`C_6H_{12}O_6 + 6O_2 -> 6CO_2 + 6H_2O + \text{Heat energy}`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`C_6H_{12}O_6 + 6O_2 -> 6CO_2 + 6H_2O + \text{Heat energy}`}</BlockMath>
+      </div>
 
       <h1 className="text-3xl font-bold mt-10 mb-6">The Hydrologic Cycle</h1>
       <p>
@@ -117,11 +126,15 @@ export default function EnvironmentalChemistry() {
       <ul className="list-disc ml-8">
         <li>Energy production:</li>
       </ul>
-      <BlockMath>{`CH_4 + 2O_2 ->{\text{Yield}} CO_2 + 2H_2O + \text{Heat energy}`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`CH_4 + 2O_2 ->{\text{Yield}} CO_2 + 2H_2O + \text{Heat energy}`}</BlockMath>
+      </div>
       <ul className="list-disc ml-8">
         <li>Degradation of organic material (example: glucose):</li>
       </ul>
-      <BlockMath>{`C_6H_{12}O_6 + 6O_2 -> 6CO_2 + 6H_2O`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`C_6H_{12}O_6 + 6O_2 -> 6CO_2 + 6H_2O`}</BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">The Nitrogen Cycle</h2>
       <p>
@@ -130,11 +143,15 @@ export default function EnvironmentalChemistry() {
       <ul className="list-disc ml-8">
         <li>Fixation by bacteria and algae:</li>
       </ul>
-      <BlockMath>{`N_2 + 3CH_2O + 3H_2O + 4H^+ -> 3CO_2 + 4NH_4^+`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`N_2 + 3CH_2O + 3H_2O + 4H^+ -> 3CO_2 + 4NH_4^+`}</BlockMath>
+      </div>
       <ul className="list-disc ml-8">
         <li>Nitrification by nitrosomas and nitrobacteria:</li>
       </ul>
-      <BlockMath>{`2O_2 + 3NH_4^+ -> NO_3^- + 2H^+ + H_2O`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`2O_2 + 3NH_4^+ -> NO_3^- + 2H^+ + H_2O`}</BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">The Phosphorus Cycle</h2>
       <p>
@@ -145,18 +162,24 @@ export default function EnvironmentalChemistry() {
       <p>
         The sulfur cycle plays a role in balancing the concentration of sulfur in different reservoirs, making Earth habitable. Some of the important reactions in the sulfur cycle include:
       </p>
-      <BlockMath>{`H_2S + 4O_2 -> 2SO_4^{2-} + 2H^+`}</BlockMath>
-      <BlockMath>{`SO_4^{2-} + 2CH_2O + H^+ -> H_2S + 2H_2O + 2CO_2`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`H_2S + 4O_2 -> 2SO_4^{2-} + 2H^+`}</BlockMath>
+        <BlockMath>{`SO_4^{2-} + 2CH_2O + H^+ -> H_2S + 2H_2O + 2CO_2`}</BlockMath>
+      </div>
 
       <h1 className="text-3xl font-bold mt-10 mb-6">The Carbon Cycle</h1>
       <p>
         The carbon cycle is integral to the Earth's climate. Plants convert carbon dioxide into glucose and oxygen through photosynthesis:
       </p>
-      <BlockMath>{`6CO_2 + 6H_2O -> C_6H_{12}O_6 + 6O_2`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`6CO_2 + 6H_2O -> C_6H_{12}O_6 + 6O_2`}</BlockMath>
+      </div>
       <p>
         Animals and plants release carbon dioxide back into the atmosphere through respiration:
       </p>
-      <BlockMath>{`C_6H_{12}O_6 + 6O_2 -> 6CO_2 + 6H_2O`}</BlockMath>
+      <div className='overflow-x-auto text-wrap text-xs'>
+        <BlockMath>{`C_6H_{12}O_6 + 6O_2 -> 6CO_2 + 6H_2O`}</BlockMath>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Pollutants and Contaminants</h2>
       <p>
