@@ -31,6 +31,27 @@ const TabManager: React.FC = () => {
     const splitInstanceRef = useRef<Split.Instance | null>(null);
     const pathname = usePathname();
     const router = useRouter();
+    const TAB_HEIGHT = 44; // Height of each tab in pixels
+    const HEADER_HEIGHT = 48; // Height of the header section
+    const MAX_HEIGHT = 80; // Maximum height in vh
+    const MIN_HEIGHT = 20; // Minimum height in 
+    const MAX_TABS = 7; // New constant for maximum number of tabs
+
+
+    const calculateContainerHeight = (tabCount: number) => {
+      // Calculate the desired height in pixels
+      const desiredHeight = HEADER_HEIGHT + (tabCount * TAB_HEIGHT);
+      // Convert to vh and clamp between MIN_HEIGHT and MAX_HEIGHT
+      const viewportHeight = window.innerHeight;
+      const heightInVh = (desiredHeight / viewportHeight) * 160;
+      return `${Math.min(Math.max(heightInVh, MIN_HEIGHT), MAX_HEIGHT)}vh`;
+  };
+
+  useEffect(() => {
+    if (tabManagerRef.current) {
+        tabManagerRef.current.style.height = calculateContainerHeight(tabs.length);
+    }
+  }, [tabs.length]);
   
     useEffect(() => {
       if (tabs.length === 0) {
@@ -161,7 +182,7 @@ const TabManager: React.FC = () => {
     const course = searchParams.get('course') || undefined;
     const chapter = searchParams.get('chapter') || undefined;
     const subChapter = searchParams.get('subChapter') || undefined;
-  
+
     return {
       id: uuidv4(),
       path: `${path}?${searchParams.toString()}`, // Include query parameters in the path
@@ -184,6 +205,9 @@ const TabManager: React.FC = () => {
   };
 
   const addNewTab = () => {
+    if (tabs.length >= MAX_TABS) {
+      return; // Don't add new tab if limit is reached
+    }
     const newTab = createNewTab(pathname);
     setTabs([...tabs, newTab]);
     setActiveTab(newTab.id);
@@ -208,6 +232,7 @@ const TabManager: React.FC = () => {
     router.push(tab.path); // Switch to the full path with query parameters
   };
 
+
   useEffect(() => {
     if (typeof window !== 'undefined' && activeTab) {
       const searchParams = new URLSearchParams(window.location.search);
@@ -225,84 +250,86 @@ const TabManager: React.FC = () => {
   
 
   return (
-    <>
-      {/* Collapsed Pill */}
-      {!isOpen && (
-        <div
-          className="fixed right-0 top-1/2 transform -translate-y-1/2 cursor-pointer bg-white dark:bg-[#2d303a] rounded-l-full shadow-lg border border-r-0 border-gray-200 dark:border-[#4b5162] z-30"
-          onClick={() => setIsOpen(true)}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="p-2">
-            <MdTab className="w-8 h-6" />
-          </div>
-        </div>
-      )}
+        <>
+            {/* Collapsed Pill */}
+            {!isOpen && (
+                <div
+                    className="fixed right-0 top-1/3 transform -translate-y-1/2 cursor-pointer bg-white dark:bg-[#2d303a] rounded-l-full shadow-lg border border-r-0 border-gray-200 dark:border-[#4b5162] z-30"
+                    onClick={() => setIsOpen(true)}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                >
+                    <div className="p-2">
+                        <MdTab className="w-8 h-6" />
+                    </div>
+                </div>
+            )}
 
-      {/* Expanded Tab Manager */}
-      <div
-        ref={tabManagerRef}
-        className={`fixed top-[40%] transform right-0 z-30 w-32 bg-white dark:bg-[#2d303a] rounded-xl transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        } flex flex-col`}
-        style={{
-          height: `${Math.min(Math.max(tabs.length * 3 + 10, 3 * 3 + 10), 50)}vh`, 
-        }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <div className="flex justify-between items-center p-2">
-            <div className="flex items-center space-x-1">
-                <button
-                    onClick={addNewTab}
-                    className="p-0.5 hover:bg-gray-100 dark:hover:bg-[#363945] rounded-md transition-colors"
-                >
-                    <IoMdAdd className="w-6 h-8 mr-6" />
-                </button>
-                <button
-                    onClick={toggleSplitMode}
-                    className={`p-0.5 rounded-md transition-colors ${
-                        tabs.length <= 1 
-                            ? 'opacity-50 cursor-not-allowed' 
-                            : 'hover:bg-gray-100 dark:hover:bg-[#363945]'
-                    } ${
-                        isSplitMode ? 'bg-gray-200 dark:bg-[#4b5162]' : ''
-                    }`}
-                    disabled={tabs.length <= 1}
-                >
-                    <TbLayoutList className="w-6 h-8 ml-6" />
-                </button>
-            </div>
-        </div>
-        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-[#4b5162] scrollbar-track-transparent">
-          {tabs.map(tab => (
+            {/* Expanded Tab Manager */}
             <div
-              key={tab.id}
-              onClick={() => switchTab(tab)}
-              className={`
-                flex justify-between items-center p-1.5 cursor-pointer
-                hover:bg-gray-100 dark:hover:bg-[#363945]
-                ${activeTab === tab.id ? 'bg-gray-100 dark:bg-[#363945]' : ''}
-                transition-colors
-              `}
+                ref={tabManagerRef}
+                className={`fixed top-[30%] transform right-0 z-30 w-36 bg-white dark:bg-[#2d303a] rounded-xl transition-all duration-300 ease-in-out ${
+                    isOpen ? 'translate-x-0' : 'translate-x-full'
+                } flex flex-col scrollbar-none`}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
             >
-              {/* <MdTab className="w-6 h-16 m-2" /> */}
-              <span className="text-sm truncate flex-1 text-center m-4 pl-4">{tab.title}</span>
-              <button
-                onClick={(e) => removeTab(tab.id, e)}
-                className="p-0.5 hover:bg-gray-200 dark:hover:bg-[#4b5162] rounded-md ml-1"
-              >
-                <IoClose className="w-5 h-5" />
-              </button>
+                <div className="flex justify-between items-center p-2 shadow-sm">
+                    <div className="flex items-center space-x-1">
+                        <button
+                            onClick={addNewTab}
+                            className={`p-0.5 rounded-md transition-colors ${
+                                tabs.length >= MAX_TABS 
+                                    ? 'opacity-50 cursor-not-allowed' 
+                                    : 'hover:bg-gray-100 dark:hover:bg-[#363945]'
+                            }`}
+                            disabled={tabs.length >= MAX_TABS}
+                        >
+                            <IoMdAdd className="w-6 h-8 mr-6" />
+                        </button>
+                        <button
+                            onClick={toggleSplitMode}
+                            className={`p-0.5 rounded-md transition-colors ${
+                                tabs.length <= 1 
+                                    ? 'opacity-50 cursor-not-allowed' 
+                                    : 'hover:bg-gray-100 dark:hover:bg-[#363945]'
+                            } ${
+                                isSplitMode ? 'bg-gray-200 dark:bg-[#4b5162]' : ''
+                            }`}
+                            disabled={tabs.length <= 1}
+                        >
+                            <TbLayoutList className="w-6 h-8 ml-6" />
+                        </button>
+                    </div>
+                </div>
+                <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-[#4b5162] scrollbar-track-transparent m-2">
+                    {tabs.map(tab => (
+                        <div
+                            key={tab.id}
+                            onClick={() => switchTab(tab)}
+                            className={`
+                                flex justify-between items-center p-1.5 cursor-pointer
+                                hover:bg-gray-100 dark:hover:bg-[#363945]
+                                ${activeTab === tab.id ? 'bg-gray-100 dark:bg-[#363945]' : ''}
+                                transition-colors h-[${TAB_HEIGHT}px]
+                            `}
+                        >
+                            <span className="text-sm truncate flex-1 text-center m-4 pl-4">{tab.title}</span>
+                            <button
+                                onClick={(e) => removeTab(tab.id, e)}
+                                className="p-0.5 hover:bg-gray-200 dark:hover:bg-[#4b5162] rounded-md ml-1"
+                            >
+                                <IoClose className="w-5 h-5" />
+                            </button>
+                        </div>
+                    ))}
+                </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 };
+
 
 export default TabManager;
