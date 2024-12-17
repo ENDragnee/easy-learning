@@ -5,7 +5,7 @@ import "katex/dist/katex.min.css";
 
 export default function RotationalMotion() {
   return (
-    <div className="px-4 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-2xl sm:text-3xl font-bold mb-6">2.2 Rotational Motion</h1>
       <p>
         Rotational motion is the motion of an object in a circle around a fixed
@@ -120,12 +120,11 @@ export default function RotationalMotion() {
         </li>
       </ul>
 
-      <div className="relative aspect-w-16 aspect-h-[10] sm:aspect-h-[7] mt-6">
+      <div className="relative w-full overflow-hidden aspect-video">
         <iframe
           scrolling="no"
           src="https://www.geogebra.org/material/iframe/id/177707/width/850/height/600/border/888888/rc/false/ai/false/sdz/false/smb/false/stb/false/stbh/true/ld/false/sri/true/at/auto"
-          className="w-full h-full"
-          style={{ minHeight: "500px" }} // Ensures larger height for simulator
+          className='responsive-iframe top-0 left-0 w-full h-full'
           allowFullScreen
         ></iframe>
       </div>

@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function UniversalGravitation() {
   return (
-    <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">2.5 Newton’s Law of Universal Gravitation</h1>
       <p>
         Planets orbit the Sun. If we look more closely at the Solar System, we see almost
@@ -41,6 +41,7 @@ export default function UniversalGravitation() {
       <iframe src="https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab_en.html"
         width="800"
         height="600"
+        className='responsive-iframe top-0 left-0 w-full h-full'
         allowFullScreen>
       </iframe>
 
@@ -98,6 +99,7 @@ export default function UniversalGravitation() {
         the distance from the Sun.
       </p>
       <iframe src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html"
+        className='responsive-iframe top-0 left-0 w-full h-full'
         width="800"
         height="600"
         allowFullScreen>

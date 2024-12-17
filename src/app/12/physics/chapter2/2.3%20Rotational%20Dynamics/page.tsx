@@ -74,11 +74,12 @@ export default function RotationalDynamics() {
         The angular acceleration of a rotating object is proportional to the net
         torque on the object.
       </p>
-      <iframe src="https://phet.colorado.edu/sims/cheerpj/rotation/latest/rotation.html?simulation=torque"
-        width="1033"
-        height="780"
-        allowFullScreen>
-      </iframe>
+      <div className="relative w-full overflow-hidden aspect-video">
+        <iframe src="https://phet.colorado.edu/sims/cheerpj/rotation/latest/rotation.html?simulation=torque"
+          className='responsive-iframe top-0 left-0 w-full h-full'
+          allowFullScreen>
+        </iframe>
+      </div>
     </div>
   );
 }

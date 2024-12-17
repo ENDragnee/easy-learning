@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function AcidBaseIndicators() {
   return (
-    <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">1.5 Acid–Base Indicators and Titrations</h1>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">How do Acid-Base Indicators Change Color?</h2>

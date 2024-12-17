@@ -1,16 +1,11 @@
 "use client"
 
-import { useEffect } from 'react';
 import 'katex/dist/katex.min.css'; // Import KaTeX CSS
 import { InlineMath, BlockMath } from 'react-katex';
 
 const FluidMechanics = () => {
-  useEffect(() => {
-    // Any necessary initialization logic for KaTeX if needed
-  }, []);
-
   return (
-    <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold text-center">Unit 3: Fluid Mechanics</h1>
 
       <h2 className="text-2xl font-semibold mt-4">3.1 Properties of Solids, Liquids, and Gases</h2>

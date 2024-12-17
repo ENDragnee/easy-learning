@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function Rectification() {
   return (
-    <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">5.3 Rectification</h1>
 
       <p>

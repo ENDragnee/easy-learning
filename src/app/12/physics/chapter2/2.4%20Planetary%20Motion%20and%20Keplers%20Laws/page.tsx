@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function PlanetaryMotionAndKeplersLaws() {
   return (
-    <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">2.4 Planetary Motion and Kepler’s Laws</h1>
       <p>
         The planets orbit the Sun, maintaining their respective distances and
@@ -114,11 +114,13 @@ export default function PlanetaryMotionAndKeplersLaws() {
           </tr>
         </tbody>
       </table>
+      <div className="relative w-full overflow-hidden aspect-video">
       <iframe src="https://phet.colorado.edu/sims/html/keplers-laws/latest/keplers-laws_en.html"
-        width="800"
-        height="600"
+        scrolling='no'
+        className='responsive-iframe top-0 left-0 w-full h-full'
         allowFullScreen>
       </iframe>
+      </div>
     </div>
   );
 }

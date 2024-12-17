@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function DiodesAndTheirFunctions() {
   return (
-    <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">5.2 Diodes and their Functions</h1>
 
       <p>
@@ -61,7 +61,15 @@ export default function DiodesAndTheirFunctions() {
       <h2 className="text-2xl font-semibold mt-6 mb-4">External Resources</h2>
       <p>
         You can watch this related video on YouTube: 
-        <a href="https://www.youtube.com/watch?v=IvZv910pM7Am" className="text-blue-600">Understanding Diodes</a>.
+        <div className="relative aspect-w-16 aspect-h-9 sm:aspect-h-[10] mb-6">
+        <iframe
+          src="https://www.youtube.com/watch?v=IvZv910pM7Am"
+          className="w-full h-full"
+          style={{ minHeight: "450px" }} // Ensures larger height
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
       </p>
     </div>
   );

@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function FluidMechanics() {
   return (
-    <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Fluid Mechanics</h1>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">3.3 Archimedes' Principle</h2>
@@ -65,7 +65,7 @@ export default function FluidMechanics() {
         src="https://www.geogebra.org/material/iframe/id/58095/width/900/height/620/border/888888/rc/false/ai/false/sdz/false/smb/false/stb/false/stbh/true/ld/false/sri/true/at/auto"
         width="900px"
         height="620px"
-        style={{ border: "0px" }}
+        className='responsive-iframe top-0 left-0 w-full h-1/2'
       ></iframe>
     </div>
   );

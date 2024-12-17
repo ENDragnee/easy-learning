@@ -5,7 +5,7 @@ import 'katex/dist/katex.min.css';
 
 export default function FluidMechanics() {
   return (
-    <div className="px-6 py-10 max-w-4xl mx-auto text-justify">
+    <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Fluid Mechanics</h1>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">3.4 Fluid Flow</h2>
@@ -30,12 +30,15 @@ export default function FluidMechanics() {
       <p>
         The path taken by a fluid particle under steady flow is called a streamline. The velocity of the particle is always tangent to the streamline. A set of streamlines forms a tube of flow. In laminar flow, fluid particles cannot flow into or out of the sides of this tube; if they could, the streamlines would cross, resulting in turbulent flow.
       </p>
+      <div className="relative w-full overflow-hidden aspect-video">
         <iframe
           src="https://phet.colorado.edu/sims/cheerpj/fluid-pressure-and-flow/latest/fluid-pressure-and-flow.html?simulation=fluid-pressure-and-flow"
           width="800"
           height="600"
+          className='responsive-iframe top-0 left-0 w-full'
           allowFullScreen
         ></iframe>
+      </div>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">Flow Rate</h2>
       <p>
@@ -66,13 +69,16 @@ export default function FluidMechanics() {
       <p>
         Where <InlineMath>{'P'}</InlineMath> is the pressure, <InlineMath>{'\\rho'}</InlineMath> is the fluid’s density, <InlineMath>{'v'}</InlineMath> is the velocity of the fluid, and <InlineMath>{'h'}</InlineMath> is the height. This principle explains why pressure decreases as the speed of the fluid increases.
       </p>
-      <iframe
-        scrolling="no"
-        src="https://www.geogebra.org/material/iframe/id/1719715/width/985/height/696/border/888888/rc/false/ai/false/sdz/false/smb/false/stb/false/stbh/true/ld/false/sri/true/at/auto"
-        width="985px"
-        height="696px"
-        style={{ border: "0px" }}
-      ></iframe>
+      <div className="relative w-full overflow-hidden aspect-video">
+        <iframe
+          scrolling="no"
+          src="https://www.geogebra.org/material/iframe/id/1719715/width/985/height/696/border/888888/rc/false/ai/false/sdz/false/smb/false/stb/false/stbh/true/ld/false/sri/true/at/auto"
+          width="800"
+          height="600"
+          className='responsive-iframe top-0 left-0 w-full h-1/3'
+          style={{ border: "0px" }}
+        ></iframe>
+      </div>
 
 
       <h3 className="text-xl font-semibold mt-6 mb-4">Applications of Fluid Flow</h3>
