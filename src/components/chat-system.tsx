@@ -1,7 +1,6 @@
-// chat-system.tsx
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -11,6 +10,13 @@ export function ChatSystem() {
   const [messages, setMessages] = useState<{ role: "user" | "assistant" | "sent"; content: string }[]>([])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const scrollAreaRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight
+    }
+  }, [messages])
 
   const handleSend = async () => {
     if (input.trim()) {
@@ -68,44 +74,48 @@ export function ChatSystem() {
   }
 
   return (
-    <div className="space-y-4">
-      {messages.map((message, index) => (
-        <div
-          key={index}
-          className={`flex ${
-            message.role === "user" ? "justify-end" : "justify-start"
-          }`}
-        >
-          <div
-            className={`rounded-lg p-4 max-w-[80%] ${
-              message.role === "user"
-                ? "bg-[#5294e2] text-white"
-                : "bg-[#4b5162] text-[#7c818c]"
-            }`}
-          >
-            {message.content}
-          </div>
+    <div className="flex flex-col h-full">
+      <ScrollArea className="flex-grow mb-4" ref={scrollAreaRef}>
+        <div className="space-y-4">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div
+                className={`rounded-lg p-4 max-w-[80%] ${
+                  message.role === "user"
+                    ? "bg-[#5294e2] text-white"
+                    : "bg-[#4b5162] text-[#7c818c]"
+                }`}
+              >
+                {message.content}
+              </div>
+            </div>
+          ))}
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="rounded-lg p-4 max-w-[80%] bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C]">
+                AI is typing...
+              </div>
+            </div>
+          )}
         </div>
-      ))}
-      {isLoading && (
-        <div className="flex justify-start">
-          <div className="rounded-lg p-4 max-w-[80%] bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C]">
-            AI is typing...
-          </div>
-        </div>
-      )}
-      <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C] p-4">
+      </ScrollArea>
+      <div className="bg-white dark:bg-[#404552] rounded-lg shadow-md p-4">
         <form onSubmit={(e) => {
           e.preventDefault()
           handleSend()
         }} className="flex items-center space-x-2">
-          <div className="flex-grow bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C]rounded-full p-1">
+          <div className="flex-grow bg-gray-100 dark:bg-[#363a45] rounded-full p-1">
             <Input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
-              className="bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C]"
+              className="bg-transparent border-none focus:ring-0 text-black dark:text-[#D3DAE3]"
             />
           </div>
           <Button 
@@ -120,3 +130,4 @@ export function ChatSystem() {
     </div>
   )
 }
+
