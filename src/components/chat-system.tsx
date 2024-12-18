@@ -18,10 +18,23 @@ export function ChatSystem() {
     }
   }, [messages])
 
+  const parseURL = () => {
+    const path = window.location.pathname
+    const segments = path.split('/').filter(segment => segment)
+    
+    return {
+      grade: segments[0] || "default",
+      course: segments[1] || "chat",
+      chapter: segments[2] || "general",
+      sub_chapter: decodeURIComponent(segments[3] || "conversation")
+    }
+  }
+
   const handleSend = async () => {
     if (input.trim()) {
       setMessages(prev => [...prev, { role: "user", content: input }])
       setIsLoading(true)
+      const urlParams = parseURL();
 
       try {
         const response = await fetch('/api/ai', {
@@ -31,10 +44,10 @@ export function ChatSystem() {
           },
           body: JSON.stringify({
             selectedText: input,
-            grade: "default",
-            course: "chat",
-            chapter: "general",
-            sub_chapter: "conversation",
+            grade: urlParams.grade,
+            course: urlParams.course,
+            chapter: urlParams.chapter,
+            sub_chapter: urlParams.sub_chapter,
             text: input,
             color: "default",
             startOffset: 0,
