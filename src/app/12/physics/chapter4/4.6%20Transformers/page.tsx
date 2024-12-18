@@ -1,9 +1,88 @@
 'use client';
 
 import { InlineMath, BlockMath } from 'react-katex';
+import { useState } from 'react';
+import QuizQuestion from '@/components/QuizQuestion';
 import 'katex/dist/katex.min.css';
 
+const quizQuestions = [
+  {
+    "question": "What is the main function of a transformer in an electrical circuit?",
+    "options": [
+      "To generate electrical energy",
+      "To transfer electrical energy between circuits through induction",
+      "To convert electrical energy to heat",
+      "To store electrical energy in batteries"
+    ],
+    "correctAnswer": 1,
+    "hint": "Transformers use electromagnetic induction to transfer electrical energy between circuits."
+  },
+  {
+    "question": "What does a step-up transformer do to the voltage levels between circuits?",
+    "options": [
+      "Increases voltage levels",
+      "Decreases voltage levels",
+      "Maintains the same voltage levels",
+      "Generates random voltage changes"
+    ],
+    "correctAnswer": 0,
+    "hint": "A step-up transformer increases the input voltage to a higher secondary voltage."
+  },
+  {
+    "question": "How is the voltage relationship between the primary and secondary windings determined in a transformer?",
+    "options": [
+      "By resistance only",
+      "By the turns ratio of the coils",
+      "By the material of the transformer core",
+      "By the frequency of the current"
+    ],
+    "correctAnswer": 1,
+    "hint": "The relationship depends on the ratio of the number of turns between the primary and secondary coils."
+  },
+  {
+    "question": "What is the efficiency formula of a transformer based on output and input power?",
+    "options": [
+      "\\( \\eta = \\frac{\\text{input power}}{\\text{output power}} \\times 100% \\)",
+      "\\( \\eta = \\frac{\\text{output power}}{\\text{input power}} \\times 100% \\)",
+      "\\( \\eta = \\text{output power} + \\text{input power} \\)",
+      "\\( \\eta = \\frac{\\Delta V}{R} \\times 100% \\)"
+    ],
+    "correctAnswer": 1,
+    "hint": "The efficiency is the ratio of output power to input power, expressed as a percentage."
+  },
+  {
+    "question": "Why do household transformers, like phone chargers, step down voltage levels?",
+    "options": [
+      "To increase electrical energy supply",
+      "To prevent damage to device circuits",
+      "To decrease electrical resistance",
+      "To stabilize the frequency of electrical currents"
+    ],
+    "correctAnswer": 1,
+    "hint": "Transformers step down voltage in devices like chargers to ensure device protection and functionality."
+  }
+]
+
 export default function Transformers() {
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(quizQuestions.length).fill(null));
+  const [showResults, setShowResults] = useState(false);
+  const [score, setScore] = useState(0); 
+
+  const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
+    const newSelectedAnswers = [...selectedAnswers];
+    newSelectedAnswers[questionIndex] = answerIndex;
+    setSelectedAnswers(newSelectedAnswers);
+  };
+
+  const handleSubmit = () => {
+    const correctCount = selectedAnswers.reduce((count: number, answer: number | null, index: number) => {
+      if (answer === null) return count;
+      return count + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+    }, 0);
+    setScore(correctCount);
+    setShowResults(true);
+  };
   return (
     <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">4.6 Transformers</h1>
@@ -61,6 +140,78 @@ export default function Transformers() {
       <p>
         Additionally, a mobile phone charger typically contains a rectifier. After stepping down the voltage, the AC is converted to DC using the rectifier. You will learn about the working principle of rectifiers in Unit 5.
       </p>
+      <div className='flex justify-center items-center'>
+          <button 
+            onClick={() => setShowQuiz(true)}
+            className="w-1/2 h-1/2 mt-6 bg-slate-400 hover:bg-slate-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Take Quiz
+          </button>
+        </div>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#242424] p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button 
+              onClick={() => {
+                setShowQuiz(false);
+                setShowResults(false);
+                setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+              }}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">Projectile Motion Quiz</h2>
+            <div className="space-y-6">
+              {quizQuestions.map((q, index) => (
+                <QuizQuestion
+                  key={index}
+                  question={q.question}
+                  options={q.options}
+                  correctAnswer={q.correctAnswer}
+                  hint={q.hint}
+                  selectedAnswer={selectedAnswers[index]}
+                  showResults={showResults}
+                  onSelectAnswer={(answerIndex) => handleAnswerSelect(index, answerIndex)}
+                />
+              ))}
+            </div>
+            <div className="mt-6 flex justify-between">
+              {!showResults && (
+                <button 
+                  onClick={handleSubmit}
+                  className="bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                >
+                  Submit
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  setShowQuiz(false);
+                  setShowResults(false);
+                  setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+                }}
+                className="bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {showResults && (
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Quiz Results</h3>
+                <p className="dark:text-white">
+                  You got {score} out of {quizQuestions.length} questions correct! 
+                  ({((score / quizQuestions.length) * 100).toFixed(1)}%)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
