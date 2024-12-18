@@ -38,7 +38,7 @@ export interface Chapter {
         {
           name: 'physics',
           chapters: [
-            { name: 'chapter1', subChapters: ['1_1', '1_2', '1_3', '1_4', '1_5'] },
+            // { name: 'chapter1', subChapters: ['1_1', '1_2', '1_3', '1_4', '1_5'] },
             { name: 'chapter2', subChapters: ['2.1 Projectile Motion', '2.2 Rotational Motion', '2.3 Rotational Dynamics', '2.4 Planetary Motion and Keplers Laws', '2.5 Newtons Law of Universal Gravitation'] },
             { name: 'chapter3', subChapters: ['3.1 Properties of Solids Liquids and Gases', '3.2 Pressure in Fluids at Rest', '3.3 Archimedes Principle', '3.4 Fluid Flow', '3.5 High Pressure Systems'] },
             { name: 'chapter4', subChapters: ['4.1 Introduction', '4.2 Magnetic Field Lines', '4.3 Current and Magnetism', '4.4 Electromagnetic Induction', '4.5 Faraday Law of Electromagnetic Induction', '4.6 Transformers', '4.7 Application and Safety'] },

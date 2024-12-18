@@ -1,8 +1,4 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Button } from "@/components/ui/button"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
+import React from 'react'
 
 interface QuizQuestionProps {
   question: string
@@ -11,7 +7,7 @@ interface QuizQuestionProps {
   hint: string
   selectedAnswer: number | null
   showResults: boolean
-  onSelectAnswer: (index: number) => void
+  onSelectAnswer: (answerIndex: number) => void
 }
 
 const QuizQuestion: React.FC<QuizQuestionProps> = ({
@@ -23,75 +19,38 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
   showResults,
   onSelectAnswer,
 }) => {
-  const [showHint, setShowHint] = useState(false)
-
   return (
-    <div className="space-y-4 p-6">
-      <h2 className="text-xl font-semibold mb-4">{question}</h2>
-      <RadioGroup value={selectedAnswer?.toString()} onValueChange={(value) => onSelectAnswer(parseInt(value))}>
+    <div className="dark:text-white">
+      <h2 className="text-xl font-bold mb-4">{question}</h2>
+      <ul className="space-y-2">
         {options.map((option, index) => (
-          <div key={index} className="flex items-center space-x-2 mb-2">
-            <RadioGroupItem 
-              value={index.toString()} 
-              id={`option-${index}`}
-              className="text-[#5294e2]"
+          <li key={index}>
+            <button
+              className={`p-2 rounded-lg w-full text-left transition-colors
+                ${
+                  showResults
+                    ? index === correctAnswer
+                      ? 'bg-green-500 dark:bg-green-600 text-white'
+                      : selectedAnswer === index
+                      ? 'bg-red-500 dark:bg-red-600 text-white'
+                      : 'bg-gray-200 dark:bg-gray-700'
+                    : selectedAnswer === index
+                    ? 'bg-blue-300 dark:bg-blue-600 text-white'
+                    : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
+                }`}
+              onClick={() => !showResults && onSelectAnswer(index)}
               disabled={showResults}
-            />
-            <Label 
-              htmlFor={`option-${index}`}
-              className={`
-                flex-grow p-2 rounded-md cursor-pointer
-                ${selectedAnswer === index ? 'bg-[#4c566a] text-white' : 'bg-[#3b4252] text-[#d8dee9]'}
-                ${showResults && index === correctAnswer ? 'bg-[#5294e2] text-white' : ''}
-                ${showResults && selectedAnswer === index && index !== correctAnswer ? 'bg-[#bf616a] text-white' : ''}
-                hover:bg-[#4c566a] hover:text-white
-                transition-colors duration-300
-              `}
             >
               {option}
-            </Label>
-          </div>
+            </button>
+          </li>
         ))}
-      </RadioGroup>
-      <div className="flex justify-between items-center mt-4">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setShowHint(!showHint)}
-          className="text-[#81a1c1] hover:text-[#88c0d0]"
-        >
-          {showHint ? 'Hide Hint' : 'Show Hint'}
-        </Button>
-      </div>
-      <AnimatePresence>
-        {showHint && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="text-sm text-[#81a1c1] mt-2"
-          >
-            Hint: {hint}
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {showResults && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className={`text-sm mt-2 ${selectedAnswer === correctAnswer ? 'text-[#a3be8c]' : 'text-[#bf616a]'}`}
-          >
-            {selectedAnswer === correctAnswer ? 'Correct!' : 'Incorrect. The correct answer is: ' + options[correctAnswer]}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </ul>
+      {showResults && selectedAnswer !== correctAnswer && (
+        <p className="mt-4 text-red-500 dark:text-red-400">{hint}</p>
+      )}
     </div>
   )
 }
 
 export default QuizQuestion
-
