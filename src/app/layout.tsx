@@ -2,7 +2,7 @@
 
 import { ReactNode, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Clock } from "@/components/clock";
+import { Clock } from "@/components/ui/clock";
 import { Toaster, toast } from "sonner";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";

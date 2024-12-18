@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import Logo from "../components/Logo";
+import Logo from "./ui/Logo";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -50,9 +50,7 @@ export default function SignIn() {
             <Logo />
           </div>
           <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
-          {error && (
-            <p className="text-red-500 text-center mb-4">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <input

@@ -74,18 +74,18 @@ export function ChatSystem() {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <ScrollArea className="flex-grow mb-4" ref={scrollAreaRef}>
+    <div className="flex flex-col h-full w-full rounded-md">
+      <ScrollArea className="flex-grow w-full mb-4" ref={scrollAreaRef}>
         <div className="space-y-4">
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex ${
+              className={`flex w-full ${
                 message.role === "user" ? "justify-end" : "justify-start"
               }`}
             >
               <div
-                className={`rounded-lg p-4 max-w-[80%] ${
+                className={`rounded-lg p-4 ${
                   message.role === "user"
                     ? "bg-[#5294e2] text-white"
                     : "bg-[#4b5162] text-[#7c818c]"
@@ -96,31 +96,31 @@ export function ChatSystem() {
             </div>
           ))}
           {isLoading && (
-            <div className="flex justify-start">
-              <div className="rounded-lg p-4 max-w-[80%] bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C]">
+            <div className="flex justify-start w-full">
+              <div className="rounded-lg p-4 w-full bg-white dark:bg-[#404552] text-black dark:text-[#D3DAE3] border border-gray-300 dark:border-[#3B404C]">
                 AI is typing...
               </div>
             </div>
           )}
         </div>
       </ScrollArea>
-      <div className="bg-white dark:bg-[#404552] rounded-lg shadow-md p-4">
+      <div>
         <form onSubmit={(e) => {
           e.preventDefault()
           handleSend()
         }} className="flex items-center space-x-2">
-          <div className="flex-grow bg-gray-100 dark:bg-[#363a45] rounded-full p-1">
+          <div className="flex-grow bg-gray-500 dark:bg-gray-900 rounded-full p-1">
             <Input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
-              className="bg-transparent border-none focus:ring-0 text-black dark:text-[#D3DAE3]"
+              className="bg-transparent border-none focus:ring-0 text-white dark:text-[#D3DAE3]"
             />
           </div>
           <Button 
             type="submit" 
-            className="bg-[#5294e2] text-white hover:bg-[#5294e2]/90 rounded-full p-2"
+            className="bg-[#5294e2] text-white hover:bg-[#5294e2]/90 rounded-full px-2.5 py-2"
           >
             <Send className="w-5 h-5" />
             <span className="sr-only">Send</span>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import Logo from "../components/Logo";
+import Logo from "./ui/Logo";
 
 export default function SignUp() {
   const router = useRouter();
@@ -38,7 +38,12 @@ export default function SignUp() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, user_type: "student", userName }),
+        body: JSON.stringify({
+          email,
+          password,
+          user_type: "student",
+          userName,
+        }),
       });
 
       const data = await response.json();
@@ -80,11 +85,7 @@ export default function SignUp() {
               handleSignUp();
             }}
           >
-            {error && (
-              <div className="text-red-500 text-sm mb-4">
-                {error}
-              </div>
-            )}
+            {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
             <div className="mb-4">
               <input
                 className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring-2 focus:border-transparent transition-colors duration-300 ${

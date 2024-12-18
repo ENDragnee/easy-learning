@@ -18,7 +18,7 @@ const placeholderData: Message[] = [
 
 export function ResponseTab() {
   return (
-    <ScrollArea className="h-full p-4">
+    <ScrollArea className="h-full py-4">
       {placeholderData.map((message, index) => (
         <div
           key={index}
@@ -27,7 +27,7 @@ export function ResponseTab() {
           }`}
         >
           <span
-            className={`inline-block p-2 rounded-lg ${
+            className={`inline-block p-2 rounded-lg w-full ${
               message.role === "user" ? "bg-gray-200 dark:bg-[#363a45] text-gray-900 dark:text-[#D3DAE3]" : "bg-gray-100 dark:bg-[#404552] text-gray-800 dark:text-[#D3DAE3]"
             }`}
           >
