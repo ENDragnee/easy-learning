@@ -21,7 +21,11 @@ interface Tab {
   };
 }
 
-const TabManager: React.FC = () => {
+interface TabManagerProp {
+  style?: React.CSSProperties;
+}
+
+const TabManager = ({ style }: { style?: React.CSSProperties }) => {
     const [tabs, setTabs] = useState<Tab[]>([]);
     const [activeTab, setActiveTab] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -250,9 +254,66 @@ const TabManager: React.FC = () => {
   
 
   return (
+<<<<<<< HEAD
     <>
         {/* Collapsed Pill */}
         {!isOpen && (
+=======
+    <div style={style}>
+      {/* Collapsed Pill */}
+      {!isOpen && (
+        <div
+          className="fixed right-0 top-1/2 transform -translate-y-1/2 cursor-pointer bg-white dark:bg-[#2d303a] rounded-l-full shadow-lg border border-r-0 border-gray-200 dark:border-[#4b5162] z-30"
+          onClick={() => setIsOpen(true)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="p-2">
+            <MdTab className="w-8 h-6" />
+          </div>
+        </div>
+      )}
+
+      {/* Expanded Tab Manager */}
+      <div
+        ref={tabManagerRef}
+        className={`fixed top-[40%] transform right-0 z-30 w-32 bg-white dark:bg-[#2d303a] rounded-xl transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        } flex flex-col`}
+        style={{
+          height: `${Math.min(Math.max(tabs.length * 3 + 10, 3 * 3 + 10), 50)}vh`, 
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div className="flex justify-between items-center p-2">
+            <div className="flex items-center space-x-1">
+                <button
+                    onClick={addNewTab}
+                    className="p-0.5 hover:bg-gray-100 dark:hover:bg-[#363945] rounded-md transition-colors"
+                >
+                    <IoMdAdd className="w-6 h-8 mr-6" />
+                </button>
+                <button
+                    onClick={toggleSplitMode}
+                    className={`p-0.5 rounded-md transition-colors ${
+                        tabs.length <= 1 
+                            ? 'opacity-50 cursor-not-allowed' 
+                            : 'hover:bg-gray-100 dark:hover:bg-[#363945]'
+                    } ${
+                        isSplitMode ? 'bg-gray-200 dark:bg-[#4b5162]' : ''
+                    }`}
+                    disabled={tabs.length <= 1}
+                >
+                    <TbLayoutList className="w-6 h-8 ml-6" />
+                </button>
+            </div>
+        </div>
+        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-[#4b5162] scrollbar-track-transparent">
+          {tabs.map(tab => (
+>>>>>>> 81d539e (fixing the ui...)
             <div
                 className="fixed right-0 top-1/3 transform -translate-y-1/2 cursor-pointer bg-white dark:bg-[#2d303a] rounded-l-full shadow-lg border border-r-0 border-gray-200 dark:border-[#4b5162] z-30"
                 onClick={() => setIsOpen(true)}
@@ -327,7 +388,12 @@ const TabManager: React.FC = () => {
                 ))}
             </div>
         </div>
+<<<<<<< HEAD
     </>
+=======
+      </div>
+    </div>
+>>>>>>> 81d539e (fixing the ui...)
   );
 };
 

@@ -4,7 +4,11 @@ import { useState } from "react"
 import { AIButton } from "@/components/ai-button"
 import { AISidebar } from "@/components/ai-sidebar"
 
-export default function AIFeature() {
+interface AIFeatureProps {
+  style?: React.CSSProperties;
+}
+
+export default function AIFeature({style}: AIFeatureProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleSidebar = () => {
@@ -17,7 +21,9 @@ export default function AIFeature() {
 
   return (
     <>
-      <AIButton onClick={toggleSidebar} isOpen={isOpen} />
+      <div style={style}>
+        <AIButton onClick={toggleSidebar} isOpen={isOpen} />
+      </div> 
       <AISidebar isOpen={isOpen} onClose={closeSidebar} />
     </>
   )
