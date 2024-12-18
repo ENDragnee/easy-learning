@@ -2,9 +2,8 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { Search, Moon, Sun } from 'lucide-react'
+import { Search, GraduationCap } from 'lucide-react'
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useTheme } from 'next-themes'
 import { Sidebar } from './Sidebar'
@@ -47,14 +46,14 @@ export function NavigationBar() {
     <>
       <Sidebar />
       <nav className={cn(
-        "fixed top-0 left-0 right-0 z-40 transition-colors duration-300",
+        "fixed top-0 left-0 z-0 right-0 transition-colors duration-300",
         theme === 'dark' ? "bg-lumo-dark1 text-white" : "bg-white text-lumo-dark1"
       )}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <Link href="/">
-                <img className="h-8 w-auto" src="/logo.svg" alt="Lumo" />
+                <GraduationCap className="h-6 w-6" />
               </Link>
             </div>
             <div className="hidden md:flex md:space-x-8">
@@ -92,14 +91,6 @@ export function NavigationBar() {
                   onClick={() => setIsSearchExpanded(true)}
                 />
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="transition-colors duration-200"
-              >
-                {theme === 'dark' ? <Sun className="h-5 w-5 text-lumo-accent" /> : <Moon className="h-5 w-5 text-lumo-dark1" />}
-              </Button>
             </div>
           </div>
         </div>

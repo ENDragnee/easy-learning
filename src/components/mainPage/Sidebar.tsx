@@ -34,7 +34,7 @@ export function Sidebar() {
   }
 
   return (
-    <>
+    <div className='z-50'>
       <button
         onClick={toggleSidebar}
         className="fixed top-4 left-4 z-50 p-2 text-white hover:text-[#5294E2] transition-colors duration-300"
@@ -69,13 +69,6 @@ export function Sidebar() {
             className="fixed top-0 left-0 bottom-0 w-64 bg-gradient-to-b from-[#404552] to-[#383C4A] text-white z-40 overflow-y-auto"
           >
             <div className="p-4 space-y-6">
-              <button
-                onClick={toggleSidebar}
-                className="absolute top-4 right-4 text-white hover:text-[#5294E2] transition-colors duration-300"
-              >
-                <X size={24} />
-              </button>
-
               <div className="flex flex-col items-center">
                 <button className="w-16 h-16 bg-[#5294E2] rounded-full flex items-center justify-center shadow-lg hover:bg-[#4A84C8] transition-colors duration-300">
                   <Plus size={32} />
@@ -127,7 +120,7 @@ export function Sidebar() {
           onClick={toggleSidebar}
         ></div>
       )}
-    </>
+    </div>
   )
 }
 

@@ -20,14 +20,14 @@ const popularItems: PopularItem[] = [
     description: "Learn the fundamentals of chemistry",
     icon: <Atom className="h-5 w-5" />,
     category: "MOE",
-    link: "/12/chemistry/chapter1/1.1%20Acid-Base%20Concepts"
+    link: "/12"
   },
   {
     title: "AASTU Curriculum",
     description: "Understanding mechanics and energy",
     icon: <Sparkles className="h-5 w-5" />,
     category: "AASTU",
-    link: "/12/physics/chapter2/2.1%20Projectile%20Motion"
+    link: "/aastu"
   },
 ]
 
