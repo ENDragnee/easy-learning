@@ -1,9 +1,143 @@
 'use client';
 
-import { InlineMath, BlockMath } from 'react-katex';
+import { useState } from 'react';
+import { BlockMath, InlineMath } from 'react-katex';
+import QuizQuestion from '@/components/QuizQuestion';
 import 'katex/dist/katex.min.css';
 
+const quizQuestions = [
+  {
+    "question": "What determines the color change in acid-base indicators?",
+    "options": [
+      "The ionization equilibrium of the indicator",
+      "The temperature of the solution",
+      "The concentration of the acid",
+      "The volume of the solution"
+    ],
+    "correctAnswer": 0,
+    "hint": "The color change is due to the ionization equilibrium of the indicator and the pH of the solution."
+  },
+  {
+    "question": "In an acidic solution, what form of the acid-base indicator is predominantly present?",
+    "options": [
+      "HIn",
+      "In⁻",
+      "H₂O⁺",
+      "OH⁻"
+    ],
+    "correctAnswer": 0,
+    "hint": "In an acidic solution, the equilibrium shifts to the left, favoring the non-ionized form, HIn."
+  },
+  {
+    "question": "Which of the following indicators has a pH range of 0.0 – 1.6?",
+    "options": [
+      "Methyl violet",
+      "Methyl orange",
+      "Bromcresol green",
+      "Litmus"
+    ],
+    "correctAnswer": 0,
+    "hint": "Methyl violet has an acid color of yellow and a pH range of 0.0 – 1.6."
+  },
+  {
+    "question": "What color does phenolphthalein turn in a basic solution?",
+    "options": [
+      "Pink",
+      "Colorless",
+      "Yellow",
+      "Blue"
+    ],
+    "correctAnswer": 0,
+    "hint": "Phenolphthalein turns pink in a basic solution and colorless in an acidic solution."
+  },
+  {
+    "question": "What is the purpose of an acid-base indicator in a titration?",
+    "options": [
+      "To indicate the pH at the equivalence point",
+      "To neutralize the acid or base",
+      "To determine the volume of the titrant",
+      "To measure the concentration of the titrant"
+    ],
+    "correctAnswer": 0,
+    "hint": "The acid-base indicator shows the pH of the solution and helps identify the equivalence point in a titration."
+  },
+  {
+    "question": "What does the equivalence point in an acid-base titration represent?",
+    "options": [
+      "The point where moles of acid equal moles of base",
+      "The point where the indicator changes color",
+      "The point where excess acid remains in the solution",
+      "The point where the solution becomes neutral"
+    ],
+    "correctAnswer": 0,
+    "hint": "At the equivalence point, the amount of acid equals the amount of base, and the solution contains only salt and water."
+  },
+  {
+    "question": "How is normality calculated in a solution?",
+    "options": [
+      "Normality = equivalents of solute / volume of solution in liters",
+      "Normality = moles of solute / volume of solution",
+      "Normality = moles of solute / volume of solvent",
+      "Normality = equivalents of solute / weight of solution"
+    ],
+    "correctAnswer": 0,
+    "hint": "Normality is calculated by dividing the number of equivalents of solute by the volume of the solution in liters."
+  },
+  {
+    "question": "What happens at the end point of a titration?",
+    "options": [
+      "The indicator changes color",
+      "The acid and base completely neutralize each other",
+      "The solution becomes acidic",
+      "The titrant is no longer added"
+    ],
+    "correctAnswer": 0,
+    "hint": "The end point of the titration is marked by a color change of the indicator."
+  },
+  {
+    "question": "Which of the following is an example of a substance with an equivalent of 2?",
+    "options": [
+      "Sulfuric acid (H₂SO₄)",
+      "Barium hydroxide (Ba(OH)₂)",
+      "Water (H₂O)",
+      "Sodium chloride (NaCl)"
+    ],
+    "correctAnswer": 1,
+    "hint": "Barium hydroxide (Ba(OH)₂) provides two hydroxide ions per formula unit, so it has an equivalent of 2."
+  },
+  {
+    "question": "What is the relationship between the normality and volume of acid and base in a titration?",
+    "options": [
+      "N₁V₁ = N₂V₂",
+      "N₁V₂ = N₂V₁",
+      "N₁ = N₂",
+      "V₁ = V₂"
+    ],
+    "correctAnswer": 0,
+    "hint": "The relationship N₁V₁ = N₂V₂ allows for the calculation of normality and volume in titrations."
+  }
+]
+
 export default function AcidBaseIndicators() {
+  const [showQuiz, setShowQuiz] = useState(false);
+    const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(quizQuestions.length).fill(null));
+    const [showResults, setShowResults] = useState(false);
+    const [score, setScore] = useState(0); 
+  
+    const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
+      const newSelectedAnswers = [...selectedAnswers];
+      newSelectedAnswers[questionIndex] = answerIndex;
+      setSelectedAnswers(newSelectedAnswers);
+    };
+  
+    const handleSubmit = () => {
+      const correctCount = selectedAnswers.reduce((count: number, answer: number | null, index: number) => {
+        if (answer === null) return count;
+        return count + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+      }, 0);
+      setScore(correctCount);
+      setShowResults(true);
+    };
   return (
     <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">1.5 Acid–Base Indicators and Titrations</h1>
@@ -118,6 +252,78 @@ export default function AcidBaseIndicators() {
       <p>
         Where <InlineMath>{'N₁'}</InlineMath> and <InlineMath>{'V₁'}</InlineMath> refer to the normality and volume of the acid solution, respectively, and <InlineMath>{'N₂'}</InlineMath> and <InlineMath>{'V₂'}</InlineMath> refer to the normality and volume of the base solution, respectively.
       </p>
+      <div className='flex justify-center items-center'>
+          <button 
+            onClick={() => setShowQuiz(true)}
+            className="w-1/2 h-1/2 mt-6 bg-slate-400 hover:bg-slate-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Take Quiz
+          </button>
+        </div>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#242424] p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button 
+              onClick={() => {
+                setShowQuiz(false);
+                setShowResults(false);
+                setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+              }}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">Projectile Motion Quiz</h2>
+            <div className="space-y-6">
+              {quizQuestions.map((q, index) => (
+                <QuizQuestion
+                  key={index}
+                  question={q.question}
+                  options={q.options}
+                  correctAnswer={q.correctAnswer}
+                  hint={q.hint}
+                  selectedAnswer={selectedAnswers[index]}
+                  showResults={showResults}
+                  onSelectAnswer={(answerIndex) => handleAnswerSelect(index, answerIndex)}
+                />
+              ))}
+            </div>
+            <div className="mt-6 flex justify-between">
+              {!showResults && (
+                <button 
+                  onClick={handleSubmit}
+                  className="bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                >
+                  Submit
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  setShowQuiz(false);
+                  setShowResults(false);
+                  setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+                }}
+                className="bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {showResults && (
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Quiz Results</h3>
+                <p className="dark:text-white">
+                  You got {score} out of {quizQuestions.length} questions correct! 
+                  ({((score / quizQuestions.length) * 100).toFixed(1)}%)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

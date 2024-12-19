@@ -1,9 +1,132 @@
 'use client';
 
-import { InlineMath, BlockMath } from 'react-katex';
+import { useState } from 'react';
+import { BlockMath, InlineMath } from 'react-katex';
+import QuizQuestion from '@/components/QuizQuestion';
 import 'katex/dist/katex.min.css';
 
+const quizQuestions = [
+  {
+    "question": "What is the primary cause of sulfur dioxide (SO2) in the atmosphere?",
+    "options": [
+      "Combustion of coal and petroleum",
+      "Thunderstorms",
+      "Ozone layer depletion",
+      "Recycling of sulfur from the soil"
+    ],
+    "correctAnswer": 0,
+    "hint": "Sulfur dioxide enters the air primarily from the combustion of coal and petroleum."
+  },
+  {
+    "question": "Which of the following gases makes up the majority of the atmosphere?",
+    "options": [
+      "Oxygen",
+      "Nitrogen",
+      "Argon",
+      "Carbon Dioxide"
+    ],
+    "correctAnswer": 1,
+    "hint": "Nitrogen constitutes 78% of the Earth's atmosphere."
+  },
+  {
+    "question": "What is the effect of carbon monoxide exposure on the human body?",
+    "options": [
+      "Increases oxygen-carrying capacity of blood",
+      "Reduces oxygen-carrying capacity of blood",
+      "Improves vision",
+      "Reduces headaches"
+    ],
+    "correctAnswer": 1,
+    "hint": "Carbon monoxide binds with hemoglobin, reducing the oxygen-carrying capacity of blood."
+  },
+  {
+    "question": "What method can help reduce air pollution by decreasing the use of private vehicles?",
+    "options": [
+      "Using public transport",
+      "Using air conditioners",
+      "Using plastic bags",
+      "Using fossil fuels"
+    ],
+    "correctAnswer": 0,
+    "hint": "Public transport reduces the number of individual vehicles on the road, cutting down air pollution."
+  },
+  {
+    "question": "What is a major water pollutant associated with the excessive use of fertilizers?",
+    "options": [
+      "Oil spills",
+      "Nitrates and phosphates",
+      "Sulfur dioxide",
+      "Lead compounds"
+    ],
+    "correctAnswer": 1,
+    "hint": "Nitrates and phosphates from fertilizers are key contributors to water pollution."
+  },
+  {
+    "question": "What is eutrophication in the context of water pollution?",
+    "options": [
+      "Increase in oxygen levels in water",
+      "Excessive growth of aquatic plants due to fertilizers",
+      "Increase in temperature of water bodies",
+      "Reduction in water pollution"
+    ],
+    "correctAnswer": 1,
+    "hint": "Eutrophication occurs when excess fertilizers lead to rapid growth of surface-water plants like algae."
+  },
+  {
+    "question": "Which of the following is a method of reducing water pollution?",
+    "options": [
+      "Using organic fertilizers",
+      "Discharging untreated sewage into rivers",
+      "Increasing the use of chemical fertilizers",
+      "Releasing oil spills into oceans"
+    ],
+    "correctAnswer": 0,
+    "hint": "Organic fertilizers help reduce water pollution by minimizing harmful chemical runoff."
+  },
+  {
+    "question": "Which of the following is a cause of land pollution?",
+    "options": [
+      "Spillage of oil from leaking pipelines",
+      "Using organic fertilizers",
+      "Recycling waste",
+      "Planting trees"
+    ],
+    "correctAnswer": 0,
+    "hint": "Oil spillage from pipelines is a major contributor to land pollution."
+  },
+  {
+    "question": "How can the use of non-biodegradable waste contribute to land pollution?",
+    "options": [
+      "It decomposes easily in soil",
+      "It does not decompose naturally and causes environmental harm",
+      "It improves soil fertility",
+      "It helps in plant growth"
+    ],
+    "correctAnswer": 1,
+    "hint": "Non-biodegradable wastes like plastics do not decompose and cause long-term harm to the environment."
+  }
+]
+
 export default function EnvironmentalPollution() {
+  const [showQuiz, setShowQuiz] = useState(false);
+    const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(quizQuestions.length).fill(null));
+    const [showResults, setShowResults] = useState(false);
+    const [score, setScore] = useState(0); 
+  
+    const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
+      const newSelectedAnswers = [...selectedAnswers];
+      newSelectedAnswers[questionIndex] = answerIndex;
+      setSelectedAnswers(newSelectedAnswers);
+    };
+  
+    const handleSubmit = () => {
+      const correctCount = selectedAnswers.reduce((count: number, answer: number | null, index: number) => {
+        if (answer === null) return count;
+        return count + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+      }, 0);
+      setScore(correctCount);
+      setShowResults(true);
+    };
   return (
     <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Environmental Pollution</h1>
@@ -128,6 +251,78 @@ export default function EnvironmentalPollution() {
       <p>
         Reducing non-biodegradable waste is a critical strategy in reducing land pollution. Non-biodegradable waste, like plastics, does not decompose naturally and can cause serious environmental harm.
       </p>
+      <div className='flex justify-center items-center'>
+          <button 
+            onClick={() => setShowQuiz(true)}
+            className="w-1/2 h-1/2 mt-6 bg-slate-400 hover:bg-slate-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Take Quiz
+          </button>
+        </div>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#242424] p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button 
+              onClick={() => {
+                setShowQuiz(false);
+                setShowResults(false);
+                setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+              }}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">Projectile Motion Quiz</h2>
+            <div className="space-y-6">
+              {quizQuestions.map((q, index) => (
+                <QuizQuestion
+                  key={index}
+                  question={q.question}
+                  options={q.options}
+                  correctAnswer={q.correctAnswer}
+                  hint={q.hint}
+                  selectedAnswer={selectedAnswers[index]}
+                  showResults={showResults}
+                  onSelectAnswer={(answerIndex) => handleAnswerSelect(index, answerIndex)}
+                />
+              ))}
+            </div>
+            <div className="mt-6 flex justify-between">
+              {!showResults && (
+                <button 
+                  onClick={handleSubmit}
+                  className="bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                >
+                  Submit
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  setShowQuiz(false);
+                  setShowResults(false);
+                  setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+                }}
+                className="bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {showResults && (
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Quiz Results</h3>
+                <p className="dark:text-white">
+                  You got {score} out of {quizQuestions.length} questions correct! 
+                  ({((score / quizQuestions.length) * 100).toFixed(1)}%)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

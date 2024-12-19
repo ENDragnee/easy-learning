@@ -16,7 +16,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
-  { name: 'Documentation', href: '/docs' },
+  { name: 'Documentation', href: 'https://github.com/ENDragnee/easy-learning' },
 ]
 
 export function NavigationBar() {

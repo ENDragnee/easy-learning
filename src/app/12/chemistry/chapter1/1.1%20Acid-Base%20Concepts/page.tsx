@@ -1,9 +1,121 @@
 'use client';
 
-import { InlineMath, BlockMath } from 'react-katex';
+import { useState } from 'react';
+import { BlockMath, InlineMath } from 'react-katex';
+import QuizQuestion from '@/components/QuizQuestion';
 import 'katex/dist/katex.min.css';
 
+const quizQuestions = [
+  {
+    "question": "According to Svante Arrhenius, what do acids increase in aqueous solutions?",
+    "options": [
+      "OH− concentration",
+      "H+ concentration",
+      "Water concentration",
+      "Salt concentration"
+    ],
+    "correctAnswer": 1,
+    "hint": "Acids increase the concentration of H+ (proton ions) in water."
+  },
+  {
+    "question": "Which of the following is an example of a strong acid, according to the Arrhenius theory?",
+    "options": [
+      "Acetic acid",
+      "Sodium hydroxide",
+      "Perchloric acid",
+      "Ammonia"
+    ],
+    "correctAnswer": 2,
+    "hint": "Strong acids like perchloric acid completely ionize in aqueous solutions."
+  },
+  {
+    "question": "In the Brønsted-Lowry theory, what is the role of a base?",
+    "options": [
+      "Proton donor",
+      "Electron donor",
+      "Proton acceptor",
+      "Electron acceptor"
+    ],
+    "correctAnswer": 2,
+    "hint": "A base in Brønsted-Lowry theory is a proton acceptor."
+  },
+  {
+    "question": "What is formed when a Brønsted-Lowry acid donates a proton?",
+    "options": [
+      "A conjugate acid",
+      "A conjugate base",
+      "Water",
+      "Hydroxide ions"
+    ],
+    "correctAnswer": 1,
+    "hint": "A conjugate base is formed when an acid donates a proton."
+  },
+  {
+    "question": "Which acid has a conjugate base that is a weak base?",
+    "options": [
+      "Hydrochloric acid",
+      "Acetic acid",
+      "Ammonium chloride",
+      "Nitric acid"
+    ],
+    "correctAnswer": 0,
+    "hint": "Strong acids like HCl have conjugate bases that are weak bases."
+  },
+  {
+    "question": "What is the autoionization of water?",
+    "options": [
+      "The reaction where two water molecules form H3O+ and OH− ions",
+      "The formation of HCl from H+ and Cl− ions",
+      "The dissociation of NaOH in water",
+      "The formation of hydrogen gas from water"
+    ],
+    "correctAnswer": 0,
+    "hint": "Water ionizes into H3O+ and OH− ions in a self-ionization process."
+  },
+  {
+    "question": "Which of the following is an example of an amphiprotic species?",
+    "options": [
+      "HCl",
+      "Water",
+      "NaOH",
+      "Cl−"
+    ],
+    "correctAnswer": 1,
+    "hint": "Water is the most important example of an amphiprotic species, acting as both an acid and a base."
+  },
+  {
+    "question": "According to the Lewis acid-base theory, which of the following is true?",
+    "options": [
+      "A base donates a proton",
+      "An acid accepts a proton",
+      "A base donates an electron pair",
+      "An acid donates an electron pair"
+    ],
+    "correctAnswer": 2,
+    "hint": "In the Lewis theory, a base donates an electron pair, and an acid accepts one."
+  }
+]
+
 export default function AcidBaseConcepts() {
+  const [showQuiz, setShowQuiz] = useState(false);
+    const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(quizQuestions.length).fill(null));
+    const [showResults, setShowResults] = useState(false);
+    const [score, setScore] = useState(0); 
+  
+    const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
+      const newSelectedAnswers = [...selectedAnswers];
+      newSelectedAnswers[questionIndex] = answerIndex;
+      setSelectedAnswers(newSelectedAnswers);
+    };
+  
+    const handleSubmit = () => {
+      const correctCount = selectedAnswers.reduce((count: number, answer: number | null, index: number) => {
+        if (answer === null) return count;
+        return count + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+      }, 0);
+      setScore(correctCount);
+      setShowResults(true);
+    };
   return (
     <div className="px-6 sm:px-6 py-10 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">1.1 Acid-Base Concepts</h1>
@@ -97,6 +209,78 @@ export default function AcidBaseConcepts() {
       <p>
         The Lewis definition allows us to consider typical Brønsted-Lowry bases, such as OH<sup>−</sup>, NH<sub>3</sub>, and H<sub>2</sub>O, as Lewis bases, since they all have electron pairs available to donate to electron-deficient species.
       </p>
+      <div className='flex justify-center items-center'>
+          <button 
+            onClick={() => setShowQuiz(true)}
+            className="w-1/2 h-1/2 mt-6 bg-slate-400 hover:bg-slate-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Take Quiz
+          </button>
+        </div>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#242424] p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button 
+              onClick={() => {
+                setShowQuiz(false);
+                setShowResults(false);
+                setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+              }}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">Projectile Motion Quiz</h2>
+            <div className="space-y-6">
+              {quizQuestions.map((q, index) => (
+                <QuizQuestion
+                  key={index}
+                  question={q.question}
+                  options={q.options}
+                  correctAnswer={q.correctAnswer}
+                  hint={q.hint}
+                  selectedAnswer={selectedAnswers[index]}
+                  showResults={showResults}
+                  onSelectAnswer={(answerIndex) => handleAnswerSelect(index, answerIndex)}
+                />
+              ))}
+            </div>
+            <div className="mt-6 flex justify-between">
+              {!showResults && (
+                <button 
+                  onClick={handleSubmit}
+                  className="bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                >
+                  Submit
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  setShowQuiz(false);
+                  setShowResults(false);
+                  setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+                }}
+                className="bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {showResults && (
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Quiz Results</h3>
+                <p className="dark:text-white">
+                  You got {score} out of {quizQuestions.length} questions correct! 
+                  ({((score / quizQuestions.length) * 100).toFixed(1)}%)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
