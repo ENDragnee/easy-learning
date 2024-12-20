@@ -275,12 +275,23 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
       },
     },
   ];
-  const pathname = usePathname();
+  const pathname = usePathname() || '';
 
+  // Log and validate pathname
+  console.log('Pathname:', pathname);
+  if (!pathname) {
+    console.error('Pathname is undefined or empty');
+    return null; // Or fallback UI
+  }
+  
   // Extract parameters from the pathname
   const pathSegments = pathname.split('/').filter(Boolean); // Remove empty strings
-  let [gradeValue, courseValue, chapterValue, subChapterValue] = pathSegments.map(decodeURIComponent);
-  subChapterValue = subChapterValue.split(' ')[0]; // Extract "2.1"
+  let [gradeValue = '', courseValue = '', chapterValue = '', subChapterValue = ''] = pathSegments.map(decodeURIComponent);
+  
+  // Handle cases where subChapterValue might not have a space
+  subChapterValue = subChapterValue.split(' ')[0] || '';
+  
+
 
   return (
     <>

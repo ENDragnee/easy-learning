@@ -2,6 +2,8 @@ import Groq from 'groq-sdk';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import db from '@/lib/db';
+import { v4 as uuidv4 } from 'uuid';
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
@@ -14,12 +16,14 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Parse the request body
     const body = await request.json();
-    const { selectedText } = body;
-
-    // Log for debugging
-    console.log('Received request body:', body);
+    const { 
+      selectedText, 
+      grade, 
+      course, 
+      chapter, 
+      sub_chapter,
+    } = body;
 
     if (!selectedText || selectedText.trim() === '') {
       return NextResponse.json(
@@ -28,9 +32,24 @@ export async function POST(request) {
       );
     }
 
-    console.log('Selected text:', selectedText);
+    // First, get the content_id
+    const [contentRows] = await db.execute(
+      'SELECT id FROM Contents WHERE Grade = ? AND Course = ? AND Chapter = ? AND SubChapter = ? AND Type = ?',
+      [grade, course, chapter, sub_chapter, "Books"]
+    );
 
-    // Continue with stream processing...
+    if (!contentRows.length) {
+      return NextResponse.json(
+        { error: 'Content not found' },
+        { status: 404 }
+      );
+    }
+
+    const content_id = contentRows[0].id;
+
+    // Generate response_id
+    const response_id = uuidv4();
+
     const stream = new TransformStream();
     const writer = stream.writable.getWriter();
 
@@ -46,8 +65,7 @@ export async function POST(request) {
             },
             {
               role: 'user',
-              content: `Please explain: "${selectedText}" 
-              in a simple and concise manner and give examples if necessary.`,
+              content: `"${selectedText}"`,
             },
           ],
           model: 'llama3-8b-8192',
@@ -59,21 +77,27 @@ export async function POST(request) {
         });
 
         const encoder = new TextEncoder();
-
-        // Write the opening bracket
         await writer.write(encoder.encode('['));
 
+        let fullResponse = '';
         let firstChunk = true;
+
         for await (const chunk of chatCompletion) {
           const content = chunk.choices[0]?.delta?.content || '';
           if (content) {
+            fullResponse += content;
             const data = JSON.stringify({ content });
-
             const chunkData = firstChunk ? data : `,${data}`;
             await writer.write(encoder.encode(chunkData));
             firstChunk = false;
           }
         }
+
+        // Store the complete response in the database
+        await db.execute(
+          'INSERT INTO AIResponses (response_id, user_id, question, answer, content_id) VALUES (?, ?, ?, ?, ?)',
+          [response_id, session.user.id, selectedText, fullResponse, content_id]
+        );
 
         await writer.write(encoder.encode(']'));
       } catch (error) {
@@ -97,9 +121,9 @@ export async function POST(request) {
       },
     });
   } catch (error) {
-    console.error('Error creating highlight:', error.message);
+    console.error('Error processing request:', error.message);
     return NextResponse.json(
-      { error: 'Failed to create highlight' },
+      { error: 'Failed to process request' },
       { status: 500 }
     );
   }

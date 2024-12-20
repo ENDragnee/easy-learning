@@ -37,7 +37,7 @@ export function ChatSystem() {
       const urlParams = parseURL();
 
       try {
-        const response = await fetch('/api/ai', {
+        const response = await fetch('/api/chat-ai', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
