@@ -1,9 +1,132 @@
 'use client';
 
-import { InlineMath, BlockMath } from 'react-katex';
+import { useState } from 'react';
+import { BlockMath, InlineMath } from 'react-katex';
+import QuizQuestion from '@/components/QuizQuestion';
 import 'katex/dist/katex.min.css';
 
+const quizQuestions = [
+  {
+    "question": "Which of the following is the most common commercial formulation of ammonia?",
+    "options": [
+      "28–30% NH₃",
+      "50–60% NH₃",
+      "10% NH₃",
+      "100% NH₃"
+    ],
+    "correctAnswer": 0,
+    "hint": "Ammonia is commonly available as an aqueous solution with 28–30% NH₃."
+  },
+  {
+    "question": "What is the primary use of ammonia in the Ostwald process?",
+    "options": [
+      "To produce ammonia gas",
+      "To produce nitric acid",
+      "To produce urea",
+      "To manufacture sulfuric acid"
+    ],
+    "correctAnswer": 1,
+    "hint": "The Ostwald process is used for the production of nitric acid."
+  },
+  {
+    "question": "Which of the following is NOT a use of ammonia?",
+    "options": [
+      "As a raw material for explosives",
+      "For producing soda ash",
+      "For making ammonium nitrate",
+      "As a solvent for organic compounds"
+    ],
+    "correctAnswer": 3,
+    "hint": "Ammonia is not commonly used as a solvent for organic compounds."
+  },
+  {
+    "question": "Which of the following is the primary feedstock for the production of ammonia in the Haber-Bosch process?",
+    "options": [
+      "Hydrogen and nitrogen",
+      "Methane and carbon dioxide",
+      "Ammonium chloride",
+      "Sulfur and oxygen"
+    ],
+    "correctAnswer": 0,
+    "hint": "Hydrogen and nitrogen are used in the Haber-Bosch process for ammonia production."
+  },
+  {
+    "question": "What is the final product of the Ostwald process?",
+    "options": [
+      "Ammonium nitrate",
+      "Nitric acid",
+      "Ammonia",
+      "Sodium hydroxide"
+    ],
+    "correctAnswer": 1,
+    "hint": "The Ostwald process produces nitric acid."
+  },
+  {
+    "question": "What is the main use of urea in agriculture?",
+    "options": [
+      "To control pests",
+      "As a nitrogen fertilizer",
+      "As a pesticide",
+      "To acidify the soil"
+    ],
+    "correctAnswer": 1,
+    "hint": "Urea is a high-nitrogen fertilizer commonly used in agriculture."
+  },
+  {
+    "question": "Which of the following is an example of an organophosphate pesticide?",
+    "options": [
+      "Pyrethroids",
+      "Carbamates",
+      "Glyphosate",
+      "Malathion"
+    ],
+    "correctAnswer": 3,
+    "hint": "Malathion is an example of an organophosphate pesticide."
+  },
+  {
+    "question": "What is the most common source of phosphorus in fertilizers?",
+    "options": [
+      "Urea",
+      "Diammonium Monohydrogen Phosphate (DAP)",
+      "Ammonium nitrate",
+      "Sulfuric acid"
+    ],
+    "correctAnswer": 1,
+    "hint": "Diammonium Monohydrogen Phosphate (DAP) is the most common source of phosphorus in fertilizers."
+  },
+  {
+    "question": "Which of the following processes is used to manufacture sulfuric acid?",
+    "options": [
+      "The Contact process",
+      "The Haber-Bosch process",
+      "The Ostwald process",
+      "The Solvay process"
+    ],
+    "correctAnswer": 0,
+    "hint": "Sulfuric acid is manufactured by the Contact process."
+  }
+]
+
 export default function ManufacturingOfValuableProducts() {
+  const [showQuiz, setShowQuiz] = useState(false);
+    const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(quizQuestions.length).fill(null));
+    const [showResults, setShowResults] = useState(false);
+    const [score, setScore] = useState(0); 
+  
+    const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
+      const newSelectedAnswers = [...selectedAnswers];
+      newSelectedAnswers[questionIndex] = answerIndex;
+      setSelectedAnswers(newSelectedAnswers);
+    };
+  
+    const handleSubmit = () => {
+      const correctCount = selectedAnswers.reduce((count: number, answer: number | null, index: number) => {
+        if (answer === null) return count;
+        return count + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+      }, 0);
+      setScore(correctCount);
+      setShowResults(true);
+    };
   return (
     <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">3.3 Manufacturing of Valuable Products' Chemicals</h1>
@@ -210,6 +333,78 @@ export default function ManufacturingOfValuableProducts() {
       <p>
         Sodium hydroxide is manufactured through methods like the Castner-Kellner process, where electrolysis of brine solution yields sodium hydroxide.
       </p>
+      <div className='flex justify-center items-center'>
+          <button 
+            onClick={() => setShowQuiz(true)}
+            className="w-1/2 h-1/2 mt-6 bg-slate-400 hover:bg-slate-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Take Quiz
+          </button>
+        </div>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#242424] p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button 
+              onClick={() => {
+                setShowQuiz(false);
+                setShowResults(false);
+                setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+              }}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">Projectile Motion Quiz</h2>
+            <div className="space-y-6">
+              {quizQuestions.map((q, index) => (
+                <QuizQuestion
+                  key={index}
+                  question={q.question}
+                  options={q.options}
+                  correctAnswer={q.correctAnswer}
+                  hint={q.hint}
+                  selectedAnswer={selectedAnswers[index]}
+                  showResults={showResults}
+                  onSelectAnswer={(answerIndex) => handleAnswerSelect(index, answerIndex)}
+                />
+              ))}
+            </div>
+            <div className="mt-6 flex justify-between">
+              {!showResults && (
+                <button 
+                  onClick={handleSubmit}
+                  className="bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                >
+                  Submit
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  setShowQuiz(false);
+                  setShowResults(false);
+                  setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+                }}
+                className="bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {showResults && (
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Quiz Results</h3>
+                <p className="dark:text-white">
+                  You got {score} out of {quizQuestions.length} questions correct! 
+                  ({((score / quizQuestions.length) * 100).toFixed(1)}%)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -470,7 +470,7 @@ const ChapterList: React.FC<{
                         {selectedGrade && selectedCourse && (
                           <Link
                             href={{
-                              pathname: `/${selectedGrade}/${selectedCourse}/${chapter.name}/${subChapter}`,
+                              pathname: `/moe/${selectedGrade}/${selectedCourse}/${chapter.name}/${subChapter}`,
                             }}
                           >
                             <Button

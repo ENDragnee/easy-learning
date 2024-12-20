@@ -12,6 +12,7 @@ export async function POST(request) {
     }
     const {
       id,
+      org,
       grade,
       course,
       chapter,
@@ -23,6 +24,7 @@ export async function POST(request) {
     } = await request.json();
 
     if (
+      !org ||
       !grade ||
       !course ||
       !chapter ||
@@ -42,6 +44,7 @@ export async function POST(request) {
       `INSERT INTO Highlights (
         highlight_id,
         user_id,
+        org,
         grade,
         course,
         chapter,
@@ -50,10 +53,11 @@ export async function POST(request) {
         color,
         start_offset,
         end_offset
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         id,
         session.user.id,
+        org,
         grade,
         course,
         chapter,

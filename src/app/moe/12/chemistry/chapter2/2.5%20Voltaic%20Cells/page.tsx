@@ -1,9 +1,143 @@
 'use client';
 
-import { InlineMath, BlockMath } from 'react-katex';
+import { useState } from 'react';
+import { BlockMath, InlineMath } from 'react-katex';
+import QuizQuestion from '@/components/QuizQuestion';
 import 'katex/dist/katex.min.css';
 
+const quizQuestions = [
+  {
+    "question": "What is the primary difference between a Galvanic (Voltaic) cell and an Electrolytic cell?",
+    "options": [
+      "Galvanic cells use electrical energy to drive non-spontaneous reactions, while electrolytic cells release energy.",
+      "Galvanic cells release energy from spontaneous reactions, while electrolytic cells use electrical energy to drive non-spontaneous reactions.",
+      "Galvanic cells do not use a salt bridge, while electrolytic cells do.",
+      "Galvanic cells require high temperatures to operate, while electrolytic cells work at room temperature."
+    ],
+    "correctAnswer": 1,
+    "hint": "A Galvanic cell produces electrical energy from spontaneous reactions, while an Electrolytic cell requires electrical energy to drive non-spontaneous reactions."
+  },
+  {
+    "question": "What is the role of the salt bridge in a Galvanic cell?",
+    "options": [
+      "To prevent the flow of electrons between the two half-cells.",
+      "To complete the electrical circuit by allowing ion flow between the half-cells.",
+      "To act as the cathode in the cell.",
+      "To increase the concentration of ions in the solution."
+    ],
+    "correctAnswer": 1,
+    "hint": "The salt bridge allows the flow of ions between the half-cells, maintaining the electrical neutrality of each half-cell."
+  },
+  {
+    "question": "In the Daniell cell, which metal undergoes oxidation?",
+    "options": [
+      "Copper",
+      "Zinc",
+      "Platinum",
+      "Hydrogen"
+    ],
+    "correctAnswer": 1,
+    "hint": "Zinc loses electrons and undergoes oxidation at the anode in the Daniell cell."
+  },
+  {
+    "question": "Which component is commonly used as the reference electrode for measuring standard electrode potentials?",
+    "options": [
+      "Platinum electrode",
+      "Copper electrode",
+      "Standard Hydrogen Electrode (SHE)",
+      "Zinc electrode"
+    ],
+    "correctAnswer": 2,
+    "hint": "The Standard Hydrogen Electrode (SHE) is used as the reference with a potential of 0 V."
+  },
+  {
+    "question": "What is the Nernst equation used for in the context of voltaic cells?",
+    "options": [
+      "To calculate the mass of the cathode material.",
+      "To determine the cell potential when concentrations deviate from standard conditions.",
+      "To determine the voltage of the salt bridge.",
+      "To balance the half-reactions in the electrochemical process."
+    ],
+    "correctAnswer": 1,
+    "hint": "The Nernst equation helps calculate the cell potential based on ion concentrations and other conditions."
+  },
+  {
+    "question": "What happens when the concentration of Cu²⁺ ions is increased in a voltaic cell?",
+    "options": [
+      "The cell potential decreases.",
+      "The cell potential increases.",
+      "The oxidation half-reaction rate increases.",
+      "The salt bridge becomes ineffective."
+    ],
+    "correctAnswer": 1,
+    "hint": "Increasing the concentration of Cu²⁺ ions will shift the equilibrium, leading to a higher cell potential."
+  },
+  {
+    "question": "Which metal is used in the standard hydrogen electrode (SHE)?",
+    "options": [
+      "Copper",
+      "Gold",
+      "Platinum",
+      "Zinc"
+    ],
+    "correctAnswer": 2,
+    "hint": "The standard hydrogen electrode uses a platinum electrode, which is inert and does not participate in the reaction."
+  },
+  {
+    "question": "In the example cell, Zn(s) | Zn²⁺(1M) || H⁺(1M) | H₂(1 atm) | Pt(s), which electrode is the anode?",
+    "options": [
+      "Zinc electrode",
+      "Hydrogen electrode",
+      "Platinum electrode",
+      "Copper electrode"
+    ],
+    "correctAnswer": 0,
+    "hint": "The zinc electrode undergoes oxidation and is the anode in the cell."
+  },
+  {
+    "question": "What is the standard reduction potential of zinc in a Daniell cell?",
+    "options": [
+      "0.76 V",
+      "1.10 V",
+      "-0.76 V",
+      "0.34 V"
+    ],
+    "correctAnswer": 2,
+    "hint": "Zinc has a standard reduction potential of -0.76 V, which is used to calculate the cell potential."
+  },
+  {
+    "question": "In a fuel cell, what is the overall reaction for the combination of hydrogen and oxygen?",
+    "options": [
+      "2H₂(g) + O₂(g) → 2H₂O(l)",
+      "H₂(g) + O₂(g) → H₂O(g)",
+      "2H₂(g) + O₂(g) → 2H₂O(g)",
+      "H₂(g) + O₂(g) → 2H₂O(l)"
+    ],
+    "correctAnswer": 0,
+    "hint": "The overall reaction in a hydrogen-oxygen fuel cell is the formation of water from hydrogen and oxygen gases."
+  }
+]
+
 export default function VoltaicCells() {
+  const [showQuiz, setShowQuiz] = useState(false);
+    const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(quizQuestions.length).fill(null));
+    const [showResults, setShowResults] = useState(false);
+    const [score, setScore] = useState(0); 
+  
+    const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
+      const newSelectedAnswers = [...selectedAnswers];
+      newSelectedAnswers[questionIndex] = answerIndex;
+      setSelectedAnswers(newSelectedAnswers);
+    };
+  
+    const handleSubmit = () => {
+      const correctCount = selectedAnswers.reduce((count: number, answer: number | null, index: number) => {
+        if (answer === null) return count;
+        return count + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+      }, 0);
+      setScore(correctCount);
+      setShowResults(true);
+    };
   return (
     <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">2.5 Voltaic Cells</h1>
@@ -329,6 +463,78 @@ export default function VoltaicCells() {
       <p>
         Various methods are used to protect metals from corrosion, such as coating them with paint or alloying them with more resistant metals like chromium in stainless steel.
       </p>
+      <div className='flex justify-center items-center'>
+          <button 
+            onClick={() => setShowQuiz(true)}
+            className="w-1/2 h-1/2 mt-6 bg-slate-400 hover:bg-slate-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Take Quiz
+          </button>
+        </div>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#242424] p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button 
+              onClick={() => {
+                setShowQuiz(false);
+                setShowResults(false);
+                setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+              }}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">Projectile Motion Quiz</h2>
+            <div className="space-y-6">
+              {quizQuestions.map((q, index) => (
+                <QuizQuestion
+                  key={index}
+                  question={q.question}
+                  options={q.options}
+                  correctAnswer={q.correctAnswer}
+                  hint={q.hint}
+                  selectedAnswer={selectedAnswers[index]}
+                  showResults={showResults}
+                  onSelectAnswer={(answerIndex) => handleAnswerSelect(index, answerIndex)}
+                />
+              ))}
+            </div>
+            <div className="mt-6 flex justify-between">
+              {!showResults && (
+                <button 
+                  onClick={handleSubmit}
+                  className="bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                >
+                  Submit
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  setShowQuiz(false);
+                  setShowResults(false);
+                  setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+                }}
+                className="bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {showResults && (
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Quiz Results</h3>
+                <p className="dark:text-white">
+                  You got {score} out of {quizQuestions.length} questions correct! 
+                  ({((score / quizQuestions.length) * 100).toFixed(1)}%)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

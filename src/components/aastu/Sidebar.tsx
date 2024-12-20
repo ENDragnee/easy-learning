@@ -19,7 +19,7 @@ import {
   getSubjects,
   getFolderStructure,
   Chapter,
-} from "@/lib/fileSystem";
+} from "./fileSystem";
 import {
   Collapsible,
   CollapsibleContent,

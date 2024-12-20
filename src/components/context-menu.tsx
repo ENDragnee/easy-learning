@@ -4,7 +4,7 @@ import Mark from 'mark.js';
 import { saveHighlightToDatabase } from '@/components/functions/saveHighlight';
 import { removeHighlightFromDatabase } from '@/components/functions/removeHighlight';
 import { HighlightInstance } from '@/components/interfaces/highlight';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 interface ContextMenuProps {
   x: number;
   y: number;
@@ -23,6 +23,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
   };
 
   const restoreHighlights = async (
+    org: string,
     grade: string,
     course: string,
     chapter: string,
@@ -30,7 +31,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
   ) => {
     try {
       const response = await fetch(
-        `/api/highlights?grade=${grade}&course=${course}&chapter=${chapter}&sub_chapter=${sub_chapter}`,
+        `/api/highlights?org=${org}?grade=${grade}&course=${course}&chapter=${chapter}&sub_chapter=${sub_chapter}`,
       );
       if (!response.ok) {
         throw new Error('Failed to fetch highlights');
@@ -66,6 +67,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
   };
 
   const handleAskAI = async (
+    org: string,
     grade: string,
     course: string,
     chapter: string,
@@ -110,7 +112,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
       setShowModal(true); // Show modal
       setAiResponse(''); // Clear previous response
 
-      highlightText(grade, course, chapter, sub_chapter, color);
+      highlightText(org, grade, course, chapter, sub_chapter, color);
       try {
         // Fetch AI response for the selected text
         const response = await fetch('/api/ai', {
@@ -184,6 +186,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
   }, [onClose, showModal]);
 
   const highlightText = async (
+    org: string,
     grade: string,
     course: string,
     chapter: string,
@@ -242,6 +245,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
         id: mark.dataset.highlightId!,
         text: selectedText,
         color: highlightColor,
+        org,
         grade,
         course,
         chapter,
@@ -286,7 +290,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
   
   // Extract parameters from the pathname
   const pathSegments = pathname.split('/').filter(Boolean); // Remove empty strings
-  let [gradeValue = '', courseValue = '', chapterValue = '', subChapterValue = ''] = pathSegments.map(decodeURIComponent);
+  let [orgValue ='', gradeValue = '', courseValue = '', chapterValue = '', subChapterValue = ''] = pathSegments.map(decodeURIComponent);
   
   // Handle cases where subChapterValue might not have a space
   subChapterValue = subChapterValue.split(' ')[0] || '';
@@ -311,6 +315,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
                 key={index}
                 onClick={() => {
                   item.action(
+                    orgValue,
                     gradeValue,
                     courseValue,
                     chapterValue,

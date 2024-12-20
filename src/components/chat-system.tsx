@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Send } from 'lucide-react'
+import { url } from "inspector"
 
 export function ChatSystem() {
   const [messages, setMessages] = useState<{ role: "user" | "assistant" | "sent"; content: string }[]>([])
@@ -23,10 +24,11 @@ export function ChatSystem() {
     const segments = path.split('/').filter(segment => segment)
     
     return {
-      grade: segments[0] || "default",
-      course: segments[1] || "chat",
-      chapter: segments[2] || "general",
-      sub_chapter: decodeURIComponent(segments[3] || "conversation")
+      org: segments[0] || "default",
+      grade: segments[1] || "default",
+      course: segments[2] || "chat",
+      chapter: segments[3] || "general",
+      sub_chapter: decodeURIComponent(segments[4] || "conversation")
     }
   }
 
@@ -44,6 +46,7 @@ export function ChatSystem() {
           },
           body: JSON.stringify({
             selectedText: input,
+            org: urlParams.org,
             grade: urlParams.grade,
             course: urlParams.course,
             chapter: urlParams.chapter,

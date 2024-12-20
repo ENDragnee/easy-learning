@@ -1,9 +1,132 @@
 'use client';
 
-import { InlineMath, BlockMath } from 'react-katex';
+import { useState } from 'react';
+import { BlockMath, InlineMath } from 'react-katex';
+import QuizQuestion from '@/components/QuizQuestion';
 import 'katex/dist/katex.min.css';
 
+const quizQuestions = [
+  {
+    "question": "What type of polymer is made from only one type of monomer?",
+    "options": [
+      "Homopolymer",
+      "Copolymer",
+      "Condensation polymer",
+      "Addition polymer"
+    ],
+    "correctAnswer": 0,
+    "hint": "Homopolymers are made from a single type of monomer."
+  },
+  {
+    "question": "Which of the following is an example of a copolymer?",
+    "options": [
+      "Polyethylene",
+      "Polystyrene",
+      "Polypropylene",
+      "Polyethylene terephthalate"
+    ],
+    "correctAnswer": 3,
+    "hint": "Polyethylene terephthalate is a copolymer formed by two types of monomers."
+  },
+  {
+    "question": "What is a key characteristic of random copolymers?",
+    "options": [
+      "Monomer units alternate in a regular pattern",
+      "Monomer units are randomly arranged",
+      "Monomers do not form bonds",
+      "The polymer is made from a single monomer"
+    ],
+    "correctAnswer": 1,
+    "hint": "In random copolymers, the monomer units are arranged randomly."
+  },
+  {
+    "question": "What distinguishes addition polymers from condensation polymers?",
+    "options": [
+      "Addition polymers involve the loss of small molecules like water",
+      "Addition polymers are formed from unsaturated monomers",
+      "Condensation polymers are made from only one type of monomer",
+      "Addition polymers are always natural"
+    ],
+    "correctAnswer": 1,
+    "hint": "Addition polymers are formed by the addition reaction of unsaturated monomers."
+  },
+  {
+    "question": "Which of the following is an example of a natural polymer?",
+    "options": [
+      "Polyethylene",
+      "Polystyrene",
+      "Polysaccharides",
+      "Polyvinyl chloride"
+    ],
+    "correctAnswer": 2,
+    "hint": "Polysaccharides, such as starch and cellulose, are natural polymers."
+  },
+  {
+    "question": "Which polymer is produced by the polymerization of propylene?",
+    "options": [
+      "Polyethylene",
+      "Polypropylene",
+      "Polystyrene",
+      "Polyvinyl chloride"
+    ],
+    "correctAnswer": 1,
+    "hint": "Polypropylene is produced from the polymerization of propylene."
+  },
+  {
+    "question": "Which polymer is commonly used to make pipes and raincoats?",
+    "options": [
+      "Polyethylene",
+      "Polystyrene",
+      "Polyvinyl chloride (PVC)",
+      "Polypropylene"
+    ],
+    "correctAnswer": 2,
+    "hint": "Polyvinyl chloride (PVC) is widely used for pipes and raincoats."
+  },
+  {
+    "question": "What is a characteristic of thermoplastics?",
+    "options": [
+      "They decompose irreversibly at high temperatures",
+      "They can melt and resolidify",
+      "They are always natural polymers",
+      "They form covalent bonds between chains"
+    ],
+    "correctAnswer": 1,
+    "hint": "Thermoplastics can melt and resolidify when heated."
+  },
+  {
+    "question": "Which of the following is an example of a thermoset polymer?",
+    "options": [
+      "Polypropylene",
+      "Polyvinyl chloride",
+      "Bakelite",
+      "Polyethylene"
+    ],
+    "correctAnswer": 2,
+    "hint": "Bakelite is an example of a thermoset polymer, which decomposes at high temperatures."
+  }
+]
+
 export default function ClassificationOfPolymers() {
+  const [showQuiz, setShowQuiz] = useState(false);
+    const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(quizQuestions.length).fill(null));
+    const [showResults, setShowResults] = useState(false);
+    const [score, setScore] = useState(0); 
+  
+    const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
+      const newSelectedAnswers = [...selectedAnswers];
+      newSelectedAnswers[questionIndex] = answerIndex;
+      setSelectedAnswers(newSelectedAnswers);
+    };
+  
+    const handleSubmit = () => {
+      const correctCount = selectedAnswers.reduce((count: number, answer: number | null, index: number) => {
+        if (answer === null) return count;
+        return count + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+      }, 0);
+      setScore(correctCount);
+      setShowResults(true);
+    };
   return (
     <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">4.3 Classification of Polymers</h1>
@@ -111,6 +234,78 @@ export default function ClassificationOfPolymers() {
       <p>Examples include polyethylene, polypropylene, and polyvinyl chloride.</p>
       <h3 className="text-xl font-semibold mt-6 mb-4">Thermosets</h3>
       <p>Examples include Bakelite, epoxy resin, and silicone resin.</p>
+      <div className='flex justify-center items-center'>
+          <button 
+            onClick={() => setShowQuiz(true)}
+            className="w-1/2 h-1/2 mt-6 bg-slate-400 hover:bg-slate-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Take Quiz
+          </button>
+        </div>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#242424] p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button 
+              onClick={() => {
+                setShowQuiz(false);
+                setShowResults(false);
+                setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+              }}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">Projectile Motion Quiz</h2>
+            <div className="space-y-6">
+              {quizQuestions.map((q, index) => (
+                <QuizQuestion
+                  key={index}
+                  question={q.question}
+                  options={q.options}
+                  correctAnswer={q.correctAnswer}
+                  hint={q.hint}
+                  selectedAnswer={selectedAnswers[index]}
+                  showResults={showResults}
+                  onSelectAnswer={(answerIndex) => handleAnswerSelect(index, answerIndex)}
+                />
+              ))}
+            </div>
+            <div className="mt-6 flex justify-between">
+              {!showResults && (
+                <button 
+                  onClick={handleSubmit}
+                  className="bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                >
+                  Submit
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  setShowQuiz(false);
+                  setShowResults(false);
+                  setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+                }}
+                className="bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {showResults && (
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Quiz Results</h3>
+                <p className="dark:text-white">
+                  You got {score} out of {quizQuestions.length} questions correct! 
+                  ({((score / quizQuestions.length) * 100).toFixed(1)}%)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -20,7 +20,7 @@ const popularItems: PopularItem[] = [
     description: "Learn the fundamentals of chemistry",
     icon: <Atom className="h-5 w-5" />,
     category: "MOE",
-    link: "/12"
+    link: "/moe"
   },
   {
     title: "AASTU Curriculum",

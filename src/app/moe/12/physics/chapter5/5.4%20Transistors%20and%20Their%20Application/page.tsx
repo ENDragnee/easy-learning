@@ -1,9 +1,121 @@
 'use client';
 
 import { InlineMath, BlockMath } from 'react-katex';
+import { useState } from 'react';
+import QuizQuestion from '@/components/QuizQuestion';
 import 'katex/dist/katex.min.css';
 
+const quizQuestions = [
+  {
+    "question": "What is the primary function of a transistor in an electronic circuit?",
+    "options": [
+      "To amplify or switch electronic signals",
+      "To block electrical current",
+      "To store electrical energy",
+      "To decrease voltage levels"
+    ],
+    "correctAnswer": 0,
+    "hint": "Transistors amplify or switch signals by controlling electron flow."
+  },
+  {
+    "question": "Which two main types of transistors are mentioned in this section?",
+    "options": [
+      "BJT and MOSFET",
+      "BJT and FET",
+      "BJT and PNP",
+      "BJT and NPN"
+    ],
+    "correctAnswer": 1,
+    "hint": "This section specifically discusses bipolar junction transistors (BJT) and field-effect transistors (FET)."
+  },
+  {
+    "question": "What are the majority current carriers in a PNP transistor?",
+    "options": [
+      "Electrons",
+      "Protons",
+      "Holes",
+      "Neutrons"
+    ],
+    "correctAnswer": 2,
+    "hint": "In a PNP transistor, the majority current carriers are holes, which flow towards the base region."
+  },
+  {
+    "question": "Which transistor configuration provides both current and voltage gain?",
+    "options": [
+      "Common-Base (CB)",
+      "Common-Collector (CC)",
+      "Common-Emitter (CE)",
+      "Base-Emitter (BE)"
+    ],
+    "correctAnswer": 2,
+    "hint": "The Common-Emitter (CE) configuration is known to provide both current and voltage gain."
+  },
+  {
+    "question": "What are the main applications of transistors in modern electronics?",
+    "options": [
+      "Amplification of electrical signals",
+      "Switching operations",
+      "Forming logic gates",
+      "All of the above"
+    ],
+    "correctAnswer": 3,
+    "hint": "Transistors amplify signals, switch currents, and form logic gates in modern electronic devices."
+  },
+  {
+    "question": "Which terminal configuration is used in the Common-Collector (CC) transistor setup?",
+    "options": [
+      "Base-Collector",
+      "Emitter-Base",
+      "Base-Emitter",
+      "Base-Collector-Emitter"
+    ],
+    "correctAnswer": 2,
+    "hint": "In a Common-Collector (CC) setup, the input is applied between the base and collector, and output is taken from the emitter and collector terminal."
+  },
+  {
+    "question": "How does a transistor act as a switch in electronic devices?",
+    "options": [
+      "By storing electrical energy",
+      "By blocking and allowing current flow",
+      "By amplifying only weak signals",
+      "By decreasing voltage to zero"
+    ],
+    "correctAnswer": 1,
+    "hint": "A transistor can block or allow the flow of electrical current, functioning as an electronic switch."
+  },
+  {
+    "question": "Why are transistors considered essential components in modern electronics?",
+    "options": [
+      "They block electrical signals completely",
+      "They amplify signals and control current flow",
+      "They only work in low-power applications",
+      "They reduce circuit complexity by using fewer components"
+    ],
+    "correctAnswer": 1,
+    "hint": "Transistors amplify signals and control current flow, forming the foundation of modern technological devices."
+  }
+]
+
 export default function TransistorsAndApplications() {
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(quizQuestions.length).fill(null));
+  const [showResults, setShowResults] = useState(false);
+  const [score, setScore] = useState(0); 
+
+  const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
+    const newSelectedAnswers = [...selectedAnswers];
+    newSelectedAnswers[questionIndex] = answerIndex;
+    setSelectedAnswers(newSelectedAnswers);
+  };
+
+  const handleSubmit = () => {
+    const correctCount = selectedAnswers.reduce((count: number, answer: number | null, index: number) => {
+      if (answer === null) return count;
+      return count + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+    }, 0);
+    setScore(correctCount);
+    setShowResults(true);
+  };
   return (
     <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">5.4 Transistors and Their Application</h1>
@@ -64,6 +176,78 @@ export default function TransistorsAndApplications() {
       <p>
         Transistors are essential components in modern electronics. Their ability to amplify signals and act as switches makes them integral to devices ranging from logic gates to microprocessors. The manipulation of current flow through transistors is the basis of countless technological innovations.
       </p>
+      <div className='flex justify-center items-center'>
+          <button 
+            onClick={() => setShowQuiz(true)}
+            className="w-1/2 h-1/2 mt-6 bg-slate-400 hover:bg-slate-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Take Quiz
+          </button>
+        </div>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#242424] p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button 
+              onClick={() => {
+                setShowQuiz(false);
+                setShowResults(false);
+                setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+              }}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">Projectile Motion Quiz</h2>
+            <div className="space-y-6">
+              {quizQuestions.map((q, index) => (
+                <QuizQuestion
+                  key={index}
+                  question={q.question}
+                  options={q.options}
+                  correctAnswer={q.correctAnswer}
+                  hint={q.hint}
+                  selectedAnswer={selectedAnswers[index]}
+                  showResults={showResults}
+                  onSelectAnswer={(answerIndex) => handleAnswerSelect(index, answerIndex)}
+                />
+              ))}
+            </div>
+            <div className="mt-6 flex justify-between">
+              {!showResults && (
+                <button 
+                  onClick={handleSubmit}
+                  className="bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                >
+                  Submit
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  setShowQuiz(false);
+                  setShowResults(false);
+                  setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+                }}
+                className="bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {showResults && (
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Quiz Results</h3>
+                <p className="dark:text-white">
+                  You got {score} out of {quizQuestions.length} questions correct! 
+                  ({((score / quizQuestions.length) * 100).toFixed(1)}%)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

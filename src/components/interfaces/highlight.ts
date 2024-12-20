@@ -2,6 +2,7 @@ export interface HighlightInstance {
     id: string;
     text: string;
     color: string;
+    org: string;
     grade: string;
     course: string;
     chapter: string;

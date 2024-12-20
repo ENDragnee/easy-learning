@@ -1,9 +1,143 @@
 'use client';
 
-import { InlineMath, BlockMath } from 'react-katex';
+import { useState } from 'react';
+import { BlockMath, InlineMath } from 'react-katex';
+import QuizQuestion from '@/components/QuizQuestion';
 import 'katex/dist/katex.min.css';
 
+const quizQuestions = [
+  {
+    "question": "What is the primary goal of green chemistry?",
+    "options": [
+      "To reduce the use of hazardous chemicals",
+      "To make chemical processes more efficient and environmentally friendly",
+      "To increase industrial waste",
+      "To promote fossil fuel use"
+    ],
+    "correctAnswer": 1,
+    "hint": "Green chemistry aims to make chemical processes safer, more efficient, and environmentally sustainable."
+  },
+  {
+    "question": "Which of the following is an example of green chemistry in action?",
+    "options": [
+      "Using toxic solvents in industrial processes",
+      "Reducing the number of steps in drug production to generate less waste",
+      "Increasing energy consumption in chemical manufacturing",
+      "Using non-renewable resources for chemical synthesis"
+    ],
+    "correctAnswer": 1,
+    "hint": "Green chemistry can involve reducing the number of steps in a process, making it more efficient and generating less waste."
+  },
+  {
+    "question": "What is the principle of 'Atom Economy' in green chemistry?",
+    "options": [
+      "Maximizing the amount of by-products produced in a reaction",
+      "Minimizing waste by maximizing the number of atoms that end up in the desired product",
+      "Using only renewable resources in chemical processes",
+      "Increasing the volume of solvents used in chemical reactions"
+    ],
+    "correctAnswer": 1,
+    "hint": "Atom economy seeks to ensure that the atoms of reactants are fully incorporated into the final product, minimizing waste."
+  },
+  {
+    "question": "Which of the following is a key principle of green chemistry?",
+    "options": [
+      "Use of non-renewable feedstocks",
+      "Design of safer chemicals",
+      "Increased use of toxic solvents",
+      "Promotion of chemical processes at high temperatures and pressures"
+    ],
+    "correctAnswer": 1,
+    "hint": "Green chemistry emphasizes designing chemicals that are safer for both humans and the environment."
+  },
+  {
+    "question": "What is one of the benefits of using catalytic processes in green chemistry?",
+    "options": [
+      "Increased energy consumption",
+      "Reduced energy consumption and higher selectivity",
+      "More hazardous by-products",
+      "Use of more toxic chemicals"
+    ],
+    "correctAnswer": 1,
+    "hint": "Catalysis helps reduce energy usage and increase the efficiency of chemical reactions by using fewer harmful chemicals."
+  },
+  {
+    "question": "What does 'Design for Degradation' mean in green chemistry?",
+    "options": [
+      "Designing products that break down into harmless substances after use",
+      "Designing products that are resistant to degradation",
+      "Designing products with long shelf lives",
+      "Designing products that are chemically stable"
+    ],
+    "correctAnswer": 0,
+    "hint": "Designing for degradation ensures that chemical products break down into non-toxic substances when their useful life ends."
+  },
+  {
+    "question": "Which principle of green chemistry advocates for the use of renewable resources instead of non-renewable ones?",
+    "options": [
+      "Prevention",
+      "Design for Energy Efficiency",
+      "Use of Renewable Feedstock",
+      "Real-time Analysis for Pollution Prevention"
+    ],
+    "correctAnswer": 2,
+    "hint": "The principle of renewable feedstock encourages the use of materials that can be replenished, like agricultural products."
+  },
+  {
+    "question": "What is the main idea behind the principle 'Prevention' in green chemistry?",
+    "options": [
+      "Treating waste after it has been generated",
+      "Preventing waste generation to minimize environmental risks",
+      "Increasing waste disposal efforts",
+      "Maximizing waste production in chemical processes"
+    ],
+    "correctAnswer": 1,
+    "hint": "The 'Prevention' principle emphasizes reducing waste at the source to minimize environmental and health impacts."
+  },
+  {
+    "question": "What is a key benefit of 'Real-time Analysis for Pollution Prevention' in industrial processes?",
+    "options": [
+      "It increases energy consumption",
+      "It allows for timely adjustments to minimize waste and pollutants",
+      "It reduces the need for renewable feedstocks",
+      "It encourages the use of harmful chemicals"
+    ],
+    "correctAnswer": 1,
+    "hint": "Real-time analysis helps minimize pollutants by enabling quick adjustments during the manufacturing process."
+  },
+  {
+    "question": "What is the 'Atom Economy' calculation formula based on?",
+    "options": [
+      "Mass of products compared to mass of reactants",
+      "Mass of the desired product compared to the total mass of all reactants",
+      "Volume of products compared to volume of reactants",
+      "Time taken for the reaction to complete"
+    ],
+    "correctAnswer": 1,
+    "hint": "Atom economy focuses on how efficiently atoms from reactants are incorporated into the desired product, minimizing waste."
+  }
+]
+
 export default function GreenChemistryAndCleanerProduction() {
+  const [showQuiz, setShowQuiz] = useState(false);
+    const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(quizQuestions.length).fill(null));
+    const [showResults, setShowResults] = useState(false);
+    const [score, setScore] = useState(0); 
+  
+    const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
+      const newSelectedAnswers = [...selectedAnswers];
+      newSelectedAnswers[questionIndex] = answerIndex;
+      setSelectedAnswers(newSelectedAnswers);
+    };
+  
+    const handleSubmit = () => {
+      const correctCount = selectedAnswers.reduce((count: number, answer: number | null, index: number) => {
+        if (answer === null) return count;
+        return count + (answer === quizQuestions[index].correctAnswer ? 1 : 0);
+      }, 0);
+      setScore(correctCount);
+      setShowResults(true);
+    };
   return (
     <div className="px-6 sm:px-6 sm:text-xs md:text-base py-6 max-w-4xl mx-auto text-justify">
       <h1 className="text-3xl font-bold mb-6">Green Chemistry and Cleaner Production</h1>
@@ -130,6 +264,78 @@ export default function GreenChemistryAndCleanerProduction() {
           {`\\text{Atom economy} = \\frac{112}{244} \\times 100 = 45.9%`}
         </BlockMath>
       </div>
+      <div className='flex justify-center items-center'>
+          <button 
+            onClick={() => setShowQuiz(true)}
+            className="w-1/2 h-1/2 mt-6 bg-slate-400 hover:bg-slate-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+          >
+            Take Quiz
+          </button>
+        </div>
+
+      {showQuiz && (
+        <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-70 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-[#242424] p-8 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button 
+              onClick={() => {
+                setShowQuiz(false);
+                setShowResults(false);
+                setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+              }}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <h2 className="text-2xl font-bold mb-6 dark:text-white">Projectile Motion Quiz</h2>
+            <div className="space-y-6">
+              {quizQuestions.map((q, index) => (
+                <QuizQuestion
+                  key={index}
+                  question={q.question}
+                  options={q.options}
+                  correctAnswer={q.correctAnswer}
+                  hint={q.hint}
+                  selectedAnswer={selectedAnswers[index]}
+                  showResults={showResults}
+                  onSelectAnswer={(answerIndex) => handleAnswerSelect(index, answerIndex)}
+                />
+              ))}
+            </div>
+            <div className="mt-6 flex justify-between">
+              {!showResults && (
+                <button 
+                  onClick={handleSubmit}
+                  className="bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+                >
+                  Submit
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  setShowQuiz(false);
+                  setShowResults(false);
+                  setSelectedAnswers(new Array(quizQuestions.length).fill(null));
+                }}
+                className="bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              >
+                Close
+              </button>
+            </div>
+            {showResults && (
+              <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Quiz Results</h3>
+                <p className="dark:text-white">
+                  You got {score} out of {quizQuestions.length} questions correct! 
+                  ({((score / quizQuestions.length) * 100).toFixed(1)}%)
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

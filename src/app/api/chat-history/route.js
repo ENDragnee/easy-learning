@@ -12,6 +12,7 @@ export async function GET(request) {
 
     // Get URL parameters
     const url = new URL(request.url);
+    const org  = url.searchParams.get('org');
     const grade = url.searchParams.get('grade');
     const course = url.searchParams.get('course');
     const chapter = url.searchParams.get('chapter');
@@ -19,8 +20,8 @@ export async function GET(request) {
 
     // First, get the content_id
     const [contentRows] = await db.execute(
-      'SELECT id FROM Contents WHERE Grade = ? AND Course = ? AND Chapter = ? AND SubChapter = ?',
-      [grade, course, chapter, sub_chapter]
+      'SELECT id FROM Contents WHERE Org = ? AND Grade = ? AND Course = ? AND Chapter = ? AND SubChapter = ?',
+      [org, grade, course, chapter, sub_chapter]
     );
 
     if (!contentRows.length) {

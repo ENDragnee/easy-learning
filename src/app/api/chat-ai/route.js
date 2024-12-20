@@ -19,6 +19,7 @@ export async function POST(request) {
     const body = await request.json();
     const { 
       selectedText, 
+      org,
       grade, 
       course, 
       chapter, 
@@ -34,8 +35,8 @@ export async function POST(request) {
 
     // First, get the content_id
     const [contentRows] = await db.execute(
-      'SELECT id FROM Contents WHERE Grade = ? AND Course = ? AND Chapter = ? AND SubChapter = ? AND Type = ?',
-      [grade, course, chapter, sub_chapter, "Books"]
+      'SELECT id FROM Contents WHERE Org = ? AND Grade = ? AND Course = ? AND Chapter = ? AND SubChapter = ? AND Type = ?',
+      [org, grade, course, chapter, sub_chapter, "Books"]
     );
 
     if (!contentRows.length) {
