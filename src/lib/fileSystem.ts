@@ -4,7 +4,7 @@ export interface Chapter {
 }
 interface Subject {
   name: string;
-  chapters: Chapter[];
+  chapters: any[];
 }
 
 interface Grade {
