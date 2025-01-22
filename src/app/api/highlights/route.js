@@ -23,8 +23,7 @@ export async function POST(request) {
       text,
       color,
       startOffset: start_offset,
-      endOffset: end_offset,
-      org
+      endOffset: end_offset
     } = await request.json();
 
     if (
