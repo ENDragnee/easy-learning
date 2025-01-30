@@ -44,7 +44,7 @@ const departments = [
     "Construction Technology Management",
     "Surveying Engineering"
 ];
-const years = ["1st Year", "2nd Year", "3rd Year", "4th Year", "5th Year"];
+const years = ["year1", "2nd Year", "3rd Year", "4th Year", "5th Year"];
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
@@ -58,6 +58,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const sidebarRef = React.useRef<HTMLDivElement>(null);
   const userMenuRef = React.useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubjectsOpen, setIsSubjectsOpen] = useState(false);
+  const [isChaptersOpen, setIsChaptersOpen] = useState(false); // Added state for chapters
+  const [selectedChapter, setSelectedChapter] = useState<string | null>(null);
   //const {state, dispatch} = useSidebar();
   const {
     grade,
@@ -140,6 +143,27 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   if (!isThemeReady) {
     return null;
   }
+  const handleGradeSelect = (grade: string) => {
+    setGrade(grade);
+    setIsGradesOpen(false); // Close grades when a grade is selected
+    setIsSubjectsOpen(true); // Open subjects when a grade is selected
+  };
+
+  const handleSubjectSelect = (subject: string) => {
+    setCourse(subject);
+    setIsSubjectsOpen(false); // Close subjects when a subject is selected
+    setIsChaptersOpen(true); // Open chapters when a subject is selected
+  };
+  const handleChapterSelect = (chapterName: string) => {
+    // Hide the previous chapter when a new one is selected
+    if (selectedChapter === chapterName) {
+        setIsChaptersOpen(false); // Close if already open
+        setSelectedChapter(null);  // Deselect if clicked again
+    } else {
+        setSelectedChapter(chapterName); // Set new selected chapter
+        setIsChaptersOpen(true); // Open chapters if a new one is selected
+    }
+};
   return (
     <div
       ref={sidebarRef}
@@ -448,7 +472,7 @@ const ChapterList: React.FC<{
                         {selectedGrade && selectedCourse && (
                           <Link
                             href={{
-                              pathname: `/${selectedGrade}/${selectedCourse}/${chapter.name}/${subChapter}`,
+                              pathname: `/aastu/${selectedGrade}/${selectedCourse}/${chapter.name}/${subChapter}`,
                             }}
                           >
                             <Button

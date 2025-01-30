@@ -58,16 +58,27 @@ const mockFileSystem: Grade[] = [
     ],
   },
   {
-    name: "11",
+    name: "year1",
     subjects: [
       {
-        name: "math",
+        name: "economics",
         chapters: [
           {
-            name: "algebra",
-            subChapters: ["Linear Equations", "Quadratic Equations"],
+            name: "chapter2",
+            subChapters: [
+              "2.1 Theory of Demand and Supply",
+              "2.2 Theory of supply",
+              "2.3 Market Equilibrium",
+            ],
           },
-          { name: "geometry", subChapters: ["Triangles", "Circles"] },
+          {
+            name: "chapter3",
+            subChapters: [
+              "3.1 Consumer preferencesy",
+              "3.2 The concept of utility",
+              "3.3 Approaches of measuring utility",
+            ],
+          },
         ],
       },
       {
